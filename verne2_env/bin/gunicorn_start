@@ -1,0 +1,26 @@
+#!/bin/bash
+
+NAME="VERNE_app"                                  # asignele un nombre a la palicación
+DJANGODIR=/webapp/verne2.0            # Directorio del proyecto
+SOCKFILE=/webapp/verne2.0/gunicorn.sock  # sock que se usará de gunicorn - puede ser un archivo vacio
+ENTORNO=verne2_env
+NUM_WORKERS=3                                     # hnumero de procesos de gunicorn
+DJANGO_SETTINGS_MODULE=verne2.settings             # settings de django
+DJANGO_WSGI_MODULE=verne2.wsgi                     # WSG de django
+DOMINIO=verne.buho.media                  #dominio de la aplicacion
+PUERTO=8000                                    #puerto de la aplicacion
+
+echo "Starting $NAME as `root`"
+
+# Activate the virtual environment
+cd $DJANGODIR
+source $ENTORNO/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+exec $ENTORNO/bin/gunicorn $DJANGO_WSGI_MODULE:application   --workers $NUM_WORKERS --bind $DOMINIO:$PUERTO
+

@@ -1,0 +1,149 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Actualizar{% endblock titulo %}
+{% load widget_tweaks %} 
+
+{% block extra_css %}
+<link href="{% static 'dist/css/verne/meeting/update_meeting.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active">Actualizar</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-3 mr-3 pb-5">
+      <div class="container  col-lg-10 col-md-10 col-sm-8  col-xs-8 ">
+           <div class="card shadow mb-4 ">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+                <p class=" header-form ">DATOS GENERALES</p>
+              </div>
+       
+               <form class="border border-light p-5" method="POST">   
+                {% csrf_token %}
+
+                  <div class="row ">
+                    <div class="col-md-6">
+                      <label class="col-form-label text-muted">{{ form.name.label }}</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="col-md-6">
+                      <label class="col-form-label text-muted">{{ form.place.label }}</label>
+                        {{ form.place }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="col-form-label text-muted"> Fecha creación</label> 
+                      <div class="input-group date" id="date_picker" data-target-input="nearest">
+                          {% render_field form.date  %}
+                        <div class="input-group-append" data-target="#date_picker" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="col-form-label text-muted">Hora Inicio</label>
+                       <div class="input-group date" id="timepicker" data-target-input="nearest"> 
+                        {% render_field form.start_time  %} 
+                        <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                      <label class="col-form-label text-muted">Hora Fin</label>
+                       <div class="input-group date" id="timepicker2" data-target-input="nearest">  
+                         {% render_field form.end_time  %} 
+                        <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <label class="col-form-label text-muted">{{ form.link_documentation.label }}</label>
+                          {{ form.link_documentation }}
+                      </div>
+
+                    </div>
+  
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">Ideas a evaluar</label>
+                        {% render_field form.id_idea class="form-control" id="activate_select_editar_multiple" %}
+                    </div>
+                    <div class="col-md-12 pb-3">
+                      <label class="col-form-label text-muted ">Invitados</label>
+                        {% render_field form.user_comitte class="form-control" id="activate_select_editar_comitte" %}
+                    </div>
+  
+                  <button class="btn send btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i>Guardar cambios</button>
+              </form>
+
+
+        </div>
+	   </section>
+
+		<!-- Este div forma parte del boton de comentario -->
+	
+
+	</div>	
+</div>
+
+{% endblock body_content %}
+
+{% block extra_js %}
+  <script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'dist/js/verne/meeting/register_meeting.js' %}"></script>
+  <!-- InputMask Fija los campos de la fecha dd/mm/yyyy -->
+  <script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+  <script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js'%}"></script>
+  <!-- Tempusdominus Bootstrap 4 activa el TimePicker-->
+  <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+  <!-- Bootstrap Switch -->
+  <script type="text/javascript">
+        //Datemask dd/mm/yyyy
+      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask2').inputmask('HH:mm', { 'placeholder': 'HH:mm' })
+      //Money Euro
+      $('[data-mask]').inputmask()
+  </script>
+  <script>
+     //Timepicker
+      $('#timepicker').datetimepicker({
+        format: 'HH:mm',
+        pickDate: false,
+        pickSeconds: false,
+        pick12HourFormat: false  
+      })
+
+     $('#timepicker2').datetimepicker({
+        format: 'HH:mm',
+        pickDate: false,
+        pickSeconds: false,
+        pick12HourFormat: false  
+      })
+     //Datepicker
+      $('#date_picker').datetimepicker({
+        format: 'DD/MM/YYYY'
+      })
+  </script>
+{% endblock extra_js %}

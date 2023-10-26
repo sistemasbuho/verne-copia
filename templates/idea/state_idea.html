@@ -1,0 +1,569 @@
+{% load staticfiles %}
+
+{% load staticfiles %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'dist/css/verne/idea/details_dashboard.css' %}">
+{% endblock extra_css %}
+
+
+{% block body_content %}
+
+<div class="modal-dialog modal-lg modal-lg modal-dialog-centered">
+	<div class="modal-content">
+		{% for idea in query %}	
+			<div class=" pl-3">			
+				<div class="card-header ">	
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+				</div>
+        <input id="id_idea" name="id_idea" type="hidden" value="{{idea.id}}">
+
+				<div class="modal-body">
+					<div class=" row">   
+						<div class="col-md-12 pb-3 pt-2 idea-name">
+							<p>{{idea.title}}</p>		     	 	
+						</div>
+
+						<div class="col-md-12">
+              <p><b>Descripción</b></p>
+              <p><i class="far fa-check-circle"></i>
+                {{idea.description}}</p>
+            </div>	
+
+            <div class="col-md-12">
+              <p><b>Solución propuesta</b></p>
+              <p><i class="far fa-check-circle"></i>
+                {{idea.solucion}}</p>
+            </div>
+
+							<!--<div class="col-md-12">
+								<button class="btn asigned rounded-pill">Encargado: {{idea.asigned.email|default_if_none:"Por definir"}}</button>
+							</div>-->
+
+							<!--<div class="col-md-12">
+								<p><b>Frente</b></p>
+								<p><i class="far fa-check-circle"></i>
+									{{idea.frente}}</p>
+							</div>	-->
+
+							<div class="col-md-12">
+								<p><b>Dimensión</b></p>
+								<p><i class="far fa-check-circle"></i>
+									{{idea.dimension}}</p>
+							</div>	
+											
+							<div class="col-md-12">
+								<p><b>Pilar</b></p>
+								<p><i class="far fa-check-circle"></i>
+									{{idea.pilar}}</p>
+							</div>	
+              
+              <div class="col-md-12">
+								<p><b>¿Esta asociada a nuestro propósito?</b></p>
+								<p><i class="far fa-check-circle"></i>
+									{{idea.proposito}}</p>
+							</div>	
+
+              	
+							
+		
+						</div>
+
+						
+
+						<div class="col-md-4 labels pl-4">												
+						
+							
+							<p class="text-one">Fecha creación </p>
+							<p>{{idea.creation_date}}</p>	
+							
+							<!--<p class="text-one">Autores:</p> 
+							<p>{%for i in idea.collaborator.all %}
+								{{i.email}}
+
+						   {% endfor %}</p>-->
+
+						   <p class="text-one">Autor(es):</p> 
+               {{idea.external_name}}<br>
+								{{idea.external_email}}
+                <p class="text-one">Documento</p>
+                <button class="btn  priority rounded-pill">{{idea.documento|default_if_none:"Por definir"}}</button>
+
+							<p class="text-one">Gerencia:</p> 
+							<i class="far fa-check-circle"></i>{{idea.gerencia}}
+								<p class="text-one">Subregión:</p> 
+								<i class="far fa-check-circle"></i>{{idea.subregion}}
+						</div>
+				
+
+						<div class="col-md-12">
+							<section class="content">
+                <div class="container">
+                   <div class="col-md-10">
+                    {% if idea.state == "Por definir" or idea.state == "En revisión" %}
+                      <h4 class="col-md-8 container font-weight-bold">PREGUNTAS PAIN</h4>   
+                       <div class="card-body">
+                              
+                          <form method="POST" >{% csrf_token %} 
+                          <div class="col-md-8 container card border border-info "><br> <br>
+           
+                          
+                          <input  type="hidden" name="num_check" value="{{questions.count}}">
+                             {% for p in questions %} 
+                             <label class="cuadrado text-muted " type="text" name="question" id="id{{p.id}}" value="{{p.name}}">{{p.name}}
+                               <input type="checkbox" name="state" value="{{p.id}}" id="checkbox{{p.id}}">
+                               <span class="checkmark"></span>
+                             </label> 
+                             {% endfor %}<br>
+           
+                          
+                    {% endif %}
+                            </div>
+                            <label for="">Feedback</label>
+                            {% if idea.feedback and idea.state == "En revisión" %}
+                            <!--<p>{{idea.feedback}}</p>	-->
+                            <input type="text" name="feedbackok" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedbackok" placeholder="{{idea.feedback}}" style="border: dotted;">
+                            {% elif idea.feedback and idea.state == "Rechazado" %}
+                            <input type="text" name="feedbackok" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedbackok" placeholder="{{idea.feedback}}" style="border: dotted;">
+                            
+                            {% elif idea.feedback and idea.state == "Aprobado" %}
+                            <input type="text" name="feedbackok" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedbackok" placeholder="{{idea.feedback}}" style="border: dotted;">
+                            {% else %}
+                            <input type="text" name="feedback" required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedback" placeholder="¿Cúal es tu opinión de esta idea?" style="border: dotted;">
+                            <!--<textarea name="feedback" cols="15" rows="4" class="form-control col-8 container card pt-4 pb-4 text-muted text-center"  placeholder="¿Cúal es tu opinión de esta idea?" id="feedback" maxlength="5000" required=""></textarea>-->
+                            {% endif %}
+                            <br>
+
+
+                            {% if idea.revision and idea.state == "En revisión" %}
+                            <!--<p>{{idea.feedback}}</p>	-->
+                            <input type="text" name="feedback" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedback" placeholder="{{idea.revision}}" style="border: dotted;">
+                            {% elif idea.revision and idea.state == "Rechazado" %}
+                            <input type="text" name="feedback" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedback" placeholder="{{idea.revision}}" style="border: dotted;">
+                            {% elif idea.revision and idea.state == "Aprobado" %}
+                            <input type="text" name="feedback" disabled required class="form-control col-8 container card pt-4 pb-4 text-muted text-center" id="feedback" placeholder="{{idea.revision}}" style="border: dotted;">
+                            
+                            {% endif %}
+
+
+
+                           <div class="col-8 container card pt-4 pb-4 text-muted text-center"> 
+                             Recuerda que todas las preguntas aprobadas pasarán esta Idea a la fase de Recepción, si no apruebas alguna pregunta, la idea irá a Banco de Ideas y enviaremos un correo a su autor con la respuesta. 
+                           </div> 
+           
+                         
+           
+                         </form>
+                       </div>  
+                     </div>
+                    </div>
+               </section>
+            <div class=" text-center modal-footer">
+            {% if idea.state == "Por definir" %}
+                  <!--<form method="POST" action="{% url 'idea:external_idea_state_aproved' pk  %} ">{% csrf_token %}
+                    <button type= "submit" class="btn btn-outline-success rounded-pill"><i class="fas fa-check mr-2" style="color:green"></i>Aceptar y enviar al dashboard</button>                
+                  </form>
+
+                  <form method="POST" action="{% url 'idea:external_idea_state_reached' pk  %} ">{% csrf_token %}
+                    <button type= "submit" class="btn btn-outline-danger rounded-pill"><i class="fas fa-trash-alt mr-2" style="color:red"></i>Rechazar</button>                
+                  </form>-->
+                  <input name="idea_externa" type="hidden" value="{{idea.id}}">
+                  <button type= "submit" class="btn btn-outline-success rounded-pill" id="btn_aceptar">
+                    <i class="fas fa-check mr-2" style="color:green"></i>Aceptar y enviar al dashboard</button>
+                    
+                    <button type= "submit" class="btn btn-outline-danger rounded-pill" id="btn_revisar">
+                      <i class="fas fa-paper-plane-o mr-2" style="color:rgb(170, 141, 10)"></i>Enviar a revisión</button>                
+
+                    <button type= "submit" class="btn btn-outline-danger rounded-pill" id="btn_rechazar">
+                      <i class="fas fa-trash-alt mr-2" style="color:red"></i>Rechazar</button>                
+              {% elif idea.state == "En revisión" %}
+              <input name="idea_externa" type="hidden" value="{{idea.id}}">
+                  <button type= "submit" class="btn btn-outline-success rounded-pill" id="btn_aceptarok">
+                    <i class="fas fa-check mr-2" style="color:green"></i>Aceptar y enviar al dashboard</button>
+              
+                    <button type= "submit" class="btn btn-outline-danger rounded-pill" id="btn_rechazar">
+                      <i class="fas fa-trash-alt mr-2" style="color:red"></i>Rechazar</button> 
+              {% else %}
+                  <p class="font-weight-bold">Estado: {{idea.state}}</p>
+              {% endif %}
+            </div>
+
+						</div>
+
+						
+
+						</div>			
+				
+					</div>
+				</div> 
+			</div>
+		{% endfor %}
+  	</div>
+</div>  
+
+
+
+{% endblock body_content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header"><br>
+            <h6 class=" font-weight-bold "> ¿Qué deseas hacer con esta idea externa?</h6>
+            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body mr-2 ml-2">
+           <div class="row">
+            <div class="container">
+              {% if request.user.is_authenticated %}
+
+              {% for idea in query%}
+              <label for="">Título</label>
+              <p>{{idea.title}}</p>
+              
+              <label for="">Autor</label>
+              <p>{{idea.external_name}}</p>
+              <p>{{idea.external_email}}</p>
+
+              <label for="">Cédula</label>
+              <p>{{idea.documento}}</p>
+              
+
+              <label for="">Gerencia</label>
+              <p>{{idea.gerencia}}</p>
+
+              <label for="">Subregión</label>
+              <p>{{idea.subregion}}</p>
+
+              <label for="">Frente</label>
+              <p>{{idea.frente}}</p>
+
+              <label for="">¿Esta asociada a nuestro propósito?</label>
+              <p>{{idea.proposito}}</p>
+
+              <label for="">Dimensión</label>
+              <p>{{idea.dimension}}</p>
+
+              <label for="">Pilar</label>
+              <p>{{idea.pilar}}</p>
+
+
+              <label for="">Descripción</label>
+              <p>{{idea.description}}</p>
+
+              <label for="">Solución</label>
+              <p>{{idea.solucion}}</p>
+
+
+          
+              
+
+
+
+              <section class="content">
+                <div class="container">
+                   <div class="col-md-10">
+                      <h4 class="col-md-8 container font-weight-bold">PREGUNTAS PAIN</h4>   
+                       <div class="card-body">
+                              
+                          <form method="POST" >{% csrf_token %} 
+                          <div class="col-md-8 container card border border-info "><br> <br>
+           
+                          
+                          <input  type="hidden" name="num_check" value="{{questions.count}}">
+                             {% for p in questions %} 
+                             <label class="cuadrado text-muted " type="text" name="question" id="id{{p.id}}" value="{{p.name}}">{{p.name}}
+                               <input type="checkbox" name="state" value="{{p.id}}" id="checkbox{{p.id}}">
+                               <span class="checkmark"></span>
+                             </label> 
+                             {% endfor %}<br>
+           
+                            </div>
+                            <label for="">Feedback</label>
+                            <textarea name="feedback" cols="15" rows="4" class="form-control col-8 container card pt-4 pb-4 text-muted text-center"  placeholder="¿Cúal es tu opinión de esta idea?" id="feedback" maxlength="5000" required=""></textarea>
+                            
+                            <br>
+                           <div class="col-8 container card pt-4 pb-4 text-muted text-center"> 
+                             Recuerda que todas las preguntas aprobadas pasarán esta Idea a la fase de Recepción, si no apruebas alguna pregunta, la idea irá a Banco de Ideas y enviaremos un correo a su autor con la respuesta. 
+                           </div> 
+           
+                         
+           
+                         </form>
+                       </div>  
+                     </div>
+                    </div>
+               </section>
+            <div class=" text-center modal-footer">
+            {% if idea.state == "Por definir" %}
+     
+                  <input name="idea_externa" type="hidden" value="{{idea.id}}">
+                  <button type= "submit" class="btn btn-outline-success rounded-pill" id="btn_aceptar">
+                    <i class="fas fa-check mr-2" style="color:green"></i>Aceptar y enviar al dashboard</button>
+                  
+                    <button type= "submit" class="btn btn-outline-danger rounded-pill" id="'btn_rechazar">
+                      <i class="fas fa-trash-alt mr-2" style="color:red"></i>Rechazar</button>                
+
+              {% else %}
+                  <p class="font-weight-bold">Estado: {{idea.state}}</p>
+              {% endif %}
+            </div>
+
+            {% endfor %}
+            
+                
+                   
+            {% endif %}
+             </div>
+          </div>
+      </div>
+  </div>
+</div>-->
+
+
+{% block extra_js %}
+
+  <script type="text/javascript">
+
+$(document).ready(function() {
+  
+
+
+//  Aceptar Idea   
+function validar_preguntas(num_questions){
+
+  var n = 1;
+  var verdaderos=0
+  while (n <= num_questions) {
+
+      let id_c = '#checkbox'
+      const nombreCompleto =id_c.concat(n);
+      n++;
+      if ($(nombreCompleto).prop('checked')==true){
+        verdaderos++;
+      }
+
+      };
+
+
+      if (verdaderos<num_questions){
+      return false;
+      }else{
+        return true;
+      };
+
+    
+};
+  
+  $('#btn_aceptar').click(function(){
+
+    
+
+    var num_questions=$('input[name=num_check]').val();
+    var idea_externa = $('input[name=idea_externa]').val();
+
+    
+    if (validar_preguntas(num_questions)==true){
+
+
+    if ($('#feedback').val().length == 0){
+          alert('Debe diligenciar el feedback');
+        
+        }else{
+    
+
+          
+          var feedback=$('input[name=feedback]').val();
+          
+
+          $.ajax({
+            url : "{% url 'idea:aceptar_idea_externa' %}", 
+            method : "POST", 
+            data : { idea_externa:  idea_externa,
+                    feedback:  feedback,
+                    //valores: valores,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, 
+                    success: function(response) {
+                        // response, es el diccionario que envias desde python
+                        if (response['valido']==true){
+                            //alert('Audio guardado');
+                            location.href="{% url 'idea:external_idea' %} ";
+                            return false;
+                        }
+                  }     
+          });
+          
+          
+          return false;
+        };
+      }
+      else{
+          alert('Deben estar marcadas todas las preguntas');
+        }
+        ;
+
+  });  
+
+  $('#btn_aceptarok').click(function(){
+
+
+
+var num_questions=$('input[name=num_check]').val();
+var idea_externa = $('input[name=idea_externa]').val();
+
+
+if (validar_preguntas(num_questions)==true){
+
+      
+      var feedback=$('input[name=feedbackok]').val();
+      
+
+      $.ajax({
+        url : "{% url 'idea:aceptar_idea_externa' %}", 
+        method : "POST", 
+        data : { idea_externa:  idea_externa,
+                feedback:  feedback,
+                //valores: valores,
+                csrfmiddlewaretoken: '{{ csrf_token }}' }, 
+                success: function(response) {
+                    // response, es el diccionario que envias desde python
+                    if (response['valido']==true){
+                        //alert('Audio guardado');
+                        location.href="{% url 'idea:external_idea' %} ";
+                        return false;
+                    }
+              }     
+      });
+      
+      
+      return false;
+    }
+  else{
+      alert('Deben estar marcadas todas las preguntas');
+    }
+    ;
+
+});  
+
+
+  //revisar idea 
+
+  $('#btn_revisar').click(function(){
+    
+    if ($('#feedback').val().length == 0){
+          alert('Debe diligenciar el feedback');
+        
+        }else{
+
+         
+          var idea_externa_id=$('input[name=id_idea]').val();
+          var feedback=$('input[name=feedback]').val();
+          
+          $.ajax({
+            url : "{% url 'idea:revisar_idea_externa' %}", 
+            method : "POST", 
+            data : { idea_externa_id:  idea_externa_id,
+                    feedback:  feedback,
+                    //valores: valores,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, 
+                    success: function(response) {
+                        // response, es el diccionario que envias desde python
+                        if (response['valido']==true){
+                            //alert('Audio guardado');
+                            location.href="{% url 'idea:external_idea' %} ";
+                            return false;
+                        }
+                  }     
+          });
+          
+          
+          return false;
+        };
+    });         
+
+  
+  //  Rechazar Idea
+
+  $('#btn_rechazar').click(function(){
+
+    
+
+    if ($('#feedback').val().length == 0){
+          alert('Debe diligenciar el feedback');
+        
+        }else{
+
+
+          var idea_externa=$('input[name=idea_externa]').val();
+          var feedback=$('input[name=feedback]').val();
+          
+
+          $.ajax({
+            url : "{% url 'idea:rechazar_idea_externa' %}", 
+            method : "POST", 
+            data : { idea_externa:  idea_externa,
+                    feedback:  feedback,
+                    //valores: valores,
+                    csrfmiddlewaretoken: '{{ csrf_token }}' }, 
+                    success: function(response) {
+                        // response, es el diccionario que envias desde python
+                        if (response['valido']==true){
+                            //alert('Audio guardado');
+                            location.href="{% url 'idea:external_idea' %} ";
+                            return false;
+                        }
+                  }     
+          });
+          
+          
+          return false;
+        };
+    });         
+
+
+
+
+
+
+});    
+
+
+
+
+</script>
+{% endblock extra_js %}
+
+
+

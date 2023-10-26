@@ -1,0 +1,93 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Equipo calificador{% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+  <link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dist/css/verne/meeting/list_meet.css' %}">
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="wrapper ">
+  <div class="content-wrapper ">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+           <p class="dasboard-title ml-4 mr-4">Ideas, oportunidades y retos</p>
+          </div>
+        </div>
+        <div class="col-sm-12 ">
+      
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-4 mr-4 pb-5">
+      <div class="container-fluid">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <table id="tabla_listar_ideas" class="table  table-hover dataTable">
+                <thead>
+                <tr>
+                  <th> Fecha</th> 
+                  <th> Título</th>      
+                  <th> Autor</th>
+                  <th> Correo </th>
+                  <th> Estado </th>
+                  <th> Opciones</th>   
+                 
+
+                </tr>
+                </thead>
+                <tbody>            
+                {% for idea in external_idea %}
+                <tr>
+                  <td>{{ idea.creation_date|date:"Y-m-d" }} </td>
+                  <td>{{idea.title}}</td>
+                  <td>{{ idea.external_name }}</td>      
+                  <td>{{ idea.external_email }}</td>   
+                  <td>{{ idea.state }}</td> 
+
+                  
+                  
+                  <td>
+                    <button onclick="open_modal_state_idea('{% url 'idea:external_idea_state' idea.id %}')" class="btn" type="button" data-toggle="tooltip" data-placement="bottom" title="Ver detalles">
+                      <span class="btn btn-info rounded-pill"><i class='fas fa-edit'></i></span>   
+                      </button>
+                  </td>            
+                 </tr>  
+                {% endfor %}     
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="modal fade" id="ModalIdeaExternal" role="dialog"></div>
+
+{% endblock body_content %}
+
+{% block extra_js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/meeting/visualize_meeting.js' %}"></script>
+<script>
+
+  function open_modal_state_idea(url) {
+    $('#ModalIdeaExternal').load(url, function() {
+
+        $(this).modal('show');
+    
+    });
+}
+
+</script>
+{% endblock extra_js %}v

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+ 
+  verne_ramo:
+    image: buho/verne_ramo
+    command: 'python3 manage.py runserver 0.0.0.0:8000'
+    #command: 'python3 manage.py runserver_plus --cert-file /etc/letsencrypt/live/verne-logisfashion.buho.media/fullchain.pem --key-file /etc/letsencrypt/live/verne-logisfashion.buho.media/privkey.pem  verne-logisfashion.buho.media:8003'
+    volumes:
+      - .:/verne_ramo
+    environment:
+      VIRTUAL_HOST: 'verne-demo-buho.buho.media'
+      C_FORCE_ROOT: 1
+      LC_ALL: 'C.UTF-8'
+      LANG: 'C.UTF-8'
+      TZ: 'America/Bogota'
+      VIRTUAL_PORT: '8000'
+      LETSENCRYPT_HOST: 'verne-demo-buho.buho.media'
+      LETSENCRYPT_EMAIL: 'sistemas@buho.media'
+    networks:
+        - default
+        - nginx_proxy
+
+networks:
+  default:
+  nginx_proxy:
+    external: true
+
+

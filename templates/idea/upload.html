@@ -1,0 +1,93 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Upload {% endblock titulo %}
+
+{% block body_content %}
+
+<div class="content-wrapper">
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active"> Subir Archivo </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <style type="text/css">
+
+      .nube{
+          font-size:110px;color:#00ada1;
+        }
+    </style>
+
+    <section class="content">
+     <div class="container">
+       
+        <div class="col-md-10 ">
+            <h4 class=" col-md-8 container ">Adjuntar archivo</h4>
+             <div class="card-body">
+                   <form enctype="multipart/form-data" action="{% url 'idea:upload' pk %}" method="post" class="form-row"> {% csrf_token %} 
+                     <div class="col-md-12 text-center">
+                       
+                      <div class="col-md-8 container card border border-info ">
+                       <br>
+                        <p>Selecciona un archivo</p>
+                         <i class=" nube fas fa-cloud-upload-alt "></i>
+                         <div class="upload"  required="true">
+                          <br> {{ form.document }}
+                        </div> <br>
+                      </div>
+                                       
+                         <p>¿A que fase lo deseas asignar?</p>       
+
+                        <select class=" col-md-6 container   activate form-control " name="fase" required="true">
+                            {%for c in consulta %}
+                               {% if c == 1 %}
+                               <option >Recepción</option>
+                               {% elif c == 2 %}
+                               <option >Nuevas</option>
+                               {% elif c == 3 %}
+                               <option >En Desarrollo</option>
+                               {% elif c == 4 %}
+                               <option >Implementadas</option>
+                               {% elif c == 5 %}
+                               <option >Ideas Implementadas</option>
+                               {% elif c == 6 %}
+                               <option >Banco de Ideas</option>
+                              {% endif %}
+                            {% endfor %}
+                        </select> <br>
+
+                      <div class="card col-md-6 container  mb-4">
+                        <div class="card-header text-muted"> Archivos subidos anteriormente </div>
+                        <div class="card-body">
+                        {% if path.document %}
+                        <a href="{{ path.document.url }}">{{ path.document.url }}</a>
+                        {% else %}
+                        <p>Aún no se han subido archivos </p>
+                        {% endif %}
+                        </div>
+                      </div>
+
+
+                    <button class="btn btn-info rounded-pill "type="submit" value="Save"><i class="fas fa-paper-plane pr-2"></i> Enviar Archivo</button>
+                     <a class="btn btn-outline-secondary rounded-pill" href="{% url 'idea:update' pk %}" > <i class="fas fa-undo pr-1"></i> Regresar </a>
+
+                </div><br>
+
+           </form>
+         
+         </div>
+       </div>
+     </div>
+    </section>
+</div>
+{% endblock body_content %}
+

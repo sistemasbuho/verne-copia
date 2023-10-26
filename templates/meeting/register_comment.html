@@ -1,0 +1,143 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'dist/css/verne/meeting/register_coment.css' %}">
+
+
+<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+  <div class="modal-content">
+
+        <div class="modal-header"><br>          
+            <p class="title-c ">Votación Comité <i class="fas fa-angle-right"></i> <span class="color-p">Idea {{id_idea}}</span></p>
+            <!-- <h6 class="text-secondary">.text-secondary</h6>  -->
+            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+          {% if is_voted == 0 %}         
+          <div class=" ">
+            <p class="text-center pl-4 pr-4 pt-4 pb-4">¡Opps! Parece que ya has votado en todas las ideas agendadas 
+             para esta reunión, si deseas cambiar tu voto, por favor contacta al Equipo de Innovación</p>
+             <a class="text-center col-md-2 container btn agendar rounded-pill" href="{% url 'meeting:visualize'%}"> <i class="fas fa-paper-plane pr-2"></i>Regresar</a>
+          </div>       
+          {% else %} 
+            {% for p in meetings_idea %}            
+            <div class="">
+
+              <form id="click__confirm" class="click__confirm" autocomplete="off" action="{% url 'meeting:register_comment' p.id_meeting p.id_idea %}" method="POST" method="post" role="form" method="POST"> {% csrf_token %}
+                <div class="row">
+                    <input id="id_idea" name="idea_input" type="hidden" value="{{p.id_idea}}">
+                 
+                    <div class="col-md-6">
+                      <div class="card votos">
+                        <p class="texto font-weight-bold m-3">Elige tu voto Fase</p>
+                        <i class="fas-fa check"></i>
+                        {{ form.vote }}
+                        
+                      </div>
+       
+                      
+                    </div>
+                    <hr>
+                    <div class="col-md-6">
+                      <div class="card votos">
+                        <p class="texto font-weight-bold m-3">Elige tu voto Prioridad</p>
+                        <i class="fas-fa check"></i>
+                      
+                        {{ form.vote_priority }}
+                      </div>
+                    
+                    </div>
+  
+                    <div class="col-md-6">
+                      <div class="card">
+                      <p class="texto font-weight-bold m-3">{{ form.message.label }}</p>
+
+                      <div class="row users-data">
+                        <div class="col-md-1">
+                          <img src="{% static 'dist/img/verne_voto.png'%}" class="avatar"  alt="">
+                        </div>
+                        <div class="col-md-11">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="user m-3 ml-4">{{p.user}}</span>
+                        </div>
+                      </div>
+                 
+                      <div class="p-3">
+                        {{ form.message }}
+                      </div>
+                      </div>
+                    </div>
+  
+   
+                    {% if field.errors %}
+                        {{ field.errors  }} 
+                      {% endif %}                                     
+               
+                                
+             
+                      <div class="col-md-12">
+                        <div class="form-group d-flex justify-content-center">
+                          <button type="submit" name="btnSubmit" class="btn rounded-pill agendar" id="send_vote"> <i class="fas fa-paper-plane pr-2"></i> Enviar voto</button>
+                        </div>
+                      </div>
+  
+                    </div>
+              </form>
+               
+                </div>              
+              {% endfor %}              
+            {% endif %} 
+          
+        </div>
+
+        </div>
+
+    </div>
+  </div>
+     
+
+  <script>
+   
+    data= document.getElementById('id_vote_0').parentNode.parentNode;
+    data.remove(); 
+    data= document.getElementById('id_vote_priority_0').parentNode.parentNode;
+    data.remove(); 
+  </script>
+
+
+<!-- 
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+<script>
+  for(name in CKEDITOR.instances)
+  {
+    CKEDITOR.instances[name].destroy()
+  }
+
+  
+
+  let checkboxes = document.querySelectorAll('#id_message0')
+  let dato1 = 0
+  //CKEDITOR.instances['id_message0'].destroy()
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].id = 'id_message'+dato1
+    let dato = 'id_message'+dato1++
+    CKEDITOR.replace(dato, {
+        toolbar: [
+        ['Bold', 'Italic', 'Underline','Strike'],
+        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ['Link', 'Unlink'],
+        ['Image', 'Smiley','Table','Iframe','Specialchar','Print'],
+        ['Styles', 'Format', 'Font', 'FontSize'],
+        ['TextColor', 'BGColor']
+        ],
+        width:['auto']
+
+    });
+  }
+
+</script> -->
+

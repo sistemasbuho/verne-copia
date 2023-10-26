@@ -1,0 +1,137 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Detalle Reunion{% endblock titulo %}
+
+
+{% block extra_css %}
+  <link href="{% static 'dist/css/verne/meeting/detail_meeting.css' %}" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="content-wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-8">
+					<h4 class="dasboard-title ml-5 mr-5">{% for meeting in meetings %}{{meeting}} {% endfor%} <span class="detalle-title"><i class="fas fa-angle-right"></i> Ideas agendadas</span></h4>
+				</div>
+				<div class="col-sm-4">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item">
+							<a href="{% url 'meeting:visualize' %}">Comité</a>
+						</li>
+						<li class="breadcrumb-item active">Detalles</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section id="team" class="ml-5 mr-5 ">
+		<div class="container-fluid row ">
+			<div class="col-sm-12 mb-4 text-right">
+				{% for meeting in meetings %}
+
+					{% if perms.meeting.view_meeting %}     
+					<a type="button" class="btn btn-send rounded-pill" href="{% url 'meeting:ticket' meeting.id %}" data-toggle="tooltip" data-placement="bottom" title="Generar Acta">
+						<i class="fas fa-plus-circle pr-1"></i>Generar Acta Reunión
+					</a> 
+					{% endif %}
+
+					{% if perms.meeting.add_meeting %}     
+
+					<a type="button" class="btn btn-edit rounded-pill" href="{% url 'meeting:update' meeting.id %}" data-toggle="tooltip" data-placement="bottom" title="Editar Reunión">
+						<i class="fa fa-edit  pr-1"></i>Editar Reunión
+					</a> 
+
+					<button onclick="abrir_modal_close_meeting('{% url 'meeting:close' reunion_pk %}')" type="button" class="btn btn-close rounded-pill" href=" ">
+						<i class="fas fa-minus-circle pr-1"></i> Cerrar reunión
+					</button> 
+
+					{% endif %}
+					
+				{% endfor%}		
+
+			</div>
+
+			<div class="col-md-12 mb-4 row">
+				{%for idea in idea_query%}
+					<div class="col-md-4">
+						<div class="card">
+							<div class="col-md-12"> 
+								<p class="title-idea ml-3 ">Idea {{idea.id_idea.id}}</p>
+								<p class="title ml-3 font-weight-bold">{{idea.id_idea}}</p>
+								<p class="description ml-3 mr-3 ">{{idea.id_idea.description}}</p>
+							</div>
+
+							<div class="card-footer text-right ">
+                
+								<button onclick="open_modal_vote ('{%  url 'meeting:register_comment' idea.id_meeting.id idea.id_idea.id %}')" target="_blank"
+								class="btn btn-send btn-sm rounded-pill float-left mt-2 " data-toggle="tooltip" data-placement="bottom" title="Votar">
+								<i class="	far fa-hand-paper pr-1"></i> Votar</button>
+				
+				
+								<span class="text-right">
+								<button onclick="open_modal_detail ('{% url 'idea:idea_details' idea.id_idea.id %}')" target="_blank"
+								class="btn btn-light detalle " class="col-md-4" data-toggle="tooltip" data-placement="bottom" title="Ver idea"><i class="far fa-eye"></i></button>
+								
+								<button onclick="abrir_modal_edicion_proyecto('{% url 'meeting:comments_list' reunion_pk idea.id_idea.pk %}')"
+								class="btn btn-light detalle " class="col-md-4" data-toggle="tooltip" data-placement="bottom" title="Ver comentarios"><i class="fas fa-poll"></i></button>
+								
+								{% if idea.id_idea.link_documentation %}
+								<span class=""  data-toggle="tooltip" data-placement="bottom" title="Ver documentación">
+									<a href="{{idea.id_idea.link_documentation}}" target="_blank" class="btn btn-light detalle"><i class="fa fa-folder-open"></i>
+									</a> </span> 
+							
+								{% else %}
+								<span data-toggle="tooltip" data-placement="bottom" title="Ver documentación"> 
+									<button type="button" class="btn btn-light detalle" data-toggle="modal" data-target="#exampleModal">
+									<i class="fa fa-folder-open"></i>
+									</button>
+								</span> 
+								{% endif %}
+
+								<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+									<div class="modal-header">
+									<p class="modal-title font-weight-bold" id="exampleModalLabel">Idea sin documentación</p>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									</div>
+									<div class="modal-body mr-3">
+										<p>Lo sentimos, aún no se ha cargado la documentación de esta idea	</p>
+																			
+									</div>
+							
+									</div>
+									</div>
+								</div>
+
+							</div>
+										
+						</div>
+					</div>
+				{% endfor %}
+			</div>			
+		</div>
+	
+	</section>
+</div>
+
+
+<!-- Este div forma parte del boton de comentario -->
+<div class="modal fade" id="myModalComentario" role="dialog"></div>
+<div class="modal fade" id="ModalClose" role="dialog"></div>
+<div class="modal fade" id="ModalDetail" role="dialog"></div>
+<div class="modal fade" id="ModalVote" role="dialog"></div>
+
+
+{% endblock body_content %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{% static 'dist/js/verne/meeting/detail_meeting.js' %}"></script>
+{% endblock extra_js %}

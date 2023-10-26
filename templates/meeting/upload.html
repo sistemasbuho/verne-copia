@@ -1,0 +1,63 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Upload {% endblock titulo %}
+
+{% block body_content %}
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'meeting:visualize' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active"> Subir Archivo </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <style type="text/css">
+
+      .nube{
+          font-size:110px;color:#00ada1;
+        }
+    </style>
+    <section class="content">
+     <div class="container">  
+        <div class="col-md-10 ">
+            <h4 class=" col-md-8 container ">Adjuntar archivo</h4>
+             <div class="card-body">
+               <form enctype="multipart/form-data"  method="post" class="form-row"> {% csrf_token %} 
+                 <div class="col-md-12 text-center">
+                   
+                  <div class="col-md-8 container card border border-info">                 
+                    <p class="mt-3">Selecciona un archivo</p>
+                     <i class=" nube fas fa-cloud-upload-alt "></i>
+                     <div class="upload mt-3 mb-3">
+                      {{ form.document_act}}
+                    </div> 
+                  </div>
+                  <div class="card col-md-6 container  mb-4">
+                    <div class="card-header text-muted"> Archivos subidos anteriormente </div>
+                    <div class="card-body">
+                    {% if path.document_act %}
+                    <a href="{{ path.document_act.url }}">{{ path.document_act.url }}</a>
+                    {% else %}
+                    <p>Aún no se han subido archivos </p>
+                    {% endif %}
+                    </div>
+                  </div>
+                <button class="btn btn-info rounded-pill "type="submit" value="Save">Enviar Archivo</button>
+                 <a class="btn btn-outline-secondary rounded-pill" href="{% url 'meeting:detail_meeting' pk %}" > Regresar </a>
+                </div>
+           </form>         
+         </div>
+       </div>
+     </div>
+    </section>
+</div>
+{% endblock body_content %}
+

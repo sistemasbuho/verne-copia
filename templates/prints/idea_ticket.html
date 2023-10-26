@@ -1,0 +1,321 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de la Idea | Verne 2.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <style>
+        body{
+            font-family: "Sans Pro", sans-serif;
+            padding: 0;
+            margin:0;
+
+        }
+
+        .title{
+            color: #89539E;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .media{
+            background-color: #39AEA2;
+            border-radius: 20px;
+            color: #fff;
+        }
+
+        td, th, .texto{
+            font-size: 13px;
+        }
+
+        .title-idea{
+            font-weight: 700;
+        }
+
+        .send{
+	    background-color: #87499c !important;
+	    color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h3 class="text-center pb-4 title">DATOS GENERALES</h3>
+
+        {% for idea in ideas%}
+     
+        <div class="row align-items-start pb-3">
+
+            <div class="col-2 media text-center">
+                <p class="font-weight-bold"> Idea N° {{id}}</p>
+            </div>
+
+            <div class="col-10">
+                <p class="title-idea text-center">{{idea.title}}</p>
+            </div>
+        
+        </div>
+
+
+        <table class="table pt-5 col-md-12">
+            <tbody>
+                <tr>
+                    <th scope="row">Fecha de creación</th>
+                    <td>{{idea.creation_date}} </td>       
+                </tr>
+
+                <tr>
+                    <th scope="row">Estado</th>
+                    <td>{% if idea.is_active == 1 %}
+                        Activa
+                        {% else %}
+                        Inactiva
+                        {% endif %}
+                    </td>        
+                </tr>
+
+                <tr>
+                    <th scope="row">Prioridad</th>
+                    <td>{{idea.priority|default_if_none:"Por definir"}} </td>    
+                </tr>
+                <tr>
+                    <th scope="row">Autor</th>
+                    <td>{{idea.external_email}}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Fase actual</th>
+                    <td> {% if idea.current_phase == 1 %}
+                            Recepción                    
+                        {% elif idea.current_phase == 2  %}
+                            Nuevas
+                        {% elif idea.current_phase == 3  %}
+                            En Desarrollo
+                        {% elif idea.current_phase == 4  %}
+                            Implementadas
+                        {% elif idea.current_phase == 5  %}
+                        Ideas Implementadas
+                        {% elif idea.current_phase == 6  %}
+                        Banco de Ideas
+                        {% endif %}                  
+                    </td>             
+                </tr>
+                <tr>
+                    <th scope="row">Tipo de Innovación</th> 
+                    <td>{{ idea.innovation_type|default_if_none:"Por definir"}}</td>       
+                </tr>
+
+
+                <tr>
+                    <th scope="row">Colaboradores</th> 
+                    <td> {{ idea.collaborator.all|join:", " }}</td>       
+                </tr>
+            </tbody>
+        </table>
+    
+   
+        <div class="row align-items-start pb-3">
+            <div class="col-4  text-center">
+                <p class="title-idea"> ROI</p>
+                <p class="font-weight-bold"> 
+                    {% if idea.roi == None %}
+                     0,0 
+                     {% else %}
+                     {{ idea.roi|floatformat:4 }} 
+                     {% endif %} </p>
+            </div>
+
+            <div class="col-4  text-center">
+                <p class="title-idea"> Ganancia</p>
+                <p class="font-weight-bold"> {{idea.gain}}</p>
+            </div>
+
+            <div class="col-4  text-center">
+                <p class="title-idea"> Beneficio</p>
+                <p class="font-weight-bold"> {{idea.investment}}</p>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Descripción de la Idea</h4>
+            <p class="texto">{{idea.description}}</p>
+        </div>
+
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Grencia de la idea</h4>
+            <p class="texto">{{idea.gerencia}}</p>
+        </div>
+
+        <!--<div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Subregión de la idea</h4>
+            <p class="texto">{{idea.subregion}}</p>
+        </div>-->
+
+        <!--<div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Frente de la idea</h4>
+            <p class="texto">{{idea.frente}}</p>
+        </div>-->
+
+    
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Dimensión de la idea</h4>
+            <p class="texto">{{idea.dimension}}</p>
+        </div>
+
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Pilar de la idea</h4>
+            <p class="texto">{{idea.pilar}}</p>
+        </div>
+
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Observaciones</h4>
+            <p class="texto">{{idea.feedback|default:"Sin observaciones"}}</p>                       
+        </div>
+
+
+        <div class="col-md-12 pt-4 pb-3">
+            <h4 class="title pb-2">Documentación</h4>
+            <a href="{{idea.link_documentation}}" target="_blank" class="texto btn send rounded-pill"> Ver la documentación de la idea</a>
+        </div>
+
+        {% endfor %}
+
+        <h3 class="text-center pb-4 title pt-3 col-md-12">HISTORIAL DE REUNIONES</h3>
+  
+        {% for meet in meetings%}
+        <div class="row align-items-start pb-3">
+
+            <div class="col-2  text-center pb-3">
+                <img class="reunión"  src="/static/dist/img/generator_pdf/reunion.png" alt="">
+            </div>
+
+            <div class="col-10 pb-3">
+                <p class="title-idea">{{meet.name}}</p>
+            </div>
+
+            <div class="col-3 ">
+                <p class="texto">Lugar: {{meet.place}}</p>
+            </div>
+
+            <div class="col-3  text-center">
+                <p class="texto"> {{meet.date}}</p>
+            </div>
+
+            <div class="col-3  text-center">
+                <p class="texto">Inicio {{meet.start_time}}</p>
+            </div>
+
+            <div class="col-3  text-center">
+                <p class="texto">Fin:{{meet.end_time}}</p>
+            </div>
+
+            <div class="col-12 ">
+                <p class="texto title-idea">Usuarios Invitados:</p>
+                <p class="texto"> {{meet.user_comitte.all|join:", " }}</p>
+            </div>
+
+            <div class="col-12 pb-3 ">
+                <a href="{{meet.link_documentation}}" target="_blank" class="texto btn btn-sm btn-light text-dark rounded-pill"> Ver documentación</a>
+            </div>
+            
+            <hr class="mt-2">          
+        </div>
+        {% endfor %}
+
+
+        <h3 class="text-center pb-4 title pt-3 col-md-12">HISTORIAL DE ACTIVIDADES</h3>
+  
+        {% for act in activity %}
+        <div class="row align-items-start pb-3">
+
+            <div class="col-2  text-center pb-3">
+                <img class="reunión"  src="/static/dist/img/generator_pdf/actividades.png" alt="">
+            </div>
+
+            <div class="col-10 pb-3">
+                <p class="title-idea">{{act.name}}</p>
+            </div>
+
+            <div class="col-4 ">
+                <p class="texto">Puntos Asignados: {{act.score}}</p>
+            </div>
+
+            <div class="col-4  text-center">
+                <p class="texto"> {{act.date}}</p>
+            </div>
+
+            <div class="col-4  text-center">
+                <p class="texto">Herramienta: {{act.tool}}</p>
+            </div>
+
+            <div class="col-12 ">
+                <p class="texto title-idea">Descripción:</p>
+                <p class="texto"> {{act.description|default:"Sin observaciones" }}</p>
+            </div>
+
+            <div class="col-12 ">
+                <p class="texto title-idea">Usuarios Invitados:</p>
+                <p class="texto"> {{act.id_user.all|join:", " }}</p>
+            </div>
+
+            <div class="col-12 pb-3 ">
+                <a href="{{act.link_documentation}}" target="_blank" class="texto btn btn-sm btn-light text-dark rounded-pill"> Ver documentación</a>
+            </div>
+            
+            <hr class="mt-2">          
+        </div>
+        {% endfor %}
+    
+        <h3 class="text-center pb-4 title pt-3 col-md-12">DOCUMENTACIÓN DE FASES</h3>
+
+        {% for phase in phases %}
+        <div class="row align-items-start pb-3">
+
+            <div class="col-12 title-idea">
+                <p class="title"> Fase: {{phase.id_phase }}</p>
+            </div>
+
+            <div class="col-6 ">
+                <p class="texto"> Fecha Inicio: {{phase.phase_date }}</p>
+            </div>
+
+            <div class="col-6  text-center ">
+                <p class="texto"> Fecha Fin: {{phase.phase_date_previous|default_if_none:"Por definir" }}</p>
+            </div>
+
+            <div class="col-12 ">
+                <p class="texto title-idea">Descripción:</p>
+                <p class="texto" class="title-idea">{{phase.description|default:"Sin observaciones"}}</p>
+            </div>
+
+            <div class="col-12 pb-3">
+                <p class="texto title-idea">Observaciones:</p>
+                <p class="texto">{{phase.feedback|default:"Sin observaciones"}}</p>
+            </div>
+
+            <div class="col-12 pb-3 ">
+                <a href="{{phase.link_documentation}}" target="_blank" class="texto btn btn-sm btn-light text-dark rounded-pill"> Ver documentación</a>
+            </div>
+            
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+
+
+

@@ -1,0 +1,73 @@
+.card{
+	border-radius: 35px;
+	background-color: #FFFFFF;
+	box-shadow: 5px 5px 10px 5px rgb(234, 234, 234);
+}
+
+.border {
+    border: 0 !important;
+}
+
+.title-text{
+	background: rgb(160,113,181);
+    background: linear-gradient(90deg, rgba(160,113,181,1) 0%, rgba(137,132,193,1) 23%, rgba(118,149,203,1) 46%, rgba(97,167,214,1) 72%, rgba(93,171,216,1) 100%, rgba(7,99,163,1) 100%);
+	padding: 12px;
+	margin-left: -48px;
+	margin-right: -48px;
+	color:#fff;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+
+.text-center p{
+	color:#383838;
+	font-weight: bold;
+}
+
+.text-muted{
+	font-weight: bold;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #89539E;
+    border-color: #89539E;
+    box-shadow: none;
+}
+
+.form-control {
+   
+    color: #495057;
+    border-top: none;
+    border-left: none;
+    /* border-radius: 0.25rem; */
+    border-right: none;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 6px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-top: none;
+    border-left: none;
+    /* border-radius: 0.25rem; */
+    border-right: none;
+    border-radius: 4px;
+    cursor: text;
+}
+
+.asistencia{
+    background: linear-gradient(90deg, rgba(160,113,181,1) 0%, rgba(137,132,193,1) 23%, rgba(118,149,203,1) 46%, rgba(97,167,214,1) 72%, rgba(93,171,216,1) 100%, rgba(7,99,163,1) 100%);
+    color: #fff !important;text-align: center;
+}
+
+.select2-container--default .select2-selection--single {
+    border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid #ced4da;;
+    padding: 0.46875rem 0.75rem;
+    height: calc(2.25rem + 2px);
+}

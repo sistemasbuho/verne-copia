@@ -1,0 +1,144 @@
+.header-form{
+	font-weight: 700;
+	color: #3491C6;
+	font-size: 20px;
+
+}
+.card-title-idea{
+	border-bottom: 1px solid #fff;
+	padding-bottom: 5px;
+}
+.rounded{
+	border-radius: 15px !important;
+}
+.select2-container--default .select2-selection--multiple {
+	border: 1px solid #d8d8d8;
+}
+.information{
+     font-size: 1.0em;
+}
+
+.data{
+        font-size: 17px;
+}
+.text-data{
+	font-size: 15px;
+}
+
+.btn-light{
+	background-color: #fff;
+}
+
+.fa, .fas{
+	width: 25px;
+}
+
+.dropdown-menu{
+	position: absolute;
+	transform: translate3d(-8px, 38px, 0px);
+	top: 0px; left: 0px; will-change: transform;
+	min-width: 12rem;
+}
+
+.fa-question{
+	color: #575757;
+}
+
+.fa-check{
+	color: #575757;
+}
+
+.fa-times{
+	color: #575757;
+}
+
+.fa-bolt{
+	color: 575757;
+}
+
+.fa-link{
+	color: #575757;
+}
+
+.fa-search{
+	color: #575757;
+}
+.fa-lightbulb{
+	color: #575757;
+}
+
+.fa-chart-pie{
+	color: #575757;
+}
+
+.fa-flag-checkered{
+	color: #575757;
+}
+
+.fa-trash-alt{
+	color: #fff;
+}
+
+.icon-final{
+	color:#575757 !important;
+}
+.fa-dowload{
+	color: #575757;
+}
+.fa-share-square{
+	color: #575757;
+}
+
+
+.send{
+	background-color: #87499c !important;
+	color: #fff;
+}
+.icon-send{
+	color: #fff;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #87499c !important;
+    font-weight: 600;
+	border: #87499c 1px solid;
+}
+
+.form-row{
+	text-align: center;
+}
+
+
+.general{
+	background: radial-gradient(circle, rgba(49,137,187,1) 0%, rgba(49,137,187,1) 22%, rgba(54,149,204,1) 40%, rgba(52,144,197,1) 59%, rgba(38,105,143,1) 83%, rgba(30,82,113,1) 100%);
+	border-radius: 15px;
+	color: #fff;
+
+}
+
+.historial{
+    height: 150px;
+    background-image: url('/static/dist/img/historial.png');
+    border-radius: 14px;
+    background-size: cover;
+}
+
+.btn-historial {
+	top: 79px;
+	position: relative;
+	left: 18px;
+	color: #fff;
+	background-color: #005b85;
+	border: 1px solid #fff;
+  }
+  
+  .btn-historial:hover {
+	color: #00857C;
+	background-color: #fff;
+	border: 1px solid #00857C;
+  }
+
+  .indicadores{
+	padding-bottom: 40px;
+  }

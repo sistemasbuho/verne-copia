@@ -1,0 +1,244 @@
+
+.pain{
+    background: rgb(57,158,235);
+    background: linear-gradient(90deg, rgba(57,158,235,1) 0%, rgba(51,168,252,1) 18%, rgba(39,182,254,1) 37%, rgba(58,197,247,1) 61%, rgba(107,209,245,1) 100%, rgba(93,171,216,1) 100%);   
+}
+
+.obs{
+    background: rgb(140,81,166);
+    background: linear-gradient(90deg, rgba(140,81,166,1) 0%, rgba(145,85,172,1) 18%, rgba(151,90,179,1) 37%, rgba(169,102,199,1) 57%, rgba(197,110,234,1) 79%, rgba(207,110,249,1) 100%);
+}
+
+.ide{
+    background: rgb(0,173,161);
+    background: linear-gradient(90deg, rgba(0,173,161,1) 0%, rgba(11,181,169,1) 18%, rgba(19,183,172,1) 38%, rgba(26,197,185,1) 57%, rgba(28,216,203,1) 79%, rgba(29,225,211,1) 100%);
+}
+
+
+.pro{
+    background: rgb(242,183,5);
+    background: linear-gradient(90deg, rgba(242,183,5,1) 0%, rgba(242,184,5,1) 18%, rgba(246,199,3,1) 38%, rgba(249,217,11,1) 57%, rgba(248,229,99,1) 79%, rgba(248,210,81,1) 100%);
+}
+
+.imple{
+    background-color: rgb(210, 30, 201) ;
+}
+.banc{
+    background-color: chocolate ;
+}
+
+.modal-content{
+    border-radius: 20px !important;
+}
+
+.title-id{
+    font-size: 28px;
+    font-weight: bolder;
+}
+.title-body-card{
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.id_idea{
+    border-bottom: #007DC7 3px solid;
+    padding-bottom: 10px;
+}
+.letter{
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0 10px 0 10px;
+    border-radius: 15px;
+    font-size: 17px;
+}
+
+.card-header {
+ border-bottom: none;
+}
+
+.card-body {
+    padding-top: 0;
+}
+
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 7px;
+    color: #354049;
+}
+
+.idea-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #354049; 
+}
+
+.priority{
+    color: #619d99;
+    background-color: #c3f7f3;
+    margin-bottom: 8px;
+    font-weight: bolder;
+}
+
+.type {
+    color: #33a3eb;
+    background-color: #c8e3f3;
+    margin-bottom: 8px;
+    font-weight: 900;
+}
+
+.type:hover, .priority:hover{
+    color: #fff;
+    cursor:initial;
+}
+
+.text-one{
+    margin-bottom: 3px;
+    font-weight: bolder;
+    color:#707070;
+}
+
+
+.labels {
+   border-left: #B2B2B2 2px solid ;
+}
+
+.tareas{
+    border-bottom: #B2B2B2 2px solid ; 
+}
+
+
+.far ,.fas {
+width: 20px;
+}
+
+.asigned{
+    background: rgb(29,80,109);
+    background: linear-gradient(90deg, rgba(29,80,109,1) 0%, rgba(34,93,128,1) 18%, rgba(41,112,153,1) 38%, rgba(46,126,173,1) 57%, rgba(49,137,188,1) 79%, rgba(54,149,204,1) 100%);
+    margin-bottom: 20px;
+    color: #fff;
+
+}
+
+.asigned:hover{
+    cursor:initial;
+    color: #fff;
+}
+
+.send{
+    background: rgb(29,80,109);
+    background: linear-gradient(90deg, rgba(29,80,109,1) 0%, rgba(34,93,128,1) 18%, rgba(41,112,153,1) 38%, rgba(46,126,173,1) 57%, rgba(49,137,188,1) 79%, rgba(54,149,204,1) 100%);
+    color: #fff;
+}
+
+.send:hover{
+    border-color: rgb(29,80,109) 1px solid;
+    color: #fff;
+}
+
+.tarjeta{
+    background-color: #FFFFFF;
+    border-radius: 15px  ;
+    margin: 10px;
+    border: #9BCCE8 1px solid;
+
+
+}
+.middle-text{
+    color: #fff;
+    border-bottom: #fff 1px solid;
+}
+
+.text_lateral{
+    border-bottom: #B8B8B8 1px solid;
+}
+
+.middle-column{
+    background: rgb(49,137,187);
+    background: radial-gradient(circle, rgba(49,137,187,1) 0%, rgba(49,137,187,1) 22%, rgba(54,149,204,1) 40%, rgba(52,144,197,1) 59%, rgba(38,105,143,1) 83%, rgba(30,82,113,1) 100%);
+    border-radius: 15px;
+}
+.asigned_task{
+    font-size: 13px;
+}
+.titulo-tarea {
+    padding-top: 10px;
+    border-bottom: #9BCCE8 1px solid;
+    font-weight: bolder;
+
+}
+.descripcion-tarea{
+    padding-top: 10px;;
+}
+
+.up-task{
+    background-color: #c3f7f3;
+    color:#619d99;
+}
+
+.bad-task{
+    background-color: #f7c3c3;
+    color:#9d6861
+}
+
+.up-task:hover{
+    color:#619d99;
+    cursor: initial;
+}
+
+.bad-task:hover{
+    color:#9d6861;
+    cursor: initial;
+}
+
+@media (min-width: 992px){
+.modal-lg, .modal-xl {
+    max-width: 850px !important;
+}
+}
+
+.empty-text{
+    color: #fff;
+}
+
+.image-empty{
+    width: 92px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ .activity{
+    width: 70px !important;
+}
+
+ .meeting{
+    width: 78px !important;
+}
+
+.modal {
+    overflow: auto !important;
+}
+
+.modal.fade {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+.folder_idea{
+    font-size: 24px;
+    color: #3799D1;
+    border: 1px solid #3799D1;
+    border-radius: 14px;
+    padding: 0px 6px;
+}
+
+.folder_idea a i{
+    color: #3799D1; 
+}

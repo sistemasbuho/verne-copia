@@ -1,0 +1,108 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Crear Idea {% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/verne/idea/register_idea.css' %}" rel="stylesheet">
+  
+{% endblock extra_css %}
+
+
+{% block body_content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Mis Ideas</a></li>
+            <li class="breadcrumb-item active"> Añadir Idea</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="content pb-5">
+ 
+     
+        <div class="card shadow mb-4  ">
+          <form class="border border-light p-5" method="POST"> {% csrf_token %}
+            <div class="text-center ">
+              <h3 class="title-text">¡Cuéntanos tu idea!</h3>
+              <p>Si encontraste un pain sin resolver o una oportunidad para mejorar algún proceso o producto, no lo dejes pasar y cuéntanos aquí abajo.
+
+              </p>
+            </div>
+            <label for="title" class="text-muted">Título</label>
+            {{ form.title }}
+            <label for="textarea" class="text-muted">Descripción</label>
+            {{ form.description }}
+            <label for="etapa" class="text-muted">¿En qué etapa de encuentra la idea?</label>
+            {{ form.innovation_type }}
+
+            <label for="etapa" class="text-muted">¿A que pilar estratégico le apunta la idea?</label>
+            {{ form.innovation_estrategia }}
+
+            <label for="area" class="text-muted">¿A qué área impacta?</label>
+            {{ form.area }}
+           
+
+            <label for="textarea" class="text-muted">Autores</label>
+            {% render_field form.collaborator class="form-control" id="activate_select_crear_idea_multiple_collaborator" %}
+
+            {% render_field form.id_phase class="form-control" %}
+            {% render_field form.current_phase class="form-control" value="1" type="hidden" %}
+
+            <center>
+              <p class="text-muted mt-3">
+                {{ form.conditions }} <i> Acepto los términos y condiciones para el uso de las ideas. <a class="terminos" data-toggle="modal" data-target="#exampleModalCenter">Conócelos aquí</a> </i></p>
+            </center>
+
+            <!-- Modal T&C-->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">TÉRMINOS Y CONDICIONES</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>buho TM declara que protege los datos personales suministrados por los titulares de dicha
+                      información en virtud de lo dispuesto por la LEY 1581 DE 2012. los datos recopilados por buho TM
+                      son utilizados para uso interno en los términos dados en la autorización por el titular del dato.
+                    </p>
+
+                    <p> En consecuencia de lo anterior, autorizo expresamente de manera libre, previa, voluntaria y
+                      debidamente informada a buho TM, para que haga uso de los datos de acuerdo con las finalidades y
+                      condiciones mencionadas en el aviso de privacidad, el cual declaro conocer y aceptar.</p>
+                    <p>Todas las ideas ingresadas a Verne y trabajadas como parte del sistema de innovación por el buho
+                      lab son propiedad de buho media.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i> Enviar idea</button>
+          </form>
+        </div>
+        <!--<img src="{% static 'dist/img/nave.svg' %}" class="verne"> -->
+        
+      
+  
+  </section>
+</div>
+{% endblock body_content %}
+
+
+{% block extra_js %}
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/idea/register_idea.js' %}"></script>
+{% endblock extra_js %}

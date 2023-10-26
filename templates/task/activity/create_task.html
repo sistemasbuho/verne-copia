@@ -1,0 +1,71 @@
+<style>
+.header-form{
+	font-weight: 700;
+	color: #39AEA2;
+	font-size: 25px;
+
+}
+
+.send{
+	background-color: #87499c !important;
+	color: #fff;
+}
+.icon-send{
+	color: #fff;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #87499c !important;
+    font-weight: 600;
+	border: #87499c 1px solid;
+}
+</style>
+
+<div class="modal-dialog modal-lg" role="dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h2 class="modal-title header-form">CREAR TAREA</h2>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+ 
+ 
+ 
+       <div class="modal-body container-fluid pr-4 pl-4">
+          <form id="form_creacion" method="POST" action="{% url 'activity:task_create' %}">
+             {% csrf_token %}
+             <div class=" col-md-12 ">
+ 
+               {% for field in form %}
+               <div class="form-group">
+   
+                  {{ field.label_tag }} {{ field }}
+                  <div class="error_message" id="{{ field.id_for_label }}"> {{ field.errors }}</div>
+               </div>
+               {% endfor %}
+
+               <!-- <input type="hidden" id="fase_form_create1" value="{{request.resolver_match.kwargs.fase}}" name="fase_form_create"> -->
+               <input type="hidden" id="id_form_create1" value="{{request.resolver_match.kwargs.id}}" name="id_form_create">
+
+             </div>
+          </form>
+       </div>
+       <div class="modal-footer">
+          <!-- spiner loader -->
+          <div class="col-12 text-center" id='loader_crear' style='display: none;'>
+             <div class='overlay custom-loader-background'>
+                <i class='fa fa-cog fa-spin custom-loader-color'></i>
+             </div>
+          </div>
+          <!-- spiner loader -->
+ 
+          <button id="boton_creacion" class="btn send rounded-pill" type="submit" form="form_creacion"
+             type="button"><i class="fas fa-paper-plane pr-2"></i> Crear Tarea</button>
+          <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal"> <i class="fas fa-undo pr-2"></i> Regresar</button>
+       </div>
+ 
+ 
+    </div>
+ </div>

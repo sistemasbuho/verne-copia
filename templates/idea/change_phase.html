@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<body>
+
+<div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+        <div class="modal-header"><br>
+          {% if consulta|add:"1" == 3 %}
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>En desarrollo</strong>?</h6>
+          {% elif consulta|add:"1" == 2 %}
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Nuevas</strong>?</h6>
+          {% elif consulta|add:"1" == 4 %}
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Implementadas</strong>?</h6>
+          {% elif consulta|add:"1" == 5 %}
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Seguimiento</strong>?</h6>
+          {% endif %}
+
+            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+           <div class="row">
+            <div class="container">
+              {% if request.user.is_authenticated %}            
+                <div class=" text-center">
+                  <form method="POST" action="{% url 'idea:change' pk  %} ">{% csrf_token %}
+                    {% if consulta == 0 %}
+                      <p class=" text-muted"> En este momento, no puedes cambiar a fase Ideación, por favor responde las Preguntas Pain</p>
+                      {% elif consulta == 5 %}
+                      <p class=" text-muted"> ¡Oops, esta idea ya alcanzó la fase de <strong>Implementación</strong> ! Si quieres ver más detalles ve a Banco de Ideas </p>
+                      {% elif consulta == 6 %}
+                       <p class=" text-muted"> Esta idea esta en Banco de Ideas, si deseas cambiarla de fase por favor restáurala. </p>
+                      {% else %}
+                      <button type= "submit" class="btn btn-outline-success  mr-2"><i class="fas fa-check" style="color:green"></i> Cambiar de Fase </button>
+                    {% endif %}
+                     <button type="button" class="btn btn-light" data-dismiss="modal">Volver</button>
+                  </form><br>
+                </div>
+            {% endif %}
+             </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+</body>
+
+

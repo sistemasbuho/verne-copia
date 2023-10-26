@@ -1,0 +1,781 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Indicadores {% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %} 
+
+
+{% block extra_css %}
+
+  <link rel="stylesheet" href="{% static 'dist/css/verne/indicators/indicator.css' %}">
+  <script src="{% static 'vendor/highcharts-9.2.1/highcharts.js' %} "></script>
+  <script src="{% static 'vendor/highcharts-9.2.1/highcharts-3d.js' %} "></script>
+  <script src="{% static 'vendor/highcharts-9.2.1/modules/bullet.js' %} "></script>
+  <script src="{% static 'vendor/highcharts-9.2.1/modules/exporting.js' %} "></script>
+  <script src="{% static 'vendor/highcharts-9.2.1/modules/export-data.js' %} "></script>
+  <script src="{% static 'vendor/highcharts-9.2.1/modules/accessibility.js' %} "></script>
+
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+
+  <link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+
+  <!-- BEGIN: Bootstrap Date-Picker Range Plugin -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- END: Bootstrap Date-Picker Range Plugin -->
+
+
+{% endblock extra_css %}
+
+
+{% block body_content %}
+
+<div class="wrapper">
+  <div class="content-wrapper  pr-4 pl-4 pb-4">
+  
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="dasboard-title">INDICADORES</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+              <li class="breadcrumb-item active">Indicadores</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container ">
+        <div class="row">
+ 
+          <!-- ROI general-->
+          <div class="col-4">
+              <div class="card ">         
+                <div class="card-body" >
+                <h4 class="text-center font-weight-bold">ROI General</h4>
+                <div class="text-center roi">      
+                    {{general_roi.0}}                     
+                </div>
+                </div>
+              </div>
+          </div>
+
+          <!-- Ganancia-->
+          <div class="col-4">
+              <div class="card ">         
+                <div class="card-body" >
+                <h4 class="text-center font-weight-bold">Beneficio</h4>
+                <div class="text-center roi">
+                  $ {{general_roi.1}} 
+                </div>
+                </div>
+              </div>
+          </div>
+
+          <!-- Inversion-->
+          <div class="col-4">
+            <div class="card ">         
+              <div class="card-body" >
+              <h4 class="text-center font-weight-bold">Inversión</h4>
+              <div class="text-center roi">
+                $ {{general_roi.2}} 
+              </div>
+              </div>
+            </div>
+          </div>
+            
+          <!-- Ideas por prioridad -->
+          <div class="col-md-6  col-sm-12">
+            <div class="card ">   
+              <div class="card-body" >
+                <figure class="highcharts-figure">
+                  <div id="graph_idea_priority"></div>
+              </figure>
+              </div>
+            </div>
+          </div> 
+
+          <!-- Ideas por tipo de innovacion -->
+          <div class="col-md-6 col-sm-12">
+            <div class="card ">         
+              <div class="card-body" >
+                <figure class="highcharts-figure">
+                  <div id="graph_idea_type_innovation"></div>
+              </figure>
+              </div>
+            </div>
+          </div> 
+
+          <!-- Innovador del mes -->
+          <div class="col-12">
+            <div class="card ">         
+              <div class="card-body" >
+              <h4 class="text-center font-weight-bold">TOP DE INNOVADORES POR MES</h4>
+            
+              <div class="buttons">
+  
+                {% for i in innovator.0 %}
+                  {% if forloop.last %}
+                    <button id="{{i.id}}" class="active">
+                    {{i.mes}}  
+                  </button>
+                  {% else %}
+                    <button id="{{i.id}}">
+                      {{i.mes}}  
+                    </button>
+                  {% endif %}
+                {% endfor %}
+  
+              </div>
+              <div id="container"></div>
+  
+              </div>
+            </div>
+          </div> 
+
+           
+          <!-- Ideas por mes -->
+           <div class="col-12">
+            <div class="card ">         
+              <div class="card-body" >
+                <figure class="highcharts-figure">
+                  <div id="graph_idea_year_moth"></div>
+              </figure>
+              </div>
+            </div>
+          </div> 
+  
+
+          <!-- Plantilla powerbi -->
+          <!-- <div class="col-12 pb-5">
+            <div class="card ">         
+              <div class="card-body">
+                <h4 class="text-center pt-3 pb-3 font-weight-bold">PUNTOS POR USUARIO</h4> 
+                <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{% for i in link %} {{i}} {% endfor %}" frameborder="0" allowFullScreen="true"></iframe>
+              </div>
+              </div>
+            </div>
+          </div>-->
+        
+          
+         <!-- Ideas por fase -->
+          <div class="col-12">
+          <div class="card ">         
+            <div class="card-body">
+              <h4 class="text-center pt-3 pb-3 font-weight-bold">TIEMPO DE IDEA POR FASE</h4>                      
+                <div class=" row">                         
+                    <div class="col-4 text-center">
+                      <label for="inputId" class="col-form-label">Busca una idea:</label>
+                    </div>
+                    <div class="col-8">
+                      <div class="flex-fill">
+                        {% csrf_token %}
+                        <select id="idea_select" style="width: 100%;">
+                        </select>
+                    </div>
+                  </div>                 
+                </div>
+                
+                <figure id="figuras" class="highcharts-figure">
+                  <div id="container1"></div>
+                  <div id="container2"></div>
+                  <div id="container3"></div>
+                  <div id="container4"></div>
+              </figure>
+              </div>
+            </div>
+          </div> 
+
+          
+          <!-- Indicador de participación -->
+          <div class="card shadow mb-4 col-md-12 ">
+
+            <div class="card-header row">
+                <div class="col-4 col-xl-4 col-lg-4 col-sm-4 pt-3">
+                  <h4 class="text-center pt-3 pb-3 font-weight-bold">PARTICIPACIÓN DEL EQUIPO</h4>
+              </div>
+
+              
+              <div class="col-4 col-xl-4 col-lg-4 col-sm-4  text-center pt-3">
+                <label>Cantidad de participaciones</label>
+                <h3 id="participacion" class="text-center"></h3>
+            </div>
+
+                <div class="col-4 col-xl-4 col-lg-4 col-sm-4  text-center pt-3">
+                  <label>Cantidad de usuarios participando</label>
+                  <h3 id="porcentaje_formacion" class="text-center"></h3>
+              </div>
+            </div>
+
+            <div class="card-body ml-4 mr-5">
+                <div class="row">
+                  <div class="col-12 col-xl-4 col-lg-6 col-sm-6">
+                    <label>Usuario</label>
+                    <div class="flex-fill">
+                        <select id="asignado_a" style="width: 100%;">
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-xl-4 col-lg-6 col-sm-6">
+                  <div class="form-group">
+                      <label for="rango_input">Fecha </label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" name="daterange"
+                              id="rango_input" autocomplete="off"
+                              placeholder="YYYY-MM-DD - YYYY-MM-DD"
+                              aria-describedby="creacionHelp"
+                              style="cursor:pointer; background-color: #FFFFFF">
+
+                      </div>
+                      <small id="creacionHelp" class="form-text text-muted">Haz clic
+                          en
+                          el campo y selecciona el rango de fecha para filtrar</small>
+                  </div>
+              </div>
+
+              <div class="col-12 col-xl-4 col-lg-6 col-sm-6">
+                <div class="form-group">
+                    <label for="search_nombre">Palabra clave</label>
+                    <div class="input-group">
+                        <!-- <div class="input-group-prepend">
+                            <span class="input-group-text"><i
+                                    class="fa fa-search"></i></span>
+                        </div> -->
+                        <input placeholder="Ingresa el texto" id="search_nombre"
+                            type="text" class="form-control"
+                            aria-describedby="nombreHelp" style="width: 100%;">
+                    </div>
+                    <small id="nombreHelp" class="form-text text-muted">Escribe y
+                        presiona Enter para buscar</small>
+                </div>
+            </div>
+
+              </div>
+          
+            <div class="table-responsive ">
+                <table id="tabla_listar" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Participación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Carga con el ajax-->
+                    </tbody>                      
+                </table>
+            </div>
+            </div>
+          </div>
+
+
+             <!-- Indicador de tabla -->
+             <div class="card shadow mb-4 col-md-12 ">
+
+              <div class="card-header row">
+                  <div class="col-12 col-xl-12 col-lg-12 col-sm-12 pt-3">
+                    <h4 class="text-center pt-3 pb-3 font-weight-bold">INDICADOR DE FASES</h4>
+                </div>
+  
+
+              <div class="card-body ml-4 mr-5">
+                <div class="row">
+                    <div class="col-12 col-xl-4 col-lg-6 col-sm-6">
+                      <label>Prioridad</label>
+                      <div class="flex-fill">
+                          <select id="prioridad" name="prioridad_name" style="width: 100%;">
+                            <option selected value="ALTA">Alta</option>
+                            <option value="MEDIA">Media</option>
+                            <option value="BAJA">Baja</option>
+                          </select>
+                      </div>
+                  </div>
+
+                    <div class="col-12 col-xl-4 col-lg-6 col-sm-6">
+                      <label>Tipo de Innovación</label>
+                      <div class="flex-fill">
+                          <select id="tipo" name="tipo_name" style="width: 100%;">
+                            <option selected value="PROCESOS">Procesos</option>
+                            <option value="INCREMENTAL">Incremental</option>
+                            <option value="PRODUCTO">Producto</option>
+                          </select>
+                      </div>
+                  </div>
+                </div>
+            
+                <div class="table-responsive ">
+                  <table id="tabla_indicador" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Fase</th>
+                              <th>Conteo de Ideas</th>
+                              <th>Prioridad</th>
+                              <th>Tipo de Innovacion</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- Carga con el ajax-->
+                      </tbody>                      
+                  </table>
+              </div>
+              </div>
+            </div>
+     
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+ 
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+
+<!-- BEGIN: Bootstrap Date-Picker range Plugin -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!-- BEGIN: Bootstrap Date-Picker range Plugin -->
+
+<!-- BEGIN: JS Personalizado de AJAX -->
+<script src="{% static 'dist/js/verne/indicators/participation.js' %}"></script>
+<script src="{% static 'dist/js/verne/indicators/indicator_table.js' %}"></script>
+
+<!-- END:  JS Personalizado  de AJAX  -->
+<script>
+
+    $('#idea_select').select2({
+        placeholder: "Selecciona una idea",
+        dropdownAutoWidth: false,
+        minimumInputLength:2,
+        allowClear: true,
+        language: "es",
+        ajax: {
+            url: '/indicador/search_idea/',
+            processResults: function (data) {
+                
+                return {
+                    results: $.map(data, function (item, index) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        }
+    });
+
+    Highcharts.setOptions({
+    colors: ['#87499c', '#00adc5', '#00ada1']
+});
+
+Highcharts.chart('graph_idea_year_moth', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Ingreso de ideas por mes'
+    },
+    subtitle: {
+        text: 'Ingreso de ideas por mes'
+    },
+    xAxis: {
+        categories: [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Cantidad de ideas enviadas'
+        }
+    },
+   
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Ideas',
+        showInLegend: false,
+        data: {{ graph_idea_year_moth|safe }}
+    }]
+});
+
+
+Highcharts.chart('graph_idea_priority', {
+    chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45
+        }
+    },
+    title: {
+        text: 'Ideas por prioridad'
+    },
+    subtitle: {
+        text: 'Las ideas sin prioridad no se registran'
+    },
+    plotOptions: {
+        pie: {
+            innerSize: 100,
+            depth: 45
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: '#Ideas',
+        data: {{ graph_idea_prority_data|safe }}
+    }]
+});
+
+
+Highcharts.chart('graph_idea_type_innovation', {
+    chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45
+        }
+    },
+    title: {
+        text: 'Ideas por Tipo de Innovación'
+    },
+    subtitle: {
+        text: 'Las ideas sin tipo de Innovación no se registran'
+    },
+    plotOptions: {
+        pie: {
+            innerSize: 100,
+            depth: 45
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: '#Ideas',
+        data: {{ graph_idea_type_innovation|safe }}
+    }]
+});
+
+  //-----------------------------------------------
+  Highcharts.setOptions({
+    chart: {
+        inverted: true,
+        marginLeft: 135,
+        type: 'bullet'
+    },
+    title: {
+        text: null
+    },
+    legend: {
+        enabled: false
+    },
+    yAxis: {
+        gridLineWidth: 0
+    },
+    plotOptions: {
+        series: {
+            pointPadding: 0.25,
+            borderWidth: 0,
+            color: '#B4B4B4',
+            targetOptions: {
+                width: '200%'
+            }
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    exporting: {
+        enabled: false
+    }
+});
+  /**
+  * Request data from the server, add it to the graph and set a timeout to request again
+  */
+ 
+  let chart_array = [];
+
+  //Apoyo> http://jsfiddle.net/rox932ks/
+  function init_graph(day,phase_name,container_name,semana,dia_inicio,dia_fin) {
+  var hc_options = {
+        chart: {
+            renderTo: container_name,
+            marginTop: 40
+        },
+        title: {
+          
+        },
+        xAxis: {
+            categories: ['<span class="hc-cat-title">'+phase_name+'</span><br/>Máximo 28 semanas']
+        },
+        yAxis: {
+            plotBands: [{
+                from: 0,
+                to: 18,
+                color: '#92FECB'
+            }, {
+                from: 18,
+                to: 28,
+                color: '#FFFAA5'
+            }, {
+                from: 28,
+                to: 9e9,
+                color: '#FFCEA5'
+            }],
+            title: null
+        },
+        series: [{
+            data: [{
+                y: semana,
+                target: 28
+            }]
+        }],
+        tooltip: {
+            pointFormat: '<b> Semanas: '+ semana + ' </b><br><b> Días: '+ day + ' </b><br>Fecha inicio:'+dia_inicio +'<br> Fecha fin:'+ dia_fin
+        }
+    };
+    
+    let chart = new Highcharts.Chart(hc_options);
+
+    //Crea un arreglo de las graficas seleccionadas
+    chart_array.push(chart)
+};
+     
+//init_graph(0,'phase_name','container1')
+ 
+      $('#idea_select').on('keyup change', function () {
+                
+          let idea_select = $('#idea_select').val();
+          console.log("idea_select ",idea_select)
+          let csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val()
+          console.log("csrfmiddlewaretoken ",csrfmiddlewaretoken)
+          $.ajax({
+          url: '/indicador/medidor/' + idea_select + '/',
+          method: 'GET',
+          headers: {
+                'X-CSRFToken': csrfmiddlewaretoken
+            },
+          data: {
+              idea_seleccionada_template: idea_select,
+          },
+          beforeSend: function (res) {
+            console.log("chart_array ",chart_array)
+            for (var i=0; i<chart_array.length; i=i+1) {
+              
+              chart_array[i].destroy()
+              chart_array.splice(i,1)
+              //Documentar con https://love2dev.com/blog/javascript-remove-from-array/
+              i--; 
+
+            }
+
+            document.getElementById("container1").style.height = '';
+            document.getElementById("container2").style.height = '';
+            document.getElementById("container3").style.height = '';
+            document.getElementById("container4").style.height = '';
+
+          },
+          success: function(data) {
+                console.log("data success ",data)
+                
+                for (var i=0; i<data.length; i=i+1) {
+                  console.log(" i ",i)
+                  phase_name = data[i].phase_name;
+                  day = data[i].day;
+                  semana = data[i].semana;
+                  dia_inicio = data[i].dia_inicio;
+                  dia_fin = data[i].dia_fin;
+                  console.log(" phase_name",phase_name)
+                  console.log(" day",day)
+                  indice_desde_uno = i+1
+                  container = 'container'+ indice_desde_uno
+                  console.log(" container",container)
+                  
+                  document.getElementById(container).style.display = 'block';
+                  document.getElementById(container).style.height = '115px';
+                  init_graph(day,phase_name,container,semana,dia_inicio,dia_fin)
+
+                }
+                
+              }, cache: false
+          });
+  
+      })
+  
+  
+//Indicador innovador del mes----------------------------------------------
+
+var data = {{innovator.1|safe}};
+var avatar = {{innovator.3|safe}};
+
+
+//Poner colores buho
+var lista_color = [
+  {
+    'color': 'rgb(0, 173, 161)'
+  },
+  {
+    'color': 'rgb(0, 125, 197)'
+  },
+  {
+    'color': 'rgb(135, 73, 156)'
+  }
+];
+
+function getData(data) {
+  return data.map(function (country, i) {
+    return {
+      name: country[0],
+      y: country[1],
+      color: lista_color[i].color
+    };
+  });
+}
+
+var years = {{innovator.2|safe}};
+const fecha_final = years[3];
+
+var chart = Highcharts.chart('container', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+
+
+  },
+  subtitle: {
+   
+  },
+  plotOptions: {
+    series: {
+      grouping: false,
+      borderWidth: 0
+    }
+  },
+  legend: {
+    enabled: false
+  },
+  tooltip: {
+    shared: true,
+    headerFormat: '<span style="font-size: 15px">{point.point.name}</span><br/>',
+    pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y} puntos</b><br/>'
+  },
+  xAxis: {
+    type: 'category',
+    max: 2,
+    labels: {
+      useHTML: true,
+      animate: true,
+      formatter: function () {
+        var value = this.value,
+          output;
+
+        avatar.forEach(function (data_avatar) { 
+          if (data_avatar.correo === value) {
+            output = data_avatar.imagen;
+          }
+        });
+
+        return '<span><img src="'+ output + '" style="width: 40px; height: 40px;"/><br></span>';
+      }
+    }
+  },
+  yAxis: [{
+    title: {
+      text: 'Puntos Asignados'
+    },
+    showFirstLabel: false
+  }],
+  series: [{
+  
+  }, {
+    name: 'hola',
+    id: 'main',
+    dataSorting: {
+      enabled: true,
+      matchByName: true
+    },
+    dataLabels: [{
+      enabled: true,
+      inside: true,
+      style: {
+        fontSize: '16px'
+      }
+    }],
+    data: getData(data[fecha_final]).slice()
+  }],
+  exporting: {
+    allowHTML: true
+  }
+});
+
+
+
+years.forEach(function (year) {
+  var btn = document.getElementById(year);
+
+  btn.addEventListener('click', function () {
+
+    document.querySelectorAll('.buttons button.active').forEach(function (active) {
+      active.className = '';
+    });
+    btn.className = 'active';
+
+    chart.update({
+      title: {
+      },
+      subtitle: {
+      },
+      series: [{
+
+      }, {
+        name: year,
+        data: getData(data[year]).slice()
+      }]
+    }, true, false, {
+      duration: 800
+    });
+  });
+});
+</script>
+  
+{% endblock extra_js%}

@@ -1,0 +1,45 @@
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 10px;
+    color: #354049;
+}
+
+.fa-vote-yea:before {
+    content: "\f772";
+}
+
+.agendar{
+    background-color:#87499c !important;
+    color: #fff;
+}
+
+.agendar:hover{
+    background-color:#fff !important;
+    color: #87499c;
+    font-weight: 600;
+    border: 1px solid #87499c;
+}
+.send{
+
+    background-color:#00ADA1 !important;
+    color: #fff;
+    width: 99px;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #00ADA1;
+    font-weight: 600;
+    width: 99px;
+}
+
+
+.boton{
+    padding-left: 3px;
+}
+
+.card{
+    box-shadow: none !important;
+}

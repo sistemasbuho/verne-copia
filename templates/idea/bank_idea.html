@@ -1,0 +1,212 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Banco de Ideas{% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+{% block extra_css %}
+  <!-- <link rel="stylesheet" href="{% static 'dist/css/verne/idea/bank_idea.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'dist/css/verne/idea/bank_idea.css' %}">
+
+  <!-- BEGIN: Bootstrap Date-Picker Range Plugin -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- END: Bootstrap Date-Picker Range Plugin -->
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+{% endblock extra_css %}
+
+{% block body_content %}
+
+<!-- spiner loader -->
+<div class="col-12 text-center" id='loader' style='display: none;'>
+  <div class='overlay custom-loader-background'>
+      <i class='fa fa-cog fa-spin custom-loader-color'></i>
+  </div>
+</div>
+<!-- spiner loader -->
+
+
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+      	<p class="dasboard-title ml-4 mb-0 row">Banco de Ideas
+
+  
+          <button class="btn btn-secondary mr-5 rounded-pill text-right ml-auto" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><i class="fas fa-filter pr-1"></i>Filtros</button>
+        </p>
+      
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+    
+            <div class="card-body ml-4 mr-5">
+              <form action="{% url 'idea:bank' %}" method="GET" class="form-horizontal">  
+              <div class="row">
+                
+                <div class="col-12 col-lg-2 col-sm-2">
+                  <div class="form-group">
+                      {{ form.id_idea.label }}
+                      {{ form.id_idea }}
+                  </div>
+                </div>
+
+                  <div class="col-12 col-lg-3 col-sm-3">
+                    <div class="form-group">
+                        {{ form.titulo.label }}
+                        {{ form.titulo }}
+                    </div>
+                  </div>
+        
+                  <div class="col-12 col-xl-2 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        {{ form.tipo_innovacion.label }}
+                        {{ form.tipo_innovacion }}
+                    </div>
+                  </div>
+        
+                  <div class="col-12 col-xl-2 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        {{ form.prioridad.label }}
+                        {{ form.prioridad }}
+                    </div>
+                  </div>
+        
+                  <div class="col-12 col-xl-2 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        {{ form.datarange.label }}
+                        {{ form.datarange }}
+                          <div class="error_message" id="{{ form.datarange.id_for_label }}"> {{ form.datarange.error}} </div>
+        
+                    </div>
+
+                    
+                  </div>
+
+                  <!--<div class="col-12 col-xl-5 col-lg-6 col-sm-6">
+                    <div class="form-group">
+                     {{form.frente.label}}
+                      {{form.frente}}
+                    </div>
+                  </div>-->
+        
+                  <div class="col-3 col-xl-1 col-lg-1 col-sm-2">
+                    <div class="form-group">
+                      <label for=""> </label>
+                    <button class="btn btn-secondary rounded-pill btn-block" type="submit">
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <!-- 
+                      enviar un localstorage
+                     <button class="btn btn-secondary rounded-pill btn-block" onclick="storeid()">
+                      <i class="fa fa-search"></i>
+                    </button>
+                     -->
+                    </div>
+                  </div>
+                
+              </div>
+            </form>
+            </div>
+    
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content ml-4 mr-4 mt-0" >
+      <div class="container-fluid row " >
+  
+      {% for phase in phases %}
+  
+      <!-- Fase banco ------------------------------------- -->
+      {% if phase.id == 6 %}
+         <div class="col-lg-6 col-sm-6 col-xs-12 ">
+              <a href="{% url 'idea:phase_list' 6 %}">
+                <div class="inner phase-three">
+                  <span> <i class="fas fa-chart-pie icon phase4 ml-2"></i></span>
+                  <span class="phase4 ml-2">{{phase.name}}</span>
+                  <span id="count_banco" class="badge badge-pill badge-ids ml-2"></span>
+                  <span class="expand"><i class="fas fa-expand-arrows-alt"></i>  </span>    
+                </div> 
+              </a>       
+     
+            <div class="courses-container row" id="posts-box-banco"></div>
+    
+            <div class="text-center pb-1" id="loading-box-banco">
+              <button class=" btn loader-more badge-ids" id="load-btn-banco">Cargar más</button>
+              <div id="spinner-box-banco" class="not-visible">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+            </div>        
+        </div>
+
+         
+      <!-- Fase Ideacion ----------------------------------------- -->
+      {% elif phase.id == 5 %}
+      <div class="col-lg-6 col-sm-6 col-xs-12 ">
+     <a href="{% url 'idea:phase_list' 5 %}">
+           <div class="inner phase-four">
+             <span> <i class="fas fa-lightbulb icon phase3 ml-2"></i></span>
+             <span class="phase3 ml-2">{{phase.name}}</span>
+             <span id="count_implementacion" class="badge badge-pill badge-pro ml-2"></span>       
+             <span class="expand"><i class="fas fa-expand-arrows-alt"></i>  </span>   
+           </div> 
+       </a>
+     <div class="courses-container row" id="posts-box-implementacion"></div>
+ 
+     <div class="text-center pb-1" id="loading-box-implementacion">
+       <button class=" btn loader-more badge-pro" id="load-btn-implementacion">Cargar más</button>
+       <div id="spinner-box-implementacion" class="not-visible">
+         <div class="spinner-border text-primary" role="status"></div>
+       </div>
+     </div>  	        
+     </div>
+        {% endif %}
+        {% endfor %}
+
+      </section>
+  
+
+  
+
+  </div>
+</div>
+
+<div class="modal fade" id="ModalDetail" role="dialog"></div>
+
+<div class="modal fade" id="ModalInactive" role="dialog"></div>
+<div class="modal fade" id="ModalPhase" role="dialog"></div>
+<div class="modal fade" id="ModalReference" role="dialog"></div>
+<div class="modal fade" id="ModalReactive" role="dialog"></div>
+<div class="modal fade" id="ModalFastrack" role="dialog"></div>
+<div class="modal fade" id="creacion" role="dialog"></div>
+
+<!-- Editar Regla -->
+<div class="modal fade" id="edicion" role="dialog"></div>
+
+<!-- eliminacion Regla -->
+<div class="modal fade" id="eliminacion" role="dialog"></div>
+{% endblock body_content %}
+
+
+{% block extra_js %}
+
+  <!-- BEGIN: Bootstrap Date-Picker range Plugin -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <!-- BEGIN: Bootstrap Date-Picker range Plugin -->
+  
+  <script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+  
+  <!-- Include Bootstrap Datepicker -->
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+  
+  <!-- BEGIN: JS Personalizado de AJAX -->
+  <script src="{% static 'dist/js/verne/idea/bank_idea.js' %}"></script>
+  <!-- END:  JS Personalizado  de AJAX  -->
+  
+  <script src="{% static 'dist/js/verne/idea/modals_idea.js' %}"></script>
+
+{% endblock extra_js %}

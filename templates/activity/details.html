@@ -1,0 +1,232 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Detalle actividad{% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+   <!-- Select2 -->
+  <link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+  
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+
+  <!-- Libreria necesaria para el datepicker -->
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/verne/activity/update_activity.css'' %}">
+{% endblock extra_css %}
+
+{% block body_content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'activity:view_activity' %}">Mis actividades</a></li>
+              <li class="breadcrumb-item active">Detalles actividad</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content pb-4">
+        <div class="container">
+         <div class="col-md-10 container ">
+          <div class="card shadow mb-4">
+
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+               <a class="header-form" >EDITAR ACTIVIDAD</a>
+
+               <div class="dropdown no-arrow ml-auto">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <i class="fas fa-cog"></i>
+                  </a>
+
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" x-placement="bottom-end" style="position: absolute; transform: translate3d(-118px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
+                     <div class="dropdown-header">Lista de acciones:</div>
+                     <a class="dropdown-item" href="{% url 'activity:upload' id %}"> <i class="fa fa-link pr-2 icon-link"> </i>Subir archivo</a>       
+                     <a class="dropdown-item" onclick="open_modal_delete_activity('{% url 'activity:delete_activity' id %}')"> <i class="fa fa-times pr-3 icon-time"> </i>Eliminar</a>
+                  </div>
+                 </div>
+               </div>
+
+                <div class="card-body">
+                  <p class="font-weight-bold text-center">¡Lleva las ideas a la realidad por medio de actividades! </p>
+                  <form class="border border-light p-3" method="POST"> {% csrf_token %}
+                    <div class="row ">
+                      <div class="col-md-8">
+                        <p class="col-form-label font-weight-bold">{{ form.name.label }}</p>
+                          {{ form.name }}</div>
+
+                      <div class="col-md-4">
+                        <p class="col-form-label font-weight-bold"> Fecha creación</p> 
+                          <div class="input-group date" id="date_picker3" data-target-input="nearest">
+                                    {% render_field form.date  %}
+                                  <div class="input-group-append" data-target="#date_picker3" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <div class="col-md-12">
+                              <label class="col-form-label font-weight-bold">{{ form.description.label }}</label>
+                                {{ form.description }}
+                              </div>
+
+                              <div class="col-md-8">
+                              <label class="col-form-label font-weight-bold">{{ form.tool.label }}</label>
+                                {{ form.tool }}
+                              </div>
+
+                              <div class="col-md-4">
+                               <label class="col-form-label font-weight-bold">Puntos</label>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+
+                                {% for score in activity %} 
+                                  {% if score.redeemed_score == True %}
+                                  <button class="btn send" data-toggle="tooltip" data-placement="bottom" title="Canjear puntos" onclick="open_modal_score_activity('{% url 'activity:assigned_leguas' id %}')"type="button" disabled>Canjear</button>
+
+                                  {% else %}
+                                   <button class="btn send" data-toggle="tooltip" data-placement="bottom" title="Canjear puntos" onclick="open_modal_score_activity('{% url 'activity:assigned_leguas' id %}')"type="button">Canjear</button>
+                                  {% endif %}
+
+                                  {% endfor %}                                 
+                                </div>                                
+                               {{ form.score }}
+                              </div>
+                            </div>
+                         </div>
+
+                           <p for="idea" class="font-weight-bold">Ideas para evaluar</p>
+                          {% render_field form.id_idea class="form-control" id="activate_select_edit_idea" %}
+
+                          <div class="pt-3 pb-4">
+                           <p for="invitados" class="font-weight-bold">Usuarios Invitados</p>
+                          {% render_field form.id_user class="form-control" id="activate_select_users_edit" %}
+                          </div>
+
+                          <div class="col-md-12">
+                            <p class="col-form-label font-weight-bold">Link Documentación</p>
+                              {{ form.link_documentation }}
+                          </div>
+
+                        <button class="btn agendar btn-block col-md-4 container rounded-pill mt-3" type="submit"> <i class="fas fa-paper-plane pr-2"></i>Guardar cambios</button>
+
+                    </form>
+                    </div>
+
+          </div>
+
+          <div class="card shadow mb-4 ">
+
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+              <p class=" header-form ">TAREAS POR IDEA</p>
+              <div class="text-right ml-auto">
+                <button id="abrir_modal_creacion" class="btn send rounded-pill btn-md"> <i class="fas fa-plus pr-2"></i> Crear tarea</button>
+            </div>
+          </div>
+
+
+            <div class="card-body ml-4 mr-5">
+                <div class="row">
+                <div class="col-12 col-xl-5 col-lg-6 col-sm-6  pb-5">
+                    <div class="form-group">
+                        <label for="search_nombre">Nombre</label>
+                        <div class="input-group">
+                            <!-- <div class="input-group-prepend">
+                                <span class="input-group-text"><i
+                                        class="fa fa-search"></i></span>
+                            </div> -->
+                            <input placeholder="Ingresa el texto" id="search_nombre"
+                                type="text" class="form-control"
+                                aria-describedby="nombreHelp" style="width: 100%;">
+                        </div>
+                        <small id="nombreHelp" class="form-text text-muted">Escribe y
+                            presiona Enter para buscar</small>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-xl-4 col-lg-6 col-sm-6 pb-5">
+                    <label>Estado:</label>
+                    <div class="form-group d-flex align-items-center">
+                        <select id="search-estado" class="form-control">
+                            <option value="" selected>Todos.. </option>
+                            <option value="False">Inactivo</option>
+                            <option value="False">En Ejecución</option>
+                            <option value="True">Activo</option>
+                        </select>
+                    </div>
+                </div>
+
+                    
+              </div>
+          
+            <div class="table-responsive ">
+                <table id="tabla_listar" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tarea</th>
+                            <th>Encargado</th>
+                            <th>Completado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Carga con el ajax-->
+                    </tbody>                      
+                </table>
+            </div>
+            </div>
+          </div>
+   
+
+            </div>
+          </div>
+     </section>
+  </div> 
+
+
+<div class="modal fade" id="Modaldelete" role="dialog"></div>
+<div class="modal fade" id="Modalscore" role="dialog"></div>
+
+<div class="modal fade" id="creacion" role="dialog"></div>
+
+<!-- Editar Regla -->
+<div class="modal fade" id="edicion" role="dialog"></div>
+
+<!-- eliminacion Regla -->
+<div class="modal fade" id="eliminacion" role="dialog"></div>
+<!-- END: Modales  -->
+
+
+{% endblock body_content %}
+
+{% block extra_js %}
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+<!-- Modales -->
+<script type="text/javascript" src="{% static 'dist/js/verne/activity/update_activity.js' %}"></script>
+<!-- InputMask Fija los campos de la fecha dd/mm/yyyy -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js'%}"></script>
+<!-- Tempusdominus Bootstrap 4 activa el TimePicker-->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script>
+
+   //Datepicker
+    $('#date_picker3').datetimepicker({
+      format: 'DD/MM/YYYY'
+    })
+
+</script>
+{% endblock extra_js %}

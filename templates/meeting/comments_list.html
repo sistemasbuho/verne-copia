@@ -1,0 +1,202 @@
+{% load staticfiles %}
+
+<style>
+
+  .coments{
+    height: 463px;
+    overflow-y: scroll;
+}
+
+#disk_c{
+ 
+  width: 100px;
+  height: 80px;
+
+  transform: rotate(270deg);
+  margin: 20px 0px 13px -7px;
+}
+
+label{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.votation{
+  border-bottom: 1px solid #BBBABC;
+  color: #818181;
+}
+
+.modal-content{
+  border-radius: 25px;
+}
+
+.boxes{
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0px 7px 18px 3px #f8f8f8;
+  margin: 8px;
+  border: 1px solid #f5f5f5;
+
+}
+
+.number{
+  margin: 0;
+  font-weight: 600;
+}
+
+meter::-webkit-meter-bar {
+  background: #E6E5E5;
+}
+
+meter::-webkit-meter-optimum-value {background: #8C51A6;}
+
+.message{
+  margin: 12px;
+  border-radius: 12px;
+  padding: 9px;
+  width: 92%;
+  border: 1px solid #f5f5f5;
+  box-shadow: 5px 5px 10px 5px rgb(234 234 234);
+
+}
+
+.avatar{
+  width: 38px;
+  border-radius: 50%;
+  height: 38px;
+  object-fit: cover;
+
+}
+
+.col-md-4{
+  text-align: center;
+}
+
+.pub{
+  border-bottom: 1px solid #BBBABC;
+}
+
+.title-c{
+  margin: 4px;
+  font-weight: 600;
+}
+
+.color-p{
+  color: #8C51A6;
+}
+
+</style>
+
+
+<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+
+          <div class="modal-header"><br>          
+              <p class="title-c ">Resumen Comité <i class="fas fa-angle-right"></i> <span class="color-p">Idea {{id_idea}}</span></p>
+              <!-- <h6 class="text-secondary">.text-secondary</h6>  -->
+              <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+          <div class="modal-body">
+          <div class="row m-2">
+            <div class="col-md-6">
+
+              <div class="boxes">
+                <p class="font-weight-bold pb-2 votation">Votación</p> 
+                <span class="text-right">Número de participantes: </span> <span class="font-weight-bold ml-2"> {{comentarios_total}}</span>
+                <div class="col-md-12 row">
+             
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ kepp_fase }}" min="0" max="{{comentarios_total}}">{{ kepp_fase }}</meter>
+                    <p class="number">{{ kepp_fase }}</p>
+                    <p> Se mantiene en fase </p>
+                  </div>
+
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ next_fase }}" min="0" max="{{comentarios_total}}"></meter>
+                    <p class="text-center number">{{ next_fase }}</p>
+                    <p>Avanza de fase </p>
+                  </div>
+
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ die_idea }}" min="0" max="{{comentarios_total}}">{{ die_idea }}</meter>
+                    <p class="text-center number">{{ die_idea }}</p>
+                    <p>Enviar a Banco de Ideas</p>
+                  </div>
+
+
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ kepp_priority }}" min="0" max="{{comentarios_total}}">{{ kepp_priority }}</meter>
+                    <p class="text-center number">{{ kepp_priority }}</p>
+                    <p>Se mantiene en prioridad </p>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ priority_up }}" min="0" max="{{comentarios_total}}">{{ priority_up }}</meter>
+                    <p class="text-center number">{{ priority_up }}</p>
+                    <p>Sube prioridad </p>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ priority_down }}" min="0" max="{{comentarios_total}}">{{ priority_down }}</meter>
+                    <p class="text-center number">{{ priority_down }}</p>
+                    <p>Baja de prioridad </p>
+                  </div>
+  
+                  
+  
+                  
+  
+                  
+                  <div class="col-md-4">
+                    <meter id="disk_c" value="{{ none_idea }}" min="0" max="{{comentarios_total}}"></meter>
+                    <p class="text-center number">{{ none_idea }}</p>
+                    <p>Sin responder </p>
+                  </div>
+                </div>
+  
+              </div>
+             
+
+            </div>
+
+            <div class="col-md-6 ">
+              <div class="boxes coments">
+                <p class="font-weight-bold pb-2 votation">Comentarios</p> 
+
+                {% for lista in comments_meetings_idea%}
+  
+                <div class="col-md-12 row  message">
+                  <div class="col-md-2">
+                    <img src="{{lista.id_user_comitte.profile.avatar.url}}" class="avatar" data-toggle="tooltip" data-placement="top"  >  
+                  </div>
+                  <div class="col-md-10">
+                    <a href="#">{{lista.id_user_comitte}}</a>
+                    <p class="text-muted pub">{{lista.pub_date}}</p> 
+                    <p>{{lista.message|safe|default_if_none:"Por responder" }} </p>
+                    <p> Voto Fase: <b>{{lista.get_vote_display}}</b> </p>
+                    <p> Voto Prioridad: <b>{{lista.get_vote_priority_display}}</b> </p>
+                  </div>
+                </div>
+  
+              {% endfor %}
+              </div>
+
+            
+            </div>
+            
+          </div>
+
+          </div>
+
+      </div>
+    </div>
+       
+        
+
+
+
+     
+            

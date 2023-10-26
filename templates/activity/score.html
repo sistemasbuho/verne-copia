@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header py-3 d-flex flex-row align-items-center justify-content-between ">
+              <a class="m-0 font-weight-bold text-primary" >Canjear Puntos</a>
+                 <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+           <div class="row">
+            <div class="container">
+              {% if request.user.is_authenticated %}
+              <div class=" text-center">
+                <form method="POST" action="{% url 'activity:assigned_leguas' pk  %} ">{% csrf_token %}
+                  <p>Se asignarán {% for user in values %}<span>{{user.score}}</span> {% endfor %}puntos a los siguientes usuarios:</p>           
+                  <div class="col-md-12 pb-5">
+                  {% for user in values %}
+                  {% for data in user.id_user.all %}
+                    {{data}}  <br>  
+                  {% endfor %}            
+                  {% endfor %}          
+                  </div>                                           
+                 <button type= "submit" class="btn btn-outline-success mr-2"><i class="fas fa-check" style="color:green"></i> Sí, canjear</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Volver</button>
+                </form>
+              </div>                          
+             {% endif %}
+             </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+

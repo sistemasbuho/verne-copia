@@ -1,0 +1,37 @@
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 6px;
+    color: #354049;
+}
+
+.agendar{
+    background-color:#87499c !important;
+    color: #fff;
+}
+
+.agendar:hover{
+    background-color:#fff !important;
+    color: #87499c;
+    font-weight: 600;
+    border: 1px solid #87499c;
+}
+.send{
+
+    background-color:#00ADA1 !important;
+    color: #fff;
+    width: 104px;
+}
+
+.card{
+    box-shadow: none !important;
+}
+.send:hover{
+    background-color:#fff !important;
+    color: #00ADA1;
+    font-weight: 600;
+    width: 104px;
+}
+
+

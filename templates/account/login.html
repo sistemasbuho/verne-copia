@@ -1,0 +1,198 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block extra_head %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>{% block title %} Iniciar Sesión - Verne 2.0 {% endblock title %} </title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets_landing_page/images/favicon.ico' %}">
+
+    <!-- Carga la linea superior -->
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/vendors/css/vendors.min.css' %}">
+    <!-- Carga el checkbox de recuerdame -->
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/vendors/css/forms/icheck/icheck.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/css/bootstrap-extended.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/css/colors.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'login-assets/css/components.css' %}">
+ 
+{% endblock extra_head %}
+
+
+{% block body_class %}
+<body class="horizontal-layout horizontal-menu horizontal-menu-padding 1-column  bg-full-screen-image blank-page blank-page" data-open="hover" data-menu="horizontal-menu" data-col="1-column">
+{% endblock body_class %}
+
+{% block content %}
+<div class="app-content container center-layout mt-2">
+  <div class="content-overlay"></div>
+  <div class="content-wrapper">
+      <div class="content-header row"></div>
+      <div class="content-body">
+          <section class="row flexbox-container">
+              <div class="col-12 d-flex align-items-center justify-content-center">
+                  <div class="col-lg-5 col-md-8 col-10 box-shadow-2 p-0">
+                      <div class="card border-grey border-lighten-3 m-0">
+                          <div class="card-header border-0">
+                              <div class="card-title text-center">
+                                  <div class="p-1"><img src="{% static 'dist/img/logo-login.png' %}" alt="Verne 2.0"></div>
+                              </div>                             
+                          </div>
+
+                          <div class="card-content">
+                              <div class="card-body pt-0  text-center ">
+
+
+                                {% if form.errors and not form.non_field_errors %}
+                                <p class="errornote">
+                                  {% if form.errors.items|length == 1 %}
+                                    {% trans "Please correct the error below." %}
+                                  {% else %}
+                                    {% trans "Please correct the errors below." %}
+                                  {% endif %}
+                                </p>
+                              {% endif %}
+                            
+                              {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                  <p class="errornote">
+                                    {{ error }}
+                                  </p>
+                                {% endfor %}
+                              {% endif %}
+                            
+                              <div id="content-main">
+                                {% if user.is_authenticated %}
+                                  <p class="errornote">
+                                    {% blocktrans trimmed %}
+                                      You are authenticated as {{ username }}, but are not authorized to
+                                      access this page. Would you like to login to a different account?
+                                    {% endblocktrans %}
+                                  </p>
+                                {% endif %}
+                            
+                                
+                                  <div class="center">
+                                   
+                                    <div class="container">
+                                      
+                                      <div id="login-container">
+
+                                        <form action="{% url 'login' %}" method="post" >
+                                          {% csrf_token %}
+                                  
+                                          <div class="form-row form-group floating-label-form-group ml-2 mr-2">
+                                            
+                                            <label class="required" for="id_username">Nombre de usuario:</label>
+                                            <input type="text" name="username" autofocus="" required="" id="id_username" class="form-control">
+                                          </div>
+                                  
+                                          <div class="form-row form-group floating-label-form-group mb-1 ml-2 mr-2">
+                                            
+                                            <label class="required" for="id_password">Contraseña:</label>
+                                            <input type="password" name="password" required="" id="id_password" class="form-control">
+                                            <input type="hidden" name="next" value="/admin/">
+                                          </div>
+                                  
+                                          
+                                          
+                                  
+                                          <div class="submit-row">
+                                            <label>&nbsp;</label>
+                                            <input type="submit" class="btn  btn-round btn-primary"  value="Iniciar sesión">
+                                          </div>
+                                  
+                                        </form>
+
+
+                                        <!-- <button id="password-login" class="btn  btn-round"  style="text-transform:none; box-shadow: 10px 5px 5px #cecece; border-color: #efefef;" type="button">
+                                          Ingresa con tu cuenta </button> -->
+                                     
+                                      </div>
+                                    </div>
+
+                                      <div>
+                                        <p>{% trans 'or' %}</p>
+                                      </div>
+                                    
+                                      <div>
+                                        <button id="microsoft-login" class="btn  btn-round" type="button" style="text-transform:none; box-shadow: 10px 5px 5px #cecece; border-color: #efefef;">
+                                          <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Microsoft Sign-In" src="{% static 'dist/img/microsoft_logo.png' %}">
+                                          Ingresa con Microsoft
+                                        </button>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                              
+                            
+                          
+                            
+                        
+                            
+                              {% if microsoft_login_enabled %}
+                                <script type="text/javascript" src="{% static 'dist/js/verne/home/login.js' %}"></script>
+                                <script type="text/javascript">
+                                document.addEventListener("DOMContentLoaded",
+                                                          function(event) {
+                                                            window.microsoft.login = new window.microsoft.objects.LoginController({
+                                                              'authorization_url': '{{ microsoft_authorization_url }}'
+                                                            });
+                                                          });
+                                </script>
+                              {% endif %}
+
+
+
+                       
+  {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+    {% endif %}
+                                </div>
+                           <!--    <p class="text-center"><span>¿Eres nuevo?</span> <a href="{{ signup_url }}" class="text-center"><i class="feather icon-user"></i> Registrate</a></p> -->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </div>
+  </div> 
+</div>
+{% endblock content %}
+
+{% block extra_body %}
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static 'login-assets/vendors/js/vendors.min.js' %}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static 'login-assets/vendors/js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'login-assets/vendors/js/jquery.sparkline.min.js' %}"></script>
+    <script src="{% static 'login-assets/vendors/js/icheck.min.js' %}"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{% static 'login-assets/js/breadcrumbs-with-stats.js' %}"></script>
+    <script src="{% static 'login-assets/js/form-login-register.js' %}"></script>
+    <!-- END: Page JS-->
+{% endblock extra_body %}
+
+</body>

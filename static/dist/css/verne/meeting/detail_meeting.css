@@ -1,0 +1,100 @@
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    color: #354049;
+}
+.detalle {
+    color: #2F83B3;
+    font-size: 20px;
+}
+
+.detalle-title {
+    color: #2F83B3;
+    font-weight: 400;
+}
+
+.card-footer {
+    background-color: #fafafa;
+}
+
+
+.btn-send {
+    background-color: #3799D1!important;
+    color:#fff !important;
+}
+
+.btn-send:hover {
+    background-color: #fff!important;
+    color:#3799D1 !important;
+    border: 1px solid #3799D1;
+    font-weight: bold;
+
+}
+
+
+.btn-edit {
+    background-color: #00ADA1!important;
+    color:#fff !important;
+}
+
+.btn-edit:hover {
+    background-color: #fff!important;
+    color:#00ADA1 !important;
+    border: 1px solid #00ADA1;
+    font-weight: bold;
+}
+
+
+.btn-close{
+	background-color: #98539E !important;
+	color:#fff !important;
+}
+
+.btn-close:hover {
+    background-color: #fff!important;
+    color:#98539E !important;
+    border: 1px solid #98539E;
+    font-weight: bold;
+
+}
+
+.title{
+    color: #5e6362 !important;
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 30px;
+    margin-bottom: 5px;
+	
+}
+
+.description{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-idea{
+    color: #fff !important;
+    font-size: 17px;
+    font-weight: bolder;
+    margin-top: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 30px;
+    margin-bottom: 0;
+    width: 103px;
+    background: radial-gradient(circle, rgba(49,137,187,1) 0%, rgba(49,137,187,1) 22%, rgba(54,149,204,1) 40%, rgba(52,144,197,1) 59%, rgba(38,105,143,1) 83%, rgba(30,82,113,1) 100%);
+    text-align: center;
+    position: relative;
+    top: -26px;
+    left: -17px;
+    border-radius: 12px;
+    padding: 3px
+}
+

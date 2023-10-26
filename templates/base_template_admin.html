@@ -1,0 +1,448 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Verne | Inicio{% endblock titulo %} </title>
+  <link rel="shortcut icon" href="{% static 'assets_landing_page/images/favicon.ico' %}" type="image/png"> 
+
+
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %} ">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/verne/user_and_main/base_template.css' %} ">
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+   <!-- BEGIN: Plugin SweetAlert2 CSS-->
+   <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+   <!-- END: SweetAlert2 CSS-->
+
+  
+  {% block extra_css %}
+  {% endblock extra_css %}
+</head>
+
+<body class=" sidebar-mini  sidebar-collapse ">
+  {% if request.user.is_authenticated %}            
+
+<div class="wrapper ">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+  <ul class="navbar-nav">
+    
+    <li class="nav-item">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+        <i class=" nav-icon fas fa-bars"></i> </a>
+    </li>   
+
+    <li class="nav-item">
+      <a href="/dashboard/" class="">
+        <span class=" font-weight-light"><b class="title-verne">VERNE</b></span>
+      </a>      
+    </li>   
+     
+  </ul>
+
+  <ul class="navbar-nav ml-auto">
+    <!-- <li class="nav-item dropdown">
+      <a class="nav-link" data-toggle="dropdown" href="#">
+      <i class="far fa-comments"></i>
+      <span class="badge badge-danger navbar-badge">3</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <a href="#" class="dropdown-item">
+      
+      <div class="media">
+      <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+      <div class="media-body">
+      <h3 class="dropdown-item-title">
+      Brad Diesel
+      <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+      </h3>
+      <p class="text-sm">Call me whenever you can...</p>
+      <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+      </div>
+      </div>
+      
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item">
+      
+      <div class="media">
+      <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+      <div class="media-body">
+      <h3 class="dropdown-item-title">
+      John Pierce
+      <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+      </h3>
+      <p class="text-sm">I got your message bro</p>
+      <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+      </div>
+      </div>
+      
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item">
+      
+      <div class="media">
+      <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+      <div class="media-body">
+      <h3 class="dropdown-item-title">
+      Nora Silvester
+      <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+      </h3>
+      <p class="text-sm">The subject goes here</p>
+      <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+      </div>
+      </div>
+      
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+      </div>
+    </li>
+     -->
+
+     {% if perms.idea.view_dashboard %}  
+      <li class="nav-item dropdown">
+        <a href="{% url 'idea:external_idea' %} "class="nav-link ">
+      <i class="far fa-comment-alt	"></i>
+      <span class="badge badge-warning navbar-badge">Ideas nuevas</span> 
+      </a>
+      </li>  
+    {% endif %}
+
+
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+        <i class="fas fa-user-circle mr-1"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+
+        <p href="#" class="dropdown-item text-muted text-sm">
+          <span > Cuenta:  </span>
+          <span class="float-right text-muted text-sm">  {{ user.email }}</span>
+        </p>
+
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="{% url 'users:user_profile' %}" >
+          <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+          Configurar mi cuenta
+        </a>
+
+        <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Cerrar Sesión
+        </a>
+
+      
+   
+        <div class="dropdown-divider"></div>
+
+      </div>
+      </li> 
+  
+  
+ 
+    </ul>
+  </nav>
+
+
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-primary elevation-4 ">
+    <!-- Brand Logo -->
+ 
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- <div class="user-panel mt-3 pb-3 mb-3  d-flex">
+        <div class="image">
+          <img src="{% static 'dist/img/avatar.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div> 
+        <div class="info">
+          <a href="#" class="d-block">¡Bienvenido!</a>
+        </div>
+      </div> -->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          {% if perms.idea.add_idea %}  
+
+          <li class="nav-header">IDEAS</li>
+          <li class="nav-item">
+            <a href="{% url 'idea:register' %}" class="nav-link">
+              <i class="nav-icon far fa-lightbulb "></i>
+              <p>Añadir Idea</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'dashboard' %}" class="nav-link">
+              <i class="nav-icon fas fa-archive"></i>
+              <p>Mis ideas</p>
+            </a>
+          </li> 
+
+          <li class="nav-item">
+            <a href="{% url 'idea:general_dashboard' %}" class="nav-link">
+              <i class="nav-icon fas fa-plus-circle "></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+                <a href="{% url 'idea:bank' %}" class="nav-link">
+                  <i class="nav-icon fas fa-university"></i>
+                  <p>Banco de Ideas</p>
+                </a>
+          </li>
+      
+          <li class="nav-item">
+            <a href="{% url 'idea:evaluate' %}" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+               <p> Portafolio</p>
+            </a>
+          </li>
+          
+          {% endif %}
+       
+          <li class="nav-header">PARTICIPACIÓN</li>
+           {% if perms.meeting.view_meeting %}
+              <li class="nav-item">
+                <a href="{% url 'meeting:visualize' %}" class="nav-link">
+                  <i class="nav-icon  far fa-calendar-check "></i>
+                  <p>Equipo calificador</p>
+                </a>
+              </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <a href="{% url 'activity:view_activity_user' %}" class="nav-link">
+                <i class="nav-icon fas fa-rocket "></i>
+                <p>Mis actividades</p>
+              </a>
+            </li>
+
+
+            {% if perms.activity.add_activity %}
+            <li class="nav-item">
+              <a href="{% url 'activity:view_activity' %}" class="nav-link">
+                <i class="nav-icon fas fa-snowboarding "></i>
+                <p>Gestionar actividades</p>
+              </a>
+            </li>
+            {% endif %}
+
+
+          <li class="nav-header">PREMIOS</li>
+          
+          {% if perms.prize.rol_admin_view %}
+          <li class="nav-item">
+             <a href="{% url 'prize:visualize_user' %}" class="nav-link">
+                 <i class="nav-icon fas fa-cog "></i>             
+             <p>Gestionar Puntos </p>
+           </a>   
+          </li>
+          {% endif %}  
+
+          {% if perms.prize.rol_user_view %}
+
+          <li class="nav-item">
+             <a href="{% url 'prize:details_score' id_user=request.user.id %}" class="nav-link">
+              <i class="nav-icon fas fa-star-half-alt "></i>
+               <p>Mis Puntos </p>
+             </a>   
+          </li>
+
+          <li class="nav-item">
+            <a href=" {% url 'prize:visualize_prize' %}" class="nav-link">
+              <i class="nav-icon fas fa-trophy "></i>
+              <p>Redimir medallas </p>
+            </a>   
+         </li>
+         {% endif %}  
+
+          
+            <li class="nav-header">¿CÓMO VAMOS?</li>
+            <li class="nav-item">
+              <a href="{% url 'indicator:indicadores' %}" class="nav-link">
+                <i class="nav-icon fas fa-chart-line "></i>
+                <p>Indicadores</p>
+              </a>
+            </li>
+
+            {% if perms.idea.view_dashboard %}
+            <li class="nav-item">
+              <a href="/admin/" class="nav-link"  target="_blank">
+                <i class=" nav-icon fas fa-cog  text-info"></i>
+                <p>Administrador</p>
+              </a>
+            </li>
+          {% endif %}
+
+          <li class="nav-header"></li>
+          <li class="nav-item">
+          </li>
+
+
+          </ul>   
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+
+  {% block body_content %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Hola</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item">
+                  <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item active">Blank Page</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- Main content -->
+      <section class="content">
+        <!-- Default box -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Bienvenido a Verne  {{ user.email }}</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            Iniciemos con Verne
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer">
+            Footer
+          </div>
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    {% endblock body_content %}
+
+  <!-- BEGIN: Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cerrar sesión</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">¿Estás seguro de cerrar la sesión?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+              {% endif %}
+              <button class= "btn btn-primary btn-user btn-block" type="submit"> Cerrar Sesión</button>
+            </form>
+
+        </div>
+    </div>
+    </div>
+  </div>
+  
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>buho</b> media 
+      </div>                                        
+      <h6 class="admin">Copyright &copy; 2014-2019 AdminLTE.io. All rights
+      reserved.</h6>
+    </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+  <!-- BEGIN: Plugin SweetAlert2 CSS-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <!-- END: SweetAlert2 CSS-->
+    {%else%}
+     <p>No tienes permisos para estar aquí</p>
+    {% endif %}
+
+{% block extra_js %}
+{% endblock extra_js %}
+
+
+{% if messages %}
+  {% for message in messages %}
+    <script>
+        swal.fire(
+            {% if 'God Job' in message.extra_tags %}
+                "Bien hecho", //God Job
+                "{{message}}", //el Proyecto fue creado con éxito
+                "success" // icon
+                
+            {% elif 'Error' in message.extra_tags %}
+                "!Oops¡",
+                "{{message}}",
+                "error"
+
+            {% else %}
+                {
+                    text: "{{message}}",
+                    icon: "{{message.tags}}",
+                }
+            {% endif %}
+            )
+    </script>
+  {% endfor %}
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% load staticfiles %}
+<div class="modal-dialog " role="document">
+    <div class="modal-content">
+        <div class="modal-header"><br>
+            <h6 class=" "> ¿Estas seguro que deseas eliminar esta acción?</h6>
+            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+           <div class="row">
+            <div class="container">
+              {% if request.user.is_authenticated %}
+             
+              <p> Se eliminarán los puntos asignados a los siguientes usuarios:</p>
+
+              <ul>
+
+              {% for user in users %}
+           
+                <li>{{user.id_user.all|join:", "}}</li>
+             
+              {% endfor %}
+              </ul>
+
+              <div class=" text-center">
+                <form method="POST" action="{% url 'prize:delete_action' pk  %} ">{% csrf_token %}               
+                 <button type= "submit" class="btn btn-outline-danger mr-2"><i class="fas fa-trash-alt" style="color:red"></i> Si, eliminar</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Volver</button>
+                </form>
+              </div>                       
+              {% endif %}
+             </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+

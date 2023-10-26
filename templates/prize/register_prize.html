@@ -1,0 +1,91 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Asignar Premio {% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'dist/css/verne/prize/register_prize.css' %}">
+<STYLE>
+/* Estilos de loading al buscar */
+.custom-loader-color {
+	color: #fff !important;
+	font-size: 40px !important;
+}
+
+.custom-loader-background {
+	background-color: transparent !important;
+}
+
+.custom-middle-align {
+	vertical-align: middle !important;
+}
+</STYLE>
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="content-wrapper pb-5">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="{% url 'prize:visualize_prize' %}">Lista de puntos</a>
+						</li>
+						<li class="breadcrumb-item active">Redimir puntos</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content">
+		<div class="container">
+			<div class="col-md-8 container ">
+				<div class="card shadow mb-4">
+					<form id="form_creacion_asignacion_premio" class="border border-light p-5" method="POST" action="{% url 'prize:register_prize' %}" > {% csrf_token %}
+						<div class="text-center">
+							<h3 class=" title-text">Redimir puntos</h3>
+							<p>¿Una nueva actividad necesita un premio? Regístralo </p>
+							<a href="{% url 'prize:visualize_prize' %}" class="font-weight-bold text-white"> Ver lista
+								de puntos</a>
+						</div>
+
+						<div class="col-md-12">
+							{% for field in form %}
+							<div class="form-group">
+							   <label class="col-form-label text-muted" for="{{ field.auto_id }}"> {{ field.label_tag }}  </label>
+							 
+							   {{ field }}
+							   <div class="error_message" id="{{ field.id_for_label }}"> {{ field.errors }}</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+				
+						<div class="col-md-12 mt-4">
+							<button id="boton_creacion" class="btn btn-info btn-block col-md-4 container rounded-pill" type="submit"> <i
+									class="fas fa-paper-plane pr-2"></i> Redimir premio</button>
+						</div>
+						<!-- spiner loader -->
+						<div class="col-12 text-center" id='loader_crear' style='display: none;'>
+						<div class='overlay custom-loader-background'>
+							<i class='fa fa-cog fa-spin custom-loader-color'></i>
+						</div>
+						</div>
+						<!-- spiner loader -->
+					</form>
+				
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+{% endblock body_content %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/prize/register_prize.js' %}"></script>
+{% endblock extra_js %}

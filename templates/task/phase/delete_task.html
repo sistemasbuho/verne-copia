@@ -1,0 +1,54 @@
+<style>
+    .header-form{
+       font-weight: 700;
+       color: #39AEA2;
+       font-size: 25px;
+    
+    }
+    
+    .send{
+       background-color: #87499c !important;
+       color: #fff;
+    }
+    .icon-send{
+       color: #fff;
+    }
+    
+    .send:hover{
+        background-color:#fff !important;
+        color: #87499c !important;
+        font-weight: 600;
+       border: #87499c 1px solid;
+    }
+    </style>
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header header-form">
+            ELIMINAR TAREA
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body text-center">
+            <form id="form_eliminar" action="{% url 'idea:task_delete' object.id  %}">
+                <p>¿Desear eliminar la tarea de manera permanente?</p>
+                {% csrf_token %}
+            </form>
+        </div>
+        <div class="modal-footer">
+
+            <!-- spiner loader -->
+            <div class="col-12 text-center" id='loader_eliminar' style='display: none;'>
+                <div class='overlay custom-loader-background'>
+                    <i class='fa fa-cog fa-spin custom-loader-color'></i>
+                </div>
+            </div>
+            <!-- spiner loader -->
+
+            <button id="boton_eliminacion" data-align="right" class="btn btn-danger" type="submit">Si, eliminar</button>
+
+            <!-- <button id="boton_eliminacion" data-align="right" class="btn btn-danger" type="button">Si, Eliminar</button> -->
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, cancelar</button>
+        </div>
+    </div>
+</div>

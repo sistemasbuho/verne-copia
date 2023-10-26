@@ -1,0 +1,98 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Crear Actividad{% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %} 
+
+{% block extra_css %}
+  <link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/verne/activity/register_activity.css'' %}">
+{% endblock extra_css %}
+
+
+{% block body_content %}
+<div class="content-wrapper  pb-5">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'activity:view_activity' %}">Actividades</a></li>
+              <li class="breadcrumb-item active">Crear actividad</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container">     
+          <div class="col-md-8 container ">
+            <div class="card shadow mb-4"> 
+            <form class="border border-light p-5" method="POST">   {% csrf_token %}
+                <div class="text-center">
+                    <h3 class="title-text ">Crea una actividad</h3>
+                    <p>Lleva las ideas a la realidad por medio de actividades </p>
+                </div>
+                <div class="row ">
+                    <div class="col-md-8">
+                    <p class="col-form-label text-muted">{{ form.name.label }}</p>
+                      {{ form.name }}</div>
+                    <div class="col-md-4">
+                      <p class="col-form-label text-muted"> Fecha creación</p> 
+                      <div class="input-group date" id="date_picker3" data-target-input="nearest">
+                          {% render_field form.date  %}
+                        <div class="input-group-append" data-target="#date_picker3" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="col-md-12">
+                    <p class="col-form-label text-muted"></p>
+                      {{ form.description }}
+                    </div>
+                    <div class="col-md-8">
+                    <p class="col-form-label text-muted">Herramienta</p>
+                      {{ form.tool }}
+                    </div>
+                     <div class="col-md-4">
+                    <p class="col-form-label text-muted">Puntos</p>
+                      {{ form.score }}
+                    </div>
+                </div>
+
+                <p for="objetivo" class="text-muted">Ideas para evaluar</p>
+                  {% render_field form.id_idea class="form-control" id="activate_select_ideas" %}
+
+                <p for="colaborador" class="text-muted">Usuarios Invitados</p>
+                  {% render_field form.id_user class="form-control" id="activate_select_invitados" %}
+               
+                <div class="card card-header text-muted mt-5 asistencia"> Se enviarán correos a todos los invitados para notificar su asistencia</div>  
+                <button class="btn btn-info btn-block col-md-4 container rounded-pill" type="submit"> <i class="fas fa-paper-plane pr-2"></i>Crear Actividad</button>
+            </form>
+           </div>
+          </div>    
+        </div>
+     </section>
+  </div> 
+{% endblock body_content %}
+
+
+{% block extra_js %}
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/activity/register_activity.js' %}"></script>
+<!-- InputMask Fija los campos de la fecha dd/mm/yyyy -->
+<script src="{% static 'plugins/moment/moment.min.js'%}"></script>
+<script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js'%}"></script>
+<!-- Tempusdominus Bootstrap 4 activa el TimePicker-->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script>
+   //Datepicker
+    $('#date_picker3').datetimepicker({
+      format: 'DD/MM/YYYY'
+    })
+</script>
+{% endblock extra_js %}

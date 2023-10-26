@@ -1,0 +1,402 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Actualizar{% endblock titulo %}
+{% load widget_tweaks %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/verne/idea/update_idea.css' %}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% endblock extra_css %}
+
+
+{% block body_content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active">Actualizar</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-3 mr-3 pb-5">
+      <div class="container  col-lg-11 col-md-11 col-sm-8  col-xs-8 ">
+
+        {% for idea in ideas %}
+
+          <div class=" py-3 d-flex flex-row align-items-center justify-content-between ">
+           <div class="btn-group dropright">
+             <button type="button" class="btn send dropdown-toggle rounded-pill" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Detalles Fases
+             </button>
+             <div class="dropdown-menu">
+              {% for item in phase_doc %}
+                <a class="dropdown-item" href="{% url 'idea:phase_documentation' idea.id item.id_phase %}"><i class="fa fa-folder-open"></i> 
+                {{item.id_phase__name}}
+                </a>	
+                <div class="dropdown-divider"></div>
+              {% endfor %}
+             </div>
+           </div>
+
+             <div class="ml-auto  mr-4">
+              {% if perms.idea.view_dashboard %}  
+
+                {% if idea.current_phase == 0 %}
+                  <a href="{% url 'idea:question' idea.id %}" class="btn btn-light" type="button"  data-toggle="tooltip" data-placement="bottom" title="Preguntas Pain">
+                    <span class="btn-inner--icon "><i class="fa fa-question"></i> </span>
+                  </a>
+
+                  {% elif idea.current_phase == 6%}
+
+                  <button onclick="open_modal_reactive('{% url 'idea:restore' idea.id %}')" 
+                    class="btn btn-light " type="button" data-toggle="tooltip" data-placement="right" title="Restaurar Idea">
+                  <span class="btn-inner--icon"><i class="fa fa-times"></i></span>   
+                  </button>
+
+                  {% else %}
+          
+                <button onclick="open_modal_phase_idea('{% url 'idea:change' idea.id %}')" class="btn  btn-light ml-auto " type="button" data-toggle="tooltip" data-placement="bottom" title="Cambiar de Fase">
+                  <span class="btn-inner--icon">
+                    <i class="fas fa-share-square"></i>
+                  </span> 
+                </button>
+
+                <button onclick="open_modal_inactive_idea('{% url 'idea:inactive' idea.id %}')" class="btn  btn-light " type="button" data-toggle="tooltip" data-placement="bottom" title="Enviar a Banco de Ideas">
+                  <span class="btn-inner--icon"><i class='fas fa-trash-alt icon-final'></i></span>   
+                </button>
+
+                <!--<button onclick="open_modal_fastrack('{% url 'idea:fastrack' idea.id %}')" data-toggle="tooltip" data-placement="bottom" title="Enviar por fastrack" class="btn  btn-light " type="button">
+                  <span class="btn-inner--icon"><i class="fas fa-bolt"></i></span>-->   
+                </button>
+
+                  <!-- <div class="col-md-12">
+                  <a href="{% url 'idea:upload' idea.id %}" class="btn  btn-light " type="button">
+                      <span class="btn-inner--icon"><i class="fa fa-link"></i>Subir Archivo</span>   
+                    </a></div> -->
+      
+              {% endif %}
+           {% endif %}
+           
+           <a href="{% url 'idea:ticket' idea.id %}" target="_blank" class="btn  btn-light " type="button" data-toggle="tooltip" data-placement="bottom" title="Exportar datos">
+             <span class="btn-inner--icon"><i class="fas fa-download"></i> </span>   
+           </a>
+           </div>
+          </div>
+
+        <div class="col-md-12 row" > 
+          <div class="col-md-4"> 
+            <div class="card shadow general ">             
+              <div class="card-body">
+                <p class=" font-weight-bold card-title-idea"> Idea {{idea.id}}
+                    <span class="ml-4 badge bg-light font-weight-bold">
+                      {% if idea.current_phase == 1 %}
+                       Recepción
+                       {% elif idea.current_phase == 2 %}
+                       Nuevas
+                       {% elif idea.current_phase == 3 %}
+                        En desarrollo
+                       {% elif idea.current_phase == 4 %}
+                       Implementadas
+                       {% elif idea.current_phase == 5 %}
+                      Seguimiento
+                       {% elif idea.current_phase == 6 %}
+                       Banco de Ideas
+                      {% endif %}
+                      </span>                         
+                </p>
+                <p> Fecha de creación: <span class="font-weight-bold ml-2"> {{idea.creation_date}} </span> </p>
+                <p> Estado: <span class="badge bg-light ml-2"> {{ idea.is_active|yesno:"Activo,En Ejecución,Inactivo" }} </span></p>
+
+              </div>
+            </div>
+
+            <form method="post">{% csrf_token %}
+
+            <div class="card shadow mb-4 pb-3 rounded col-md-12">
+              <div class="card-body">	
+                <p class=" header-form ">DATOS DE INNOVACIÓN</p>
+                <div class="row">
+
+                <div class="col-md-12 ">
+                  <label class="col-form-label text-muted ">{{ form.priority.label }}</label>
+                  {{ form.priority }}
+                </div>
+
+                <div class="col-md-12">
+                  <label class="col-form-label text-muted">Tipo Innovación</label>
+                  {{ form.innovation_type }}
+                </div>
+              
+                </div>    
+              </div>                
+            </div>
+
+
+              <div class="card rounded ">
+                <div class="card-body indicadores">
+                  <p class=" header-form ">INDICADORES</p>
+                  <div class="row">
+
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.roi.label }}</label>
+                      {{ form.roi }}
+                    </div>
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.score_idea.label }}</label>
+                      {{ form.score_idea }}
+                    </div>
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.price_score.label }}</label>
+                      {{ form.price_score }}
+                    </div>
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.gain.label }}</label>
+                      {{ form.gain }}
+                    </div>
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.investment.label }}</label>
+                        {{ form.investment }}
+                    </div> 
+
+                    <div class="col-md-12">
+                      <label class="col-form-label text-muted">{{ form.total_investment.label }}</label>
+                      {{ form.total_investment }}
+                    </div>  
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">   
+                <div class="historial">
+                  <!-- Button trigger modal -->
+                  <button onclick="open_modal_historial('{% url 'idea:record' idea.id %}')"  type="button" class="btn btn-historial rounded-pill btn-sm">
+                    Ver historial
+                  </button>
+                </div>     
+              </div>
+
+
+            </div>
+
+    
+              
+            <div class ="col-md-8">             
+                <div class="card shadow mb-4 pb-3 rounded">
+                  <div class="card-body">	
+                    <p class=" header-form ">DATOS GENERALES</p>	      
+                  <div class="col-md-12">
+                    <label class="col-form-label text-muted ">{{ form.title.label }}</label>
+                    {{ form.title }}
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="col-form-label text-muted">{{ form.description.label }}</label>
+                    {{ form.description }}
+                  </div>
+
+                  
+
+                  <!--<div class="col-md-12 pt-2">
+                    <label class="col-form-label text-muted">{{ form.frente.label }}</label>
+                  {% render_field form.frente class="form-control" id="editar_frente" %}
+                  </div>-->
+
+                  <!--<div class="col-md-12 pt-2">
+                    <label class="col-form-label text-muted">{{ form.subregion.label }}</label>
+                  {% render_field form.subregion class="form-control" id="editar_subregion" %}
+                  </div>-->
+
+                  
+
+                  <div class="col-md-12 pt-2">
+                    <label class="col-form-label text-muted">Autor(es)</label>
+                  {% render_field form.collaborator class="form-control" id="editar_colaborador" %}  
+                  </div>
+
+                  
+                 
+
+                  <div class="col-md-12 pt-2">
+                    <label class="col-form-label text-muted">Encargado</label>
+                  {% render_field form.asigned class="form-control" id="edit_asigned" %}  
+                  </div>
+                  
+
+                  <div class="col-md-12 pt-2">
+                    <label class="col-form-label text-muted">{{ form.feedback.label }}</label>
+                      {{ form.feedback }}
+                  </div>  
+                  
+
+                  <div class="col-md-12 pt-2 pr-3">
+                    <label class="col-form-label text-muted">Referenciar Ideas</label>
+                  {% render_field form.id_merge class="form-control" id="editar_merge" %}
+                  </div>
+            
+                <div class="col-md-12">
+                  <label class="col-form-label text-muted">{{ form.link_documentation.label }}</label>
+                    {{ form.link_documentation }}
+                </div>   
+
+                
+                <div class="col-md-12">
+                  <label class="col-form-label text-muted">{{ form.primer_documento.label }}</label>
+                  {{ form.primer_documento.value }}<br>
+                    {{ form.primer_documento }}
+                </div>  
+
+
+                <div class="col-md-12">
+                  <label class="col-form-label text-muted">{{ form.segundo_documento.label }}</label>
+                  {{ form.segundo_documento.value }}<br>
+                    {{ form.segundo_documento }}
+                    
+                </div>  
+
+
+                <div class="col-md-12">
+                  <label class="col-form-label text-muted">{{ form.tercer_documento.label }}</label>
+                  {{ form.tercer_documento.value }}<br>
+                    {{ form.tercer_documento }}
+                </div>  
+                </div>
+                </div>
+              </div> 
+
+                <div class="text-center pt-3 pb-4 col-md-12">
+                  <button class="btn text-center rounded-pill send pl-3" type="submit" value="Actualizar"><i class="fas fa-paper-plane pr-2"></i> Guardar cambios</button>
+                  <a class="btn btn-outline-secondary rounded-pill" href="{% url 'idea:evaluate' %}"> Regresar </a>	
+                </div>
+              </form>
+            </div>
+        {% endfor %}
+                               
+          <div class="card shadow mb-4 rounded">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+                <p class=" header-form ">TAREAS POR IDEA</p>
+                <div class="text-right ml-auto">
+                  <button id="abrir_modal_creacion" class="btn send rounded-pill btn-md"> <i class="fas fa-plus pr-2"></i> Crear tarea</button>
+              </div>
+            </div>
+
+              <div class="card-body ml-4 mr-5">
+                  <div class="row">
+                  <div class="col-12 col-xl-5 col-lg-6 col-sm-6  pb-3">
+                      <div class="form-group">
+                          <label for="search_nombre">Nombre</label>
+                          <div class="input-group">
+                              <input placeholder="Ingresa el texto" id="search_nombre"
+                                  type="text" class="form-control"
+                                  aria-describedby="nombreHelp" style="width: 100%;">
+                          </div>
+                          <small id="nombreHelp" class="form-text text-muted">Escribe y
+                              presiona Enter para filtrar</small>
+                      </div>
+                  </div>
+                  
+                  <div class="col-12 col-xl-4 col-lg-6 col-sm-6 pb-3">
+                      <label>Estado:</label>
+                      <div class="form-group d-flex align-items-center">
+                          <select id="search-estado" class="form-control">
+                              <option value="" selected>Todos.. </option>
+                              <option value="False">Inactivo</option>
+                              <option value="False">En Ejecución</option>
+                              <option value="True">Activo</option>
+                          </select>
+                      </div>
+                  </div>
+
+               
+                </div>
+            
+              <div class="table-responsive ">
+                  <table id="tabla_listar" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Tarea</th>
+                              <th>Encargado</th>
+                              <th>Completado</th>
+                              <th>Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- Carga con el ajax-->
+                      </tbody>                      
+                  </table>
+              </div>
+              </div>
+            </div>
+     
+
+        </div>
+	   </section>
+
+		<!-- Este div forma parte del boton de comentario -->
+		<div class="modal fade" id="ModalInactive" role="dialog"></div>
+    <div class="modal fade" id="ModalPhase" role="dialog"></div>
+    <div class="modal fade" id="ModalReference" role="dialog"></div>
+    <div class="modal fade" id="ModalReactive" role="dialog"></div>
+    <div class="modal fade" id="ModalFastrack" role="dialog"></div>
+    <div class="modal fade" id="ModalHistorial" role="dialog"></div>
+
+    <!-- BEGIN: Modales -->
+
+    <!-- Crear Regla -->
+    <div class="modal fade" id="creacion" role="dialog"></div>
+
+    <!-- Editar Regla -->
+    <div class="modal fade" id="edicion" role="dialog"></div>
+
+    <!-- eliminacion Regla -->
+    <div class="modal fade" id="eliminacion" role="dialog"></div>
+    <!-- END: Modales  -->
+
+	</div>	
+</div>
+
+{% endblock body_content %}
+
+{% block extra_js %}
+
+<!-- BEGIN: Page select2 JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/js/select2.min.js"></script>
+
+<!-- Librería español -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.11/js/i18n/es.js"></script>
+<script src="{% static 'dist/js/verne/task/task_idea.js' %}"></script>
+<script src="{% static 'dist/js/verne/idea/modals_idea.js' %}"></script>
+
+<script>
+
+
+  
+function open_modal_historial(url) {
+  $('#ModalHistorial').load(url, function() {
+      $(this).modal('show');
+  });
+};
+
+
+
+
+</script>
+
+{% endblock extra_js %}

@@ -1,0 +1,284 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Detalles Puntos{% endblock titulo %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'dist/css/verne/prize/score_user.css' %}">
+{% endblock extra_css %}
+
+
+{% block body_content %}
+<div class="wrapper">
+  <div class="content-wrapper pb-4 pr-5 pl-5">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              {% if perms.prize.rol_admin_view %}
+
+              <li class="breadcrumb-item"><a href="{% url 'prize:visualize_user' %}">Lista de usuarios</a></li>
+              <li class="breadcrumb-item active"> Actividad Reciente </li>
+              {% endif %}
+            </ol>
+          </div>
+        </div>
+    </section>
+
+    <section class="content">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-5">
+            <div class="card general">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+              <span class="m-0 font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" id="dropdownMenuLink">Datos Generales</span>
+
+              <div class="dropdown no-arrow ml-auto">
+                 <span class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+                 </span>
+
+                 
+                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" x-placement="bottom-end" style="position: absolute; transform: translate3d(-118px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  {% if perms.prize.rol_admin_view %}
+                    <div class="dropdown-header">Lista de acciones:</div>
+                    <a onclick="open_modal_inactive_user('{% url 'prize:inactive_user' id_user %}')" class="btn btn-light text-right" type="button"><i class="fas fa-times pr-1"></i> Inactivar usuario</a>
+                    <a onclick="open_modal_club('{% url 'prize:club' id_user %}')" class="btn btn-light text-right" type="button"><i class="fas fa-check pr-1"></i> Inscribir al club </a>
+                  {% endif %}
+                  <a href="{% url 'users:user_profile' %}" class="btn btn-light text-right" type="button"><i class="fas fa-user pr-3"></i>Ver mi perfil</a>
+                 </div>
+
+              </div>
+         
+              </div>
+
+              {% for user in detail_user %}
+
+              <div class="avatar-img">
+                <img src="{{user.id_user.profile.avatar.url}}" alt="" class="avatar">
+              </div>
+
+              <div class="row datos">
+                <div class="col-md-7 datos-name">
+                    <label>Usuario</label>
+                    <p>{{user.id_user.email }}</p>
+         
+                    <label>Categoría</label>
+                    <p>{{user.get_category_display }}</p>
+            
+                </div>
+
+                <!-- <div class="col-md-5 sello-img">
+                    <p></p>
+                    {% if user.inscription_club == 1 %}
+                    <img src="{% static 'dist/img/activas.jpg' %}" alt="" class="sello">
+                    {% else %}
+                    <img src="{% static 'dist/img/activas.jpg' %}" alt="" class="sello">
+                    {% endif %}
+             
+                </div> -->
+              </div>
+
+              <div class="col-md-12">
+                <p></p>
+              </div>
+              
+              <!-- <div class="card-footer pie-card">
+                <span class="mr-5 text-sm"></span>
+                <a type="button" class="btn btn-club rounded-pill btn-sm" href="https://docs.google.com/forms/d/e/1FAIpQLSfcJSqAnVVt5h49RKUTl0CfjdT5GjImcyp1U0Er6DfOpacMsA/viewform" target="_blank">
+                  
+                </a>                 
+              </div> -->
+          </div>
+        </div>
+
+          <div class="col-md-7 card prizes-card">
+            <div class="card-header title-prizes">
+              <p class="font-weight-bold">Tus Logros</p>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">         
+                <div class="prizes">
+                  <div class="progress" data-value='{{user.quantity }}'>
+                    <span class="progress-left">
+                                  <span class="progress-bar border-primary"></span>
+                    </span>
+                    <span class="progress-right">
+                                  <span class="progress-bar border-primary"></span>
+                    </span>
+                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                      <div > <p class="h2 font-weight-bold">{{user.quantity }}</p> <p class="text-center">Puntos acumulados</p></div>
+                    </div>
+                  </div>
+  
+                  <div class="progress-prize" data-value='{{total_prize}}'>
+                    <span class="progress-left">
+                                  <span class="progress-bar border-warning"></span>
+                    </span>
+                    <span class="progress-right">
+                                  <span class="progress-bar border-warning"></span>
+                    </span>
+                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                      <div > <p class="h2 font-weight-bold">{{total_prize}}</p> <p class="text-center title-circle">Puntos redimidos</p></div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </div>
+
+              <div class="col-md-6">   
+                <div class="premios">
+                  <!-- Button trigger modal -->
+                  <a type="button" class="btn btn-historial rounded-pill btn-sm" href="{% url 'prize:visualize_prize' %}" >
+                    Redimir puntos 
+                  </a>
+                </div>     
+              </div>
+
+ 
+
+              <div class="col-md-6">   
+                <div class="historial">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-historial rounded-pill btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                    Ver historial
+                  </button>
+                </div>     
+              </div>
+            </div>
+
+
+   
+
+              <!-- Modal -->
+              <div class="modal fade  bd-example-modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <p class="modal-title" id="exampleModalLongTitle">
+                        <a class="m-0 font-weight-bold text-primary">Historial de premios redimidos</a></p>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                       <div class="card-body table-responsive">
+                         <table id="example2" class="table  table-hover dataTable">
+                         <thead>
+                         <tr>
+                           <th>Premio</th>
+                           <th> Puntos redimidos</th>
+                           <th> Fecha</th>
+                           {% if perms.prize.rol_admin_view %}
+                           <th> Opciones</th>
+                           {% endif %}     
+                         </tr>
+                         </thead>
+                         <tbody>
+                         {% for prize in redem_prize %}
+                           <tr>                       
+                             <td class="td-prize"><img src="{{ prize.id_prize.image.url }}" class="premio_logo pr-2"> {{ prize.id_prize }}</td>
+                             <td>{{ prize.id_prize.score }}</td>
+                             <td>{{ prize.date }}</td>
+              
+                              {% if perms.prize.rol_admin_view %}
+                             <td>
+                             <button onclick="open_modal_delete_prize('{% url 'prize:delete_prize' prize.id %}')"class="btn btn-light"type="button">
+                             <span class="btn-inner--icon"><i class="far fa-trash-alt"></i></span> 
+                             </button>
+                             </td>
+                             {% endif %}                       
+                           </tr>
+                         {% endfor %}             
+                         </tbody>
+                       </table>
+                       </div>
+                    </div>
+       
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-md-12 card mb-5">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+      <a class="m-0 font-weight-bold text-primary">Actividad Reciente</a>
+       </div>
+       <div class="card-body table-responsive">
+         <table id="example1" class="table  table-hover dataTable">
+           <thead>
+           <tr>
+             <th> Logro</th>
+             <th> Puntos</th>
+             <th> Descripción</th>
+             <th> Idea o Actividad</th>
+             <th> Fecha</th>
+              {% if perms.prize.rol_admin_view %}
+             <th> Opciones</th>
+             {% endif %}
+           </tr>
+           </thead>
+           <tbody>
+
+           {% for user in score_user %}
+             <tr>    
+               <td>{{ user.name }}</td>
+               <td>{{ user.score }}</td>
+               <td>{{ user.description }}</td>
+               {% if user.id_idea %}
+               <td>{{ user.id_idea }}</td>
+               {% elif user.id_activity %} 
+               <td>{{ user.id_activity }}</td>
+               {% else %}
+               <td>Ninguna</td>                      
+               {% endif %}
+               <td>{{ user.date|date:"Y-m-d"}}</td>
+               {% if perms.prize.rol_admin_view %}
+               <td>
+               <button onclick="open_modal_delete_action('{% url 'prize:delete_action' user.id %}')" class="btn btn-light " type="button">
+                  <span class="btn-inner--icon"><i class="far fa-trash-alt"></i></span>
+               </button>
+               </td>
+               {% endif %}
+             </tr>
+           {% endfor %}             
+           </tbody>
+         </table>
+     </div>
+        </div>
+ 
+  
+
+      </div>
+    </section>
+
+
+  
+  </div>
+</div>
+<div class="modal fade" id="ModalDeleteAction" role="dialog"></div>
+<div class="modal fade" id="ModalDeletePrize" role="dialog"></div>
+<div class="modal fade" id="ModalInactiveUser" role="dialog"></div>
+<div class="modal fade" id="ModalUserClub" role="dialog"></div>
+{% endblock body_content %}
+
+
+{% block extra_js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/leguas/details_leguas.js' %}"></script>
+
+{% endblock extra_js %}

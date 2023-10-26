@@ -1,0 +1,167 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Actualizar{% endblock titulo %}
+{% load widget_tweaks %} 
+
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/verne/idea/phases.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+
+{% block body_content %}
+
+<div class="wrapper">
+  <div class="content-wrapper">
+    
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active">Detalle Fase</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-3 mr-3 pb-5">
+      <div class="container  col-lg-10 col-md-10 col-sm-8  col-xs-8 ">
+           <div class="card shadow mb-4 ">
+
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+                    <p class=" header-form ">TAREAS POR FASE</p>
+                    <!-- <p class="badge badge-info" style="margin:0">Tienes <i>{{count}}</i> tareas incompleta{{ count|pluralize:"s" }}</p> -->
+                </div>
+
+                <div class="card-body ml-4 mr-5">
+                    <div class="row">
+                    <div class="col-12 col-xl-5 col-lg-6 col-sm-6  pb-5">
+                        <div class="form-group">
+                            <label for="search_nombre">Nombre</label>
+                            <div class="input-group">
+                                <!-- <div class="input-group-prepend">
+                                    <span class="input-group-text"><i
+                                            class="fa fa-search"></i></span>
+                                </div> -->
+                                <input placeholder="Ingresa el texto" id="search_nombre"
+                                    type="text" class="form-control"
+                                    aria-describedby="nombreHelp" style="width: 100%;">
+                            </div>
+                            <small id="nombreHelp" class="form-text text-muted">Escribe y
+                                presiona Enter para buscar</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-xl-4 col-lg-6 col-sm-6 pb-5">
+                        <label>Estado:</label>
+                        <div class="form-group d-flex align-items-center">
+                            <select id="search-estado" class="form-control">
+                                <option value="" selected>Todos.. </option>
+                                <option value="False">Inactivo</option>
+                                <option value="True">Activo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xl-3 col-lg-6 col-sm-6 text-center align-self-center  pb-5">
+                        <button id="abrir_modal_creacion" class="btn send rounded-pill btn-md"> <i class="fas fa-plus pr-2"></i> Crear tarea</button>
+                    </div>
+                  </div>
+              
+                <div class="table-responsive ">
+                    <table id="tabla_listar" class="table table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th>Tarea</th>
+                                <th>Encargado</th>
+                                <th>Completado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Carga con el ajax-->
+                        </tbody>                      
+                    </table>
+                </div>
+                </div>
+            </div>
+                    
+            <div class="card shadow mb-4 ">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+                    <p class=" header-form ">DOCUMENTACIÓN FASE</p>
+                    <!-- <p class="badge badge-info" style="margin:0">Tienes <i>{{count}}</i> tareas incompleta{{ count|pluralize:"s" }}</p> -->
+                </div>
+
+                <div class="card-body ml-4 mr-5">
+                <form method="post" class="">{% csrf_token %}
+            
+                        <div class="col-md-12">
+                        <label class="col-form-label text-muted ">{{ form.description.label }}</label>
+                        {{ form.description }}
+                        </div>
+        
+                        <div class="col-md-12 pt-2">
+                        <label class="col-form-label text-muted">{{ form.feedback.label }}</label>
+                        {{ form.feedback }}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="col-form-label text-muted">{{ form.link_documentation.label }}</label>
+                            {{ form.link_documentation }}
+                        </div>
+        
+                    
+                    <div class="text-center pt-4">
+                        <button class="btn text-center rounded-pill send pl-3" type="submit" value="Actualizar"><i class="fas fa-paper-plane pr-2"></i> Guardar cambios</button>
+                        <a class="btn btn-outline-secondary rounded-pill" href="{% url 'idea:evaluate' %}"> Regresar </a>	
+                    </div>
+                </form>
+                </div>
+                       
+            </div>
+        </div>
+        
+    </section>
+
+
+
+	</div>	
+</div>
+
+
+<!-- BEGIN: Modales -->
+
+<!-- Crear Regla -->
+<div class="modal fade" id="creacion" role="dialog">
+
+</div>
+
+<!-- Editar Regla -->
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+
+<!-- eliminacion Regla -->
+<div class="modal fade" id="eliminacion" role="dialog">
+
+</div>
+<!-- END: Modales  -->
+
+{% endblock body_content %}
+
+{% block extra_js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+
+<script src="{% static 'vendor/select2/dist/js/select2.full.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'dist/js/verne/task/task.js' %}"></script>
+
+{% endblock extra_js %}

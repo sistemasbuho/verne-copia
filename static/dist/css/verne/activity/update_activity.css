@@ -1,0 +1,44 @@
+.header-form{
+	font-weight: 700;
+	color: #39AEA2 !important;
+	font-size: 25px;
+
+}
+.agendar{
+    background-color:#87499c !important;
+    color: #fff;
+}
+
+.agendar:hover{
+    background-color:#fff !important;
+    color: #87499c;
+    font-weight: 600;
+    border: #87499c 1px solid;
+}
+
+.icon-link{
+    color: #87499c;
+}
+.icon-time{
+    color: red;
+}
+
+.send{
+    background-color:#87499c !important;
+    color: #fff;
+    font-weight: 600;
+
+}
+
+.send:hover{
+ 
+
+    background-color:#fff !important;
+    color: #87499c;
+    border: 1px solid #87499c ;
+    font-weight: 600;
+
+}
+
+
+

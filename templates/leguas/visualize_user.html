@@ -1,0 +1,78 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block titulo %}Verne | Gestión de Leguas {% endblock titulo %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+   <link rel="stylesheet" href="{% static 'dist/css/verne/prize/prize_leguas.css' %}">
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="wrapper ml-4 mr-4">
+  <div class="content-wrapper pb-3">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+              <p class="dasboard-title ">PUNTOS DE INNOVACIÓN</p>
+          </div>
+          <div class="col-sm-12 ">
+                <a class="btn agendar rounded-pill" href="{% url 'prize:register_prize' %}"> <i class="fas fa-award pr-2"></i> Redimir puntos </a>
+                <a class="btn leguas rounded-pill" href="{% url 'prize:score_user_register' %}"> <i class="fas fa-trophy pr-2"></i>Asignar puntos </a>         
+          </div>
+        </div>
+    </section>
+
+    <section class="content">
+      <div class="">
+        <div class="col-md-12 container ">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <table id="example1" class="table  table-hover dataTable">
+                <thead>
+                <tr>
+                  <th> Nº </th> 
+                  <th> Usuario</th>
+                  <th> Grupo asignado</th>
+                  <th> Puntos Totales</th>       
+                  <!--<th> Club Verne</th>-->
+                  <th> Detalles</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                  <tr>
+                      <td>{{ user.id_user.id }}</td> 
+                      <td class="users">{{ user.id_user.email }}</td>
+                      
+                      <td>{{ user.get_category_display}}</td>
+                      <td>{{ user.quantity }}</td>
+                      <!--<td class="td-sello">{% if user.inscription_club == 1 %}
+                         <img src="{% static 'dist/img/sello.png' %}" class="sello">
+                          {% else %}
+                          <img src="{% static 'dist/img/nosello.png' %}" class="sello">
+                          {% endif %}
+                      </td>-->
+                      <td> 
+                        <a class="btn rounded-pill btn-sm boton-ver" href="{% url 'prize:details_score' user.id_user.pk %}">
+                          <i class="fas fa-arrow-right pr-1"></i></i> Ver más</a>
+                      </td>
+                  </tr>
+                {% endfor %}             
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock body_content %}
+
+{% block extra_js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/leguas/visualize_leguas.js' %}"></script>
+{% endblock extra_js %}

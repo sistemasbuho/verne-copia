@@ -1,0 +1,49 @@
+.header-form{
+	font-weight: 700;
+	color: #39AEA2;
+	font-size: 25px;
+
+}
+.send{
+	background-color: #87499c !important;
+	color: #fff;
+}
+.icon-send{
+	color: #fff;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #87499c !important;
+    font-weight: 600;
+	border: #87499c 1px solid;
+}
+
+
+
+.btn-info {
+    color: #fff;
+    background-color: #87499c;
+    border-color: #87499c;
+}
+
+.btn-info:hover {
+    color: #87499c;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #39AEA2;
+    border-color: #39AEA2;
+}
+
+.fa-times{
+	color: red;
+}
+
+.fa-check{
+	color: green;
+}

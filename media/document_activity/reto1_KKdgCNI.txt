@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+class Reto1 {
+    private final Scanner input = new Scanner(System.in);
+    
+    public String read(){
+        return this.input.nextLine();
+    }
+    
+
+    public void run(){
+        String valorIngresado=read();
+        String[]datosIngresado=valorIngresado.split(" ");
+        
+        double peso= Double.parseDouble(datosIngresado[0]);
+        double altura= Double.parseDouble(datosIngresado[1]);
+        double edad= Double.parseDouble(datosIngresado[2]);
+    
+
+    if((peso >= 0 && peso <= 150)&& (altura >= 0.1 && altura <= 2.5)&&(edad >= 0 && edad <= 110)){
+            double imc=peso/(altura*altura);
+            String mensaje=" ";
+
+            if (imc < 22 && edad <= 45 ){
+                mensaje = " Bajo";
+
+            }else if(imc >= 22 && edad <= 45){
+                mensaje =  " Medio";
+
+            }else if(imc < 22 && edad > 45){
+                mensaje =  " Medio";
+
+            }else if(imc >= 22 && edad >45){
+                mensaje = " Alto";
+            }
+            System.out.println(String.format("%.2f", imc) + mensaje);
+        } else {System.out.println("ERROR");}
+    
+   }
+}

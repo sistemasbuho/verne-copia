@@ -1,0 +1,799 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!--====== Title ======-->
+    <title>Verne 2.0 - Plataforma de ideas</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="{% static 'assets_landing_page/images/favicon.ico' %}" type="image/png"> 
+    <!--====== Animate CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/animate.css' %}">  
+    <!--====== Magnific Popup CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/magnific-popup.css' %}">   
+    <!--====== Slick CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/slick.css' %}">  
+    <!--====== Line Icons CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/LineIcons.2.0.css' %}">  
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/bootstrap-4.5.0.min.css' %}">
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/default.css' %}">
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" href="{% static 'assets_landing_page/css/style.css' %}"> 
+</head>
+
+<body>
+    
+    <!--====== PRELOADER PART START ======-->
+    <div class="preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====== PRELOADER PART ENDS ======-->
+    
+    <!--====== HEADER PART START ======-->
+
+    <style>
+        .logo_principal{
+            /* width: 360px; */
+        }
+    </style>
+    
+    <header class="header-area">
+        <div class="navbar-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand logo- href="index.html">
+                                {% for logo in menu_logo%}
+                                <img src="{{logo.logo.url}}" class="logo_principal" alt="Logo">
+                                {% endfor %}
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+
+                            
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ml-auto">
+                                    {% for item in menu %}
+                                    {% if item.items == "Inicio" %}
+                                    <li class="nav-item active">
+                                        <a class="page-scroll" href="#home">{{item.items}}</a>
+                                    </li>
+                                    {% elif item.items == "Explora" %}
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#features">{{item.items}}</a>
+                                    </li>
+
+                                    {% elif item.items == "Envía tu idea" %}
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#form-idea">{{item.items}}</a>
+                                    </li>
+                                    {% elif item.items == "Procesos" %}
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#about">{{item.items}}</a>
+                                    </li>
+                                    {% elif item.items == "Equipo" %}
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#team">{{item.items}}</a>
+                                    </li>
+                                    
+                                    {% endif %}
+                                    {% endfor %}
+                                    
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                            {% for item in menu %}
+                            {% if item.items == "Ingresar" %}
+                            <div class="navbar-btn d-none d-sm-inline-block">
+                                <a class="main-btn" data-scroll-nav="0" href="{% url 'singin' %}" rel="nofollow">{{item.items}}</a>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </nav> <!-- navbar -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        </div> <!-- navbar area -->
+        
+        <div id="home" class="header-hero bg_cover" style="background-image: url({% static 'assets_landing_page/images/banner-bg.svg' %});padding:140px;">
+            <div class="container">
+                {% for banner in banner_header %}
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="header-hero-content text-center">
+                            <h2 class="header-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.5s">{{banner.header_title}}</h2>
+
+                            <h3 class="header-sub-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">{{banner.description}}</h3>
+                        </div> <!-- header hero content -->
+                    </div>
+                </div> <!-- row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="header-hero-image text-center wow fadeIn" data-wow-duration="1.3s" data-wow-delay="1.4s">
+                            <img src="{{ banner.image_banner.url}}" alt="hero" ><br>
+                           
+                        </div> <!-- header hero image -->
+                    </div>
+                </div> <!-- row -->
+                {% endfor %}
+                
+            </div> <!-- container -->
+            <div id="particles-1" class="particles"></div>
+        </div> <!-- header hero -->
+    </header>
+    
+    <!--====== HEADER PART ENDS ======-->
+        
+    <!--====== SERVICES PART START ======-->
+    <style>
+    .texto{
+        font-weight: 100;
+    }
+    .single-services{
+     height: 422px;
+     }
+
+     .footer-contianer{
+        margin-top: 17.5rem!important;
+     }
+    </style>
+
+
+<!--====== FORM REGISTER START ======-->
+<section id="form-idea" class="services-area pt-120 pb-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center mb-5">
+                <div class="line m-auto"></div>
+                <h3 class="title text-center mb-4">¡Cuéntanos tu idea!</h3>
+                <h4 class="pt-2 pb-2 texto">Si encontraste un pain sin resolver o una oportunidad para mejorar algún
+                    proceso o producto, no lo dejes pasar y cuéntanos aquí abajo.
+                </h4>
+                
+
+            </div>
+
+            <div class="col-lg-5 nave">
+                <div class="text-center pb-4">
+                    <img src="{% static 'dist/img/nave.svg' %}" class="verne"> 
+                    
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+
+                <div class="subscribe-area wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeIn;">
+                    
+                        <form class="border border-light " method="POST"> {% csrf_token %}
+                            <div class="row">
+
+                                <label for="title" class="font-weight-bold">Título</label>
+                                {{ form.title }}
+        
+                                <label for="textarea" class="font-weight-bold pt-2">Descripción</label>
+                                {{ form.description }}
+    
+                                <div class="col-md-6">
+                                    <label for="external_name" class=" font-weight-bold pt-2">Nombre autor</label>
+                                    {{ form.external_name }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="external_email" class="font-weight-bold pt-2">Correo</label>
+                                    {{ form.external_email }}
+                                </div>
+
+  
+                                <p class="text-muted mt-3 mb-3 texto-terms">
+                                    {{ form.conditions }} 
+                                    <i> Acepto los términos y condiciones para el uso de las ideas. 
+                                        <a class="terminos font-weight-bold" data-toggle="modal" data-target="#exampleModalCenter">Conócelos aquí</a> </i></p>
+                    
+                                <!-- Modal T&C-->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">TÉRMINOS Y CONDICIONES</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>buho TM declara que protege los datos personales suministrados por los titulares de dicha
+                                        información en virtud de lo dispuesto por la LEY 1581 DE 2012. los datos recopilados por buho TM
+                                        son utilizados para uso interno en los términos dados en la autorización por el titular del dato.
+                                        </p>
+                    
+                                        <p> En consecuencia de lo anterior, autorizo expresamente de manera libre, previa, voluntaria y
+                                        debidamente informada a buho TM, para que haga uso de los datos de acuerdo con las finalidades y
+                                        condiciones mencionadas en el aviso de privacidad, el cual declaro conocer y aceptar.</p>
+                                        <p>Todas las ideas ingresadas a Verne y trabajadas como parte del sistema de innovación por el buho
+                                        lab son propiedad de buho media.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <button class="btn-send btn btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i> Enviar idea</button>
+                            </div>
+                          </form>
+                     </div>     
+                </div>
+
+            </div>
+        </div>
+    </div>    
+</section>
+<!--====== FORM REGISTER PART ENDS ======-->
+
+ 
+    <!--====== SERVICES PART START ======-->
+
+    <section id="features" class="services-area pt-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-title text-center pb-40">
+                        <div class="line m-auto"></div>
+
+                        {% for title in header_section_explore%}
+                        <h3 class="title mb-3">{{title.title}}</h3>
+                             <h4 class="texto"><span>{{title.description}}</span></h4>
+                        {% endfor %}
+
+                    </div> <!-- section title -->
+                </div>
+            </div> <!-- row -->
+            <div class="row justify-content-center">
+
+                {% for card in explore_section %}
+                <div class="col-lg-3 col-md-7 col-sm-8">
+                    <div class="single-services text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <div class="services-icon">
+                            <img class="shape" src="{% static 'assets_landing_page/images/services-shape.svg' %}" alt="shape">
+                            <img class="shape-1" src="{{ card.card_image.url}}" alt="shape">
+                           
+                        </div>
+                        <div class="services-content mt-30">
+                            <h4 class="services-title">{{card.card_title}}</h4>
+                            <p class="text">{{card.card_description}}</p>
+                        </div>
+                    </div> <!-- single services -->
+                </div>
+                {% endfor%}
+
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+    
+    <!--====== SERVICES PART ENDS ======-->
+
+
+       
+    
+
+
+    <!--====== ABOUT PART START ======-->
+
+    <section id="about" class="about-area pt-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-title text-center">
+                        <h3 class="title mb-3 ">Conoce el proceso</h3>
+                        <h4 class="texto"> <span>Conoce un poco más de como llevamos tu idea de la imaginación a la realidad </span> </h4>           
+                        </div> <!-- about content -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- container -->
+    </section>
+
+    {% for card in process_section %}
+
+    {% if card.id == 10 %}
+    <section  class="about-area pt-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-content mt-50 wow fadeInLeftBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <div class="section-title">
+                            <div class="line"></div>
+                            <h3 class="title">{{card.card_title}}</h3>
+                        </div> <!-- section title -->
+                        <p class="text"> {{card.card_description}}</p> 
+                        <p class="text"> {{card.card_description_two}}</p>                
+                    </div> <!-- about content -->
+                </div>
+    
+                <div class="col-lg-6">
+                    <div class="about-image text-center mt-50 wow fadeInRightBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <img src="{{card.card_image.url}}" class="images_buho"  alt="about">
+                    </div> <!-- about image -->
+                </div>
+
+            </div> <!-- row -->
+        </div> <!-- container -->
+
+        <div class="about-shape-1">
+            <img src="{% static 'assets_landing_page/images/about-shape-1.svg' %}" alt="shape">
+        </div>
+    </section>
+
+
+    {% elif card.id == 11 %}
+    <section class="about-area pt-70">
+        <div class="about-shape-2">
+            <img src="{% static 'assets_landing_page/images/about-shape-2.svg' %}" alt="shape">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 order-lg-last">
+                    <div class="about-content mt-50 wow fadeInLeftBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <div class="section-title">
+                            <div class="line"></div>
+                            <h3 class="title">{{card.card_title}}</h3>
+                        </div> <!-- section title -->
+                        <p class="text">
+                            {{card.card_description}}
+                        </p>
+
+                        <p class="text">
+                            {{card.card_description_two}}
+                        </p>
+                     
+                    </div> <!-- about content -->
+                </div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="about-image text-center mt-50 wow fadeInRightBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <img src="{{card.card_image.url}}" class="images_buho" alt="about">
+                    </div> <!-- about image -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    {% elif card.id == 12 %}
+    <section class="about-area pt-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-content mt-50 wow fadeInLeftBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <div class="section-title">
+                            <div class="line"></div>
+                            <h3 class="title">{{card.card_title}}</h3>
+                        </div> <!-- section title -->
+                        <p class="text">
+                            {{card.card_description}}                       
+                        </p>
+                        <p class="text">
+                            {{card.card_description_two}}                       
+                        </p>
+           
+                    </div> <!-- about content -->
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-image text-center mt-50 wow fadeInRightBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <img src="{{card.card_image.url}}" class="images_buho" alt="about">
+                    </div> <!-- about image -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+        <div class="about-shape-1">
+            <img src="{% static 'assets_landing_page/images/about-shape-1.svg' %}" alt="shape">
+        </div>
+    </section>
+    
+    {% elif card.id == 13 %}
+
+    <section id="facts" class="video-counter pt-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-image text-center mt-50 wow fadeInRightBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <img src="{{card.card_image.url}}" class="images_buho" alt="about">
+                    </div> <!-- about image -->
+                </div>
+                <div class="col-lg-6">
+                    <div class="counter-wrapper mt-50 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
+                        <div class="counter-content">
+                            <div class="section-title">
+                                <div class="line"></div>
+                                <h3 class="title">{{card.card_title}}</h3>
+                            </div> <!-- section title -->
+                            <p class="text">
+                                {{card.card_description}}
+                            </p>
+                            <p class="text">
+                                {{card.card_description_two}}
+                            </p>
+      
+                        </div> <!-- counter content -->
+
+                        <div class="row no-gutters">
+                        {% for data in metrics %}
+                            <div class="col-4">
+                                <div class="single-counter counter-color-1 d-flex align-items-center justify-content-center">
+                                    <div class="counter-items text-center">
+                                        <p class="text">{{data.title_counter}}</p>
+                                        <span class="count"><span class="counter">{{data.conter_data}}</span></span>
+                                    </div>
+                                </div> <!-- single counter -->
+                            </div>
+                        {% endfor %}
+
+                        </div> <!-- row -->
+                    </div> <!-- counter wrapper -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+    {% endif%}
+    {% endfor %}
+
+
+
+   
+
+    {% for card in process_section %}
+
+    {% if card.id == 18 %}
+    <section  class="about-area pt-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-content mt-50 wow fadeInLeftBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <div class="section-title">
+                            <div class="line"></div>
+                            <h3 class="title">{{card.card_title}}</h3>
+                        </div> <!-- section title -->
+                        <p class="text"> {{card.card_description}}</p> 
+                        <p class="text"> {{card.card_description_two}}</p>                
+                    </div> <!-- about content -->
+                </div>
+    
+                <div class="col-lg-6">
+                    <div class="about-image text-center mt-50 wow fadeInRightBig" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <img src="{{card.card_image.url}}" class="images_buho"  alt="about">
+                    </div> <!-- about image -->
+                </div>
+
+            </div> <!-- row -->
+        </div> <!-- container -->
+
+        <div class="about-shape-1">
+            <img src="{% static 'assets_landing_page/images/about-shape-1.svg' %}" alt="shape">
+        </div>
+    </section>
+
+    {% endif%}
+    {% endfor %}
+    
+  
+
+    <!--====== TEAM PART START ======-->
+    
+    <section id="team" class="team-area pt-120 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="section-title text-center pb-30">
+                        <div class="line m-auto"></div>
+                        {% for title in header_section_team %}
+                        <h3 class="title">{{title.title}}</h3>
+                        <h5 class="texto">{{title.description}}</h5>
+                        {% endfor %}
+                    </div> <!-- section title -->
+                </div>
+            </div> <!-- row -->
+            <div class="row justify-content-center">
+
+                {% for member in team_section %}
+                <div class="col-lg-4 col-md-7 col-sm-8">
+                    <div class="single-team text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <div class="team-image">
+                            <img src="{{member.team_image.url}}" alt="Team">
+                        </div>
+                        <div class="team-content">
+                            <h5 class="holder-name">{{member.team_name}}</h5>
+                            <p class="text">{{member.team_role}}</p>
+                        </div>
+                    </div> <!-- single team -->
+                </div>
+                {% endfor %}
+
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+
+     <!--====== TEAM PART START moviizadores ======-->
+    
+     <!--<section id="team" class="team-area pt-120 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="section-title text-center pb-30">
+                        <div class="line m-auto"></div>
+                        {% for title in header_section_movilizadores_team %}
+                        <h3 class="title">{{title.title}}</h3>
+                        <h5 class="texto">{{title.description}}</h5>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div> 
+            <div class="row justify-content-center">
+
+                {% for member in movilizadores_team %}
+                <div class="col-lg-4 col-md-7 col-sm-8">
+                    <div class="single-team text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <div class="team-image">
+                            <img src="{{member.team_image.url}}" alt="Team">
+                        </div>
+                        <div class="team-content">
+                            <h5 class="holder-name">{{member.team_name}}</h5>
+                            <p class="text">{{member.team_role}}</p>
+                        </div>
+                    </div> 
+                </div>
+                {% endfor %}
+
+            </div> 
+        </div> 
+    </section>-->
+
+
+    <!--<section id="team" class="team-area pt-120 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5" >
+                    <div class="section-title text-center pb-30">
+                        <div class="line m-auto"></div>
+                        {% for title in section_valores %}
+                        <h3 class="title">{{title.title}}</h3>
+                        <h5 class="texto">{{title.description}}</h5>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div> 
+            <div class="row justify-content-center">
+
+                {% for member in header_section_valores %}
+                <div class="col-lg-4 col-md-7 col-sm-8"  style="flex: 1 0 45.333333% !important;max-width: 63.333333% !important;">
+                    <div class="single-team text-center mt-30 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <div class="team-image">
+                            <img src="{{member.team_image.url}}" alt="Team">
+                        </div>
+                        <div class="team-content">
+                            <h5 class="holder-name">{{member.team_name}}</h5>
+                            <p class="text">{{member.team_role}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div> 
+        </div> 
+    </section>-->
+    
+
+   
+
+    <!--====== TEAM PART ENDS ======-->
+
+    <footer id="footer" class="footer-area pt-120">
+        <div class="container footer-contianer">
+
+            {% for item in footer%}
+            <div class="footer-widget pb-100 mt-4">
+                <div class="row mt-4">
+                    <div class="col-lg-4 col-md-6 col-sm-8 ">
+                        <div class="footer-about mt-50 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+                        <a class="logo" href="#">
+                            <img src="{{ item.logo_footer.url}}" alt="logo">
+                        </a>
+                        <p class="text">{{ item.description_footer}}</p>
+                        <ul class="social">
+                            {% if item.link_facebook %}
+                            <li><a href="{{item.link_facebook}}" target="_blank"><i class="lni lni-facebook-filled"></i></a></li> 
+                            {% endif %}
+                           {% if item.link_twitter %}
+                            <li><a href="{{item.link_twitter}}" target="_blank"><i class="lni lni-twitter-filled"></i></a></li> 
+                            {% endif %}
+                           {% if item.link_linkedin %}
+                            <li><a href="{{item.link_linkedin}}" target="_blank"><i class="lni lni-linkedin-original"></i></a></li>
+                            {% endif %}
+                           {% if item.link_youtube %}
+                            <li><a href="{{item.link_youtube}}" target="_blank"><i class="lni lni-youtube"></i></a></li>
+                           {% endif %}
+                           <li><a href="https://www.instagram.com/comfenalcoant/ " target="_blank"><i class="lni lni-instagram"></i></a></li>
+                        </ul>
+                        </div> 
+                    </div>
+                    <div class="col-lg-4 col-md-7 col-sm-7">
+                        <div class="footer-link d-flex mt-50 justify-content-md-between">
+                            <div class="link-wrapper wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
+                                <div class="footer-title">
+                            
+                                </div>             
+                            </div> 
+                        <div class="link-wrapper wow fadeIn" data-wow-duration="1s" data-wow-delay="0.6s">
+                            <div class="footer-title">
+                                <h4 class="title">Acerca de Verne</h4>
+                            </div>
+                            <ul class="link">
+                                {% for item in menu %}
+                                {% if item.id == 1 %}
+                                <li><a href="#home">{{item.items}}</a></li>
+
+                                {% elif item.id == 2 %}
+                                <li><a href="#features">{{item.items}}</a></li>
+
+                                {% elif item.id == 3 %}
+                                <li><a href="#about">{{item.items}}</a></li>
+
+                                {% elif item.id == 4 %}
+                                <li><a href="#team">{{item.items}}</a></li>
+
+                                {% endif %}
+                                {% endfor %}
+                                <li><a href="{{item.terms_conditions.url}}" target="_blank">Política de y privacidad Verne</a></li>
+                                <li><a href="{{item.manifiesto.url}}" target="_blank">Manifiesto de Innovación</a></li>
+                            </ul>
+                        </div> 
+                        </div> 
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-5">
+                        <div class="footer-contact mt-50 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
+                            <div class="footer-title">
+                                <h4 class="title">Contáctanos</h4>
+                            </div>
+                        <ul class="contact">
+                            <li>{{item.address}}</li>
+                            <li>{{item.location}}</li>
+                            <li>Tel: {{item.telephone}}</li>
+                          
+                            <li> <a href="{{item.url_website}}"target="_blank" class="font-weight-bold text-white" >Conoce nuestra Página Web</a></li>
+                        </ul>
+                        </div> 
+                    </div>
+                </div> 
+            </div> 
+
+            {% endfor %}
+
+            <div class="footer-copyright">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright d-sm-flex justify-content-between">
+                            <div class="copyright-content">
+                                <p class="text">Un producto de <a href="https://buho.media" rel="nofollow">
+                                    <img src="{% static 'dist/img/logo.svg' %}" alt="">
+                                </a></p>
+                            </div> 
+                        </div> 
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+        <div id="particles-2"></div>
+    </footer>
+        
+
+
+
+
+
+     
+        <!--====== BACK TOP TOP PART START ======-->
+    
+        <a href="#" class="back-to-top"><i class="lni lni-chevron-up"></i></a>
+    
+        <!--====== BACK TOP TOP PART ENDS ======-->   
+        
+        <!--====== PART START ======-->
+<!--
+    <section class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-"></div>
+            </div>
+        </div>
+    </section>
+-->
+    
+    <!--====== PART ENDS ======-->
+
+
+
+
+    <!--====== Jquery js ======-->
+    <script src="{% static 'assets_landing_page/js/vendor/jquery-3.5.1-min.js' %}"></script>
+    <script src="{% static 'assets_landing_page/js/vendor/modernizr-3.7.1.min.js' %}"></script>
+    
+    <!--====== Bootstrap js ======-->
+    <!-- <script src="{% static 'assets_landing_page/js/popper.min.js' %}"></script> -->
+    <!-- <script src="{% static 'assets_landing_page/js/bootstrap-4.5.0.min.js' %}"></script> -->
+    
+    <!--====== Plugins js ======-->
+    <script src="{% static 'assets_landing_page/js/plugins.js' %}"></script>
+    
+    <!--====== Slick js ======-->
+    <script src="{% static 'assets_landing_page/js/slick.min.js' %}"></script>
+    
+    <!--====== Ajax Contact js ======-->
+    <script src="{% static 'assets_landing_page/js/ajax-contact.js' %}"></script>
+    
+    <!--====== Counter Up js ======-->
+    <script src="{% static 'assets_landing_page/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'assets_landing_page/js/jquery.counterup.min.js' %}"></script>
+    
+    <!--====== Magnific Popup js ======-->
+    <script src="{% static 'assets_landing_page/js/jquery.magnific-popup.min.js' %}"></script>
+    
+    <!--====== Scrolling Nav js ======-->
+    <script src="{% static 'assets_landing_page/js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'assets_landing_page/js/scrolling-nav.js' %}"></script>
+    
+    <!--====== wow js ======-->
+    <script src="{% static 'assets_landing_page/js/wow.min.js' %}"></script>
+    
+    <!--====== Particles js ======-->
+    <script src="{% static 'assets_landing_page/js/particles.min.js' %}"></script>
+    
+    <!--====== Main js ======-->
+    <script src="{% static 'assets_landing_page/js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    {% if messages %}
+  {% for message in messages %}
+    <script>
+        swal.fire(
+            {% if 'God Job' in message.extra_tags %}
+                "Bien hecho", //God Job
+                "{{message}}", //el Proyecto fue creado con éxito
+                "success" // icon
+                
+            {% elif 'Error' in message.extra_tags %}
+                "!Oops¡",
+                "{{message}}",
+                "error"
+
+            {% else %}
+                {
+                    text: "{{message}}",
+                    icon: "{{message.tags}}",
+                }
+            {% endif %}
+            )
+    </script>
+  {% endfor %}
+{% endif %}
+
+</body>
+
+</html>

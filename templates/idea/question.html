@@ -1,0 +1,104 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Preguntas Pain {% endblock titulo %}
+{% load staticfiles %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'dist/css/verne/idea/idea_question_pain.css' %}">
+
+  <link rel="stylesheet" href="{% static 'dist/css/verne/idea/details_dashboard.css' %}">
+
+{% endblock extra_css %}
+
+
+{% block body_content %}
+<div class="content-wrapper">
+
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+       
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active">Preguntas Pain </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+     <div class="container">
+        <div class="col-md-10">
+           <h4 class="col-md-8 container font-weight-bold">PREGUNTAS PAIN</h4>   
+            <div class="card-body">
+                   
+             	<form method="POST" >{% csrf_token %} 
+               <div class="col-md-8 container card border border-info "><br> <br>
+
+                {% if consulta == 1 %}		
+        				  {% for p in questions %} 
+                  <label class="cuadrado text-muted " type="text" name="question" id="id{{p.id}}" value="{{p.name}}">{{p.name}}
+                    <input type="checkbox" name="state" value="{{p.id}}">
+                    <span class="checkmark"></span>
+                  </label> 
+                  {% endfor %}<br>
+
+           			</div>
+
+                 <textarea name="feedback" cols="15" rows="4" class="form-control col-8 container card pt-4 pb-4 text-muted text-center"  placeholder="¿Cúal es tu opinión de esta idea?" id="feedback" maxlength="5000" required=""></textarea>
+		       			
+                 <br>
+                <div class="col-8 container card pt-4 pb-4 text-muted text-center"> 
+                  Recuerda que todas las preguntas aprobadas pasarán esta Idea a la fase de Observación, si no apruebas alguna pregunta, la idea irá a Banco de Ideas y enviaremos un correo a su autor con la respuesta. 
+                </div> 
+
+                <div class="col-6 container  text-center">
+                  <button class="btn btn-info rounded-pill" onclick="return confirmaEliminacion()" type="submit" value="Actualizar"><i class="fas fa-paper-plane pr-2"></i>Pasar idea a Observación</button>            
+                  <a class="btn btn-outline-secondary rounded-pill" href="{% url 'idea:update' pk %}" > <i class="fas fa-undo pr-1"></i> Regresar </a><br>
+                  
+                  <button onclick="open_modal_inactive_idea('{% url 'idea:inactive' pk %}')" class="btn" type="button" data-toggle="tooltip" data-placement="bottom" title="Enviar a Banco de Ideas">
+                    <span class="btn-inner--icon"><i class='fas fa-trash-alt'></i></span>   
+                    </button>
+
+                  {% else%}
+
+                   <div class="col-8 container  text-muted text-center">
+                   ¡Ooops! Parece que ya has respondido todas las preguntas</div><br><br>
+                   <div class="col-md-12  text-center pb-4">
+                    <a class="btn btn-outline-secondary rounded-pill" href="{% url 'idea:update' pk %}" > <i class="fas fa-undo pr-1"></i> Regresar </a><br>
+                  </div>
+                  {% endif %}
+                   
+                </div>
+
+              </form>
+            </div>  
+          </div>
+         </div>
+    </section>
+</div>
+
+{% endblock body_content %}
+
+{% block extra_js %}
+<script>
+function confirmaEliminacion() {
+  var respuesta = confirm("¿Estás seguro de todas las preguntas?\nSi deseas continuar, pulsa aceptar.");
+    if (respuesta) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+</script><script src="{% static 'dist/js/verne/idea/modals_idea.js' %}"></script>
+
+{% endblock extra_js %}
+
+
+
+

@@ -1,0 +1,69 @@
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 6px;
+    color: #354049;
+}
+
+.fila-titulo{
+    font-weight: 800;
+}
+
+.send{
+    background-color:#929292 !important;
+    color: #fff;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #929292;
+    font-weight: 600;
+    border: #929292 1px solid;
+}
+.icon-send{
+	color: #929292 ;
+}
+ a { 
+     text-decoration: none;
+     color: #858585;
+ }
+
+.avatar{
+    width:30px;
+    height:30px;
+    border-radius:30px;
+    object-fit: cover;
+    margin: 3px 0 3px 3px;
+}
+
+
+.badge-priority{
+    background-color: #87499c;
+    color: #fff;
+}
+
+.badge-procesos{
+    background-color: #3799D1;
+    color: #fff;
+}
+
+.badge-producto{
+    background-color: #00ADA1;
+    color: #fff;
+}
+
+.badge-def{
+    background-color: #929292;
+    color: #fff;
+}
+
+.card{
+    box-shadow: none !important;
+}
+
+
+.btn-secondary {
+    height: 38px;
+    align-self: center;
+}

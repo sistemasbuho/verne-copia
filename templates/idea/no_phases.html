@@ -1,0 +1,65 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Actualizar{% endblock titulo %}
+{% load widget_tweaks %} 
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+<link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/verne/idea/phases.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block body_content %}
+
+<div class="wrapper">
+  <div class="content-wrapper">
+    
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'idea:evaluate' %}">Lista de Ideas</a></li>
+              <li class="breadcrumb-item active">Detalle Fase</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-3 mr-3 pb-5">
+      <div class="container-fluid  col-lg-12 col-md-10 col-sm-8  col-xs-8 centrered ">
+
+        <h4 class="pb-3 text-center">
+            ¡Ooops, al parecer la idea no ha llegado a esta fase!</h3>
+
+        <img src="{% static 'dist/img/verne.png' %}" alt="" class="verne">
+
+        <p class="pt-3 text-center">Para solucionarlo, cambia la idea de fase ...</p>
+
+        <a class="btn btn-secondary rounded-pill" href="{% url 'idea:evaluate' %}"> <i class="fas fa-undo pr-2"></i> Regresar </a>	
+        </div>
+        
+    </section>
+
+
+
+	</div>	
+</div>
+
+
+<style> 
+.verne{
+    width: 350px;
+}
+
+.centrered{
+    text-align: center;
+}
+</style>
+
+
+{% endblock body_content %}

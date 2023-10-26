@@ -1,0 +1,140 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+
+<style>
+
+.title-c{
+  margin: 4px;
+  font-weight: 600;
+}
+
+.color-p{
+  color: #8C51A6;
+}
+
+</style>
+
+
+<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+
+          <div class="modal-header"><br>          
+              <p class="title-c ">Historial <i class="fas fa-angle-right"></i> <span class="color-p">Idea {{id_idea}}</span></p>
+              <!-- <h6 class="text-secondary">.text-secondary</h6>  -->
+              <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+          <div class="modal-body">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Actividades</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Reuniones</a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                <div class="card-body table-responsive">
+
+                  <table id="example1" class="table table-hover dataTable">
+                    <thead>
+                    <tr>
+                      <th> Nº </th>   
+                      <th> Fecha</th>                   
+                      <th> Título</th>                   
+                      <th> Asistentes</th>
+                      <th> Puntos</th>
+                  
+                    </tr>
+                    </thead>
+    
+                    <tbody> 
+                       {% for data in activity %}
+                       <tr>
+                            <td>{{ data.id }}</td> 
+                            <td>{{ data.date|date:"Y-m-d" }}</td>                         
+                            <td class="font-weight-bold"><a href="{% url 'activity:update_activity' data.id %}">{{ data.name }}</td>                       
+                            <td> {{ data.id_user.all|join:", " }}</td>
+                              <td>{{data.score}}</td>
+                        </tr>
+                    {% endfor %}         
+                    </tbody>
+    
+                  </table>
+                </div>
+
+
+              </div>
+
+              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="card-body table-responsive">
+
+                  <table id="example2" class="table table-hover dataTable">
+                    <thead>
+                    <tr>
+                      <th> Nº </th>   
+                      <th> Fecha</th>                   
+                      <th> Título</th>                   
+                      <th> Asistentes</th>
+                      <th> Hora</th>
+                  
+                    </tr>
+                    </thead>
+    
+                    <tbody> 
+                       {% for data in meeting %}
+                       <tr>
+                            <td>{{ data.id }}</td> 
+                            <td>{{ data.date|date:"Y-m-d" }}</td>                         
+                            <td class="font-weight-bold"><a href="{% url 'meeting:detail_meeting' data.id %}">{{ data.name }}</td>                       
+                            <td> {{ data.user_comitte.all|join:", " }}</td>
+                              <td>{{data.start_time}}</td>
+                        </tr>
+                    {% endfor %}         
+                    </tbody>
+    
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+</div>
+       
+        
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+  
+  $(function () {
+    $("#example1").DataTable();
+    $("#example2").DataTable({
+      
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "order": [[ 1, "desc" ]],
+
+    })
+   
+  });
+
+
+
+
+        
+</script>
+
+
+     
+            

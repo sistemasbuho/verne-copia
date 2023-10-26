@@ -1,0 +1,270 @@
+{% extends 'base_template_admin.html' %}
+{% load staticfiles %}
+{% block titulo %}Verne | Mis ideas {% endblock titulo %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'dist/css/verne/idea/dashboard_user.css' %}">
+     <!-- ===== Link Swiper's CSS ===== -->
+	 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+
+	 <!-- ===== Fontawesome CDN Link ===== -->
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
+	 <style>
+
+			.swiper-backface-hidden .swiper-slide {
+				width: 200px !important; 
+				margin-right: 30px;
+			}
+	 </style>
+
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="wrapper"  >
+  <div class="content-wrapper" >
+    <section class="content-header">
+      <div class="container-fluid">
+      	<p class="dasboard-title ml-4">Mis ideas</p>
+      </div>
+    </section> 
+	
+	<div class="container-fluid">
+		<div class="row ml-5 mr-5">
+			<div class="card col-md-12 inicio">
+			  <div class="card-body">
+			  	<div class="row ">
+			  		<div class="col-md-8">
+			  		<h5 class="card-title text">¡Hola de nuevo!</h5>
+			    	<p class="card-text">Estas son tus ideas, participa, gana puntos y <br>redime fabulosos premios</p>
+			  		</div>
+			  
+			  		<div class="col-md-2">
+			  		<h5 class="card-title total_idea">{{total_ideas}}</h5>
+			    	<p class="card-text">Ideas Activas</p>
+			  		</div>
+
+					  <div class="col-md-2">
+						<h5 class="card-title total_idea">{{total_dead}}</h5>
+					  <p class="card-text">Ideas Inactivas</p>
+						</div>
+			  	</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+   <section id="team" class="pb-5 ml-5 mr-5 ">
+    <div class="container-fluid">
+		
+		<div class="col-md-12  mt-5 mb-4">
+		 <span class="bolita rounded-pill fase-pain"> P</span> <span class="mr-3">Recepción</span>
+		 <span class="bolita rounded-pill fase-observacion "> P</span> <span class="mr-3">Nuevas</span>
+		 <span class="bolita rounded-pill fase-ideacion"> P</span> <span class="mr-3">En desarrollo</span>
+		 <span class="bolita rounded-pill fase-prototipado "> P</span> <span>Implementadas</span>
+		</div>
+
+		<div class="ideas-container-actives row">
+			<div class="col-md-2 header-active active">
+				<p class="title-actives">Ideas Activas</p>
+			</div>
+
+			<div class="col-md-10 contenedor">
+				<section class="targets-slider">
+					<div class="swiper mySwiper">
+					  <div class="swiper-wrapper ">
+						{% if total_ideas == 0 %}
+							<div class="text-center">
+								<img src="{% static 'dist/img/empty_task.png' %}" alt="" class="img-vacio">
+								<p class="">Aun no tienes ideas activas</p>
+							</div>
+						{%else%}
+							{% for idea in idea_query %}
+								{% if idea.current_phase == 1 or  idea.current_phase == 2  or  idea.current_phase == 3  or  idea.current_phase == 4   %}
+
+									<div class="swiper-slide ">
+									<div class="card mt-1">
+										<div class="row">
+							
+											<div class="col-md-12"> 
+
+													{% if idea.current_phase == 1  %}
+														<p class="title-idea fase-pain"> Idea {{idea.id}} </p>                         
+													{% elif idea.current_phase == 2 %}
+														<p class="title-idea fase-observacion">Idea {{idea.id}}</p>	
+													{% elif idea.current_phase == 3 %}
+														<p class="title-idea fase-ideacion"> Idea {{idea.id}}</p>	
+													{% elif idea.current_phase == 4 %}
+														<p class="title-idea fase-prototipado">Idea {{idea.id}}</p>	                 
+													{% endif %}
+										
+
+										
+													<p class="title ml-2 mr-2">{{idea.title}}</p>
+													<p class="description ml-2 ">{{idea.description}}</p> 
+											</div>
+											
+											
+											<div class="col-md-12"> 
+													<div class="card-footer text-center">
+														<a class="btn btn-sm rounded-pill details" onclick="open_modal_detail ('{% url 'idea:idea_details' idea.id %}')"> Ver detalles</a>
+													</div>      		
+											</div>
+										</div>
+										</div>
+									</div>
+
+								{%endif %}
+							{% endfor %}
+						{%endif %}
+					  </div>
+					</div>
+				
+					<div class="swiper-button-next"></div>
+					  <div class="swiper-button-prev"></div>
+					  <div class="swiper-pagination"></div>
+				  </section>
+				
+			</div>
+		</div>
+
+
+
+		<div class="col-md-12  mt-5 mb-4">
+			<span class="bolita rounded-pill fase-banco"> P</span> <span class="mr-3">Banco de Ideas </span>
+			<span class="bolita rounded-pill fase-implementacion "> P</span> <span class="mr-3">Ideas Implementadas</span>
+		   </div>
+
+		<div class="ideas-container-actives row">
+			<div class="col-md-2 header-active inactive">
+				<p class="title-actives">Ideas Inactivas</p>
+			</div>
+
+			<div class="col-md-10 contenedor">
+				<section class="targets-slider">
+					<div class="swiper mySwiper2">
+					  <div class="swiper-wrapper ">
+						{% if total_dead == 0 %}
+							<div class="text-center">
+								<img src="{% static 'dist/img/empty_task.png' %}" alt="" class="img-vacio">
+								<p class="">Aun no tienes ideas inactivas</p>
+							</div>
+						{%else%}
+							{% for idea in idea_query %}
+								{% if idea.current_phase == 6 or  idea.current_phase == 5   %}
+
+									<div class="swiper-slide ">
+									<div class="card mt-1">
+										<div class="row">
+							
+											<div class="col-md-12"> 
+
+													{% if idea.current_phase == 5 %}
+														<p class="title-idea fase-implementacion">Idea {{idea.id}}</p>	
+													{% elif idea.current_phase == 6 %}
+														<p class="title-idea fase-banco"> Idea {{idea.id}} </p>                    
+													{% endif %}
+										
+
+										
+													<p class="title ml-2 mr-2">{{idea.title}}</p>
+													<p class="description ml-2 ">{{idea.description}}</p> 
+											</div>
+											
+											
+											<div class="col-md-12"> 
+													<div class="card-footer text-center">
+														<a class="btn btn-sm rounded-pill details" onclick="open_modal_detail ('{% url 'idea:idea_details' idea.id %}')"> Ver detalles</a>
+													</div>      		
+											</div>
+										</div>
+										</div>
+									</div>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					  </div>
+					</div>
+				
+					<div class="swiper-button-next2"></div>
+					  <div class="swiper-button-prev2"></div>
+					  <div class="swiper-pagination2"></div>
+				  </section>
+				
+			</div>
+		</div>
+		
+    </div>
+   </section>
+
+	</div>
+</div>
+
+<div class="modal fade" id="ModalDetail" role="dialog"></div>
+<div class="modal fade" id="ModalInactive" role="dialog"></div>
+<div class="modal fade" id="ModalPhase" role="dialog"></div>
+<div class="modal fade" id="ModalReference" role="dialog"></div>
+<div class="modal fade" id="ModalReactive" role="dialog"></div>
+<div class="modal fade" id="ModalFastrack" role="dialog"></div>
+
+{% endblock body_content %}
+
+{% block extra_js %}
+<script>
+	function open_modal_detail(url) {
+		$('#ModalDetail').load(url, function(res) {
+	
+			$('#ModalDetail').html(res).modal({
+				keyboard: false,
+				//backdrop: 'static',
+				show: true,
+	
+			})
+	
+		});
+		
+	}
+	
+</script>
+
+<script src="{% static 'dist/js/verne/idea/modals_idea.js' %}"></script>
+
+ <!-- Swiper JS -->
+ <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+ <!-- Initialize Swiper -->
+ <script>
+   var swiper = new Swiper(".mySwiper", {
+	 slidesPerView: 3,
+	 spaceBetween: 30,
+	 slidesPerGroup: 3,
+	 loop: true,
+	 loopFillGroupWithBlank: true,
+	 pagination: {
+	   el: ".swiper-pagination",
+	   clickable: true,
+	 },
+	 navigation: {
+	   nextEl: ".swiper-button-next",
+	   prevEl: ".swiper-button-prev",
+	 },
+   });
+
+   var swiper2 = new Swiper(".mySwiper2", {
+	slidesPerView: 3,
+	spaceBetween: 30,
+	slidesPerGroup: 3,
+	loop: true,
+	loopFillGroupWithBlank: true,
+	pagination: {
+	  el: ".swiper-pagination2",
+	  clickable: true,
+	},
+	navigation: {
+	  nextEl: ".swiper-button-next2",
+	  prevEl: ".swiper-button-prev2",
+	},
+  });
+ </script>
+
+{% endblock extra_js %}

@@ -1,0 +1,323 @@
+/*Vista de banco*/
+
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 6px;
+    color: #354049;
+}
+
+#loader {
+    position: fixed;
+    z-index: 1000;
+    text-align: center !important;
+  }
+  
+  /* Estilos de loading al buscar */
+  .custom-loader-color {
+    color: #fff !important;
+    font-size: 22px !important;
+  }
+  
+  .custom-loader-background {
+    background-color: #C76EED !important;
+  }
+  
+  .custom-middle-align {
+    vertical-align: middle !important;
+  }
+
+/*Permisos de administrador*/
+.course {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 8px rgb(0 0 0 / 20%);
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+    width: 700px;
+    margin-bottom: 33px;
+    border: #ebebeb 1px solid;
+    color: #707070 !important;
+}
+
+.course:hover{
+    border: none;
+    color: #fff !important;
+}
+
+
+
+.p-three:hover{
+    
+    background: rgb(84,84,84);
+    background: linear-gradient(90deg, rgba(84,84,84,1) 0%, rgba(93,93,93,1) 21%, rgba(107,107,107,1) 42%, rgba(125,125,125,1) 61%, rgba(154,154,154,1) 80%, rgba(169,169,169,1) 100%);
+    cursor: pointer;
+}
+
+
+
+.p-four:hover{
+    background: rgb(255,144,0);
+    background: linear-gradient(90deg, rgba(255,144,0,1) 0%, rgba(255,148,7,1) 21%, rgba(254,164,39,1) 42%, rgba(255,189,97,1) 61%, rgba(255,192,104,1) 80%, rgba(255,214,156,1) 100%);
+    cursor: pointer;
+}
+
+
+.course h6 {
+    opacity: 0.6;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+.course-info {
+    padding-left: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.date {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 30px;
+}
+
+.boton-id{
+    border-radius: 10px;
+    background-color: #007DC5;
+    margin-left: -20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-bottom: 7px;
+    color: #fff;
+    font-size: 14px;
+}
+
+
+
+.inner {
+    padding: 10px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+}
+
+
+/*Tamaño de las fases e iconos*/
+
+.phase3,.phase4{
+      font-size: 16px;
+      color: #fff!important;
+}
+
+.fa-bolt:before , .fa-search .icon .phase2:before, .fa-search .icon .phase2:before ,.fa-chart-pie:before{
+    font-size: 16px;
+}
+
+.expand{
+    position: relative;
+    float: right;
+    color: #fff;
+}
+
+/*-------------------------------------*/
+
+
+.loader-more {
+    font-size: 16px !important;
+}
+
+
+
+/*-------------------------------------*/
+.phase-three,.boton-three{
+    background: rgb(84,84,84);
+    background: linear-gradient(90deg, rgba(84,84,84,1) 0%, rgba(93,93,93,1) 21%, rgba(107,107,107,1) 42%, rgba(125,125,125,1) 61%, rgba(154,154,154,1) 80%, rgba(169,169,169,1) 100%);
+}
+.badge-ids {
+
+    color: #555555;
+    background-color: #A2A2A2;
+    font-size:18px;
+}
+
+/*-------------------------------------*/
+.phase-four, .boton-four{
+   
+    background: rgb(255,144,0);
+    background: linear-gradient(90deg, rgba(255,144,0,1) 0%, rgba(255,148,7,1) 21%, rgba(254,164,39,1) 42%, rgba(255,189,97,1) 61%, rgba(255,192,104,1) 80%, rgba(255,214,156,1) 100%);
+}
+.badge-pro {
+    color: #FF9102;
+    background-color: #FFD395;
+    font-size:18px;
+}
+
+/*-------------------------------------*/
+.dasboard-title{
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 14px;
+    padding-left: 6px;
+    color: #354049;
+}
+
+.avatar-card{
+    width:30px;
+    height:30px;
+    border-radius:30px;
+    object-fit: cover;
+}
+
+.avatar{
+    position: relative;
+    float: right;
+    margin: 5px 10px 10px 10px;
+   
+}
+
+
+/*VISTA DE USUARIO: USERS & COMITTE*/
+
+#team .card {
+    /* border: none; */
+    background: #ffffff;
+    border-radius: 17px;
+    width: 100%;
+}
+
+.card-footer .btn:hover{
+    background-color: #c9c9c9;
+}
+.title{
+    font-size: 15px;
+    font-weight: bolder;
+    text-decoration: none !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 14px;
+}
+
+
+.title-idea{
+    color: #5e6362 !important;
+    font-size: 17px;
+    font-weight: bolder;
+    margin-top: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 30px;
+    margin-bottom: 0;
+}
+
+
+.btn-outline-light {
+    color: #343a40;
+    font-weight: bolder;
+}
+.frontside .card .card-body img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+p.card-text.fase-pain{
+    color: #fff !important;
+    background-color: #007DC5;
+    font-weight: bolder;
+    text-align: center;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+p.card-text.fase-observacion{
+    color: #fff !important;
+    background-color: #88489E;
+    font-weight: bolder;
+    text-align: center;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+p.card-text.fase-ideacion{
+    color: #fff !important;
+    background-color: #43AFA2;
+    font-weight: bolder;
+    text-align: center;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+p.card-text.fase-prototipado{
+    color: #fff !important;
+    background-color: #F2E339;
+    font-weight: bolder;
+    text-align: center;
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+p.card-text.fase-prototipado{
+    color: #fff !important;
+    background-color: #FF04C5;
+    font-weight: bolder;
+    text-align: center;
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+p.card-text.fase-prototipado{
+    color: #fff !important;
+    background-color: #BFAA96;
+    font-weight: bolder;
+    text-align: center;
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.card-title {
+    float: left;
+    font-size: 27px;
+    font-weight: 400;
+    margin-top: 22px;
+}
+
+
+.card-description {
+    margin-top: 62px;
+    margin-bottom: -45px;
+
+    }
+
+.img-fluid {
+    max-width: 66%;
+    height: auto;
+    margin-top: 14px;
+    margin-left: 40px;
+}
+.inicio{
+    background-color: #9443af7a
+}
+
+.total_idea{
+    float: left;
+    font-size: 53px;
+    font-weight: 900;
+    margin-top: 0px;
+}
+
+.text{
+    font-weight: 900;
+}
+
+
+.not-visible {
+    visibility: hidden;
+  }

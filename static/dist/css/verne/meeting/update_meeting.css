@@ -1,0 +1,21 @@
+.header-form{
+	font-weight: 700;
+	color: #39AEA2;
+	font-size: 25px;
+
+}
+
+.send{
+	background-color: #87499c !important;
+	color: #fff;
+}
+.icon-send{
+	color: #fff;
+}
+
+.send:hover{
+    background-color:#fff !important;
+    color: #87499c !important;
+    font-weight: 600;
+	border: #87499c 1px solid;
+}

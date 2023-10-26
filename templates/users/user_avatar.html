@@ -1,0 +1,80 @@
+{% load staticfiles %}
+
+<style>
+    .avatar-img{
+        width: 75px;
+        height: 70px;
+        object-fit: cover;
+        margin: 7px;
+    }
+
+
+      .avatars > input{
+        display: none;
+      }
+      
+      .avatars > input + img{
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+      
+      .avatars > input:checked + img{
+        border: 3px solid rebeccapurple;
+        border-radius: 21px;
+      }
+
+</style>
+
+<div class="modal-dialog  modal-dialog-centered modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+
+        <div class="modal-header"><br>
+            <span class="font-weight-bold"> Selecciona tu avatar</span>
+            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+           <div class="row">
+            <div class="container">
+              {% if request.user.is_authenticated %}   
+
+                <div id="avatars">
+                
+                        {% for image in query %}
+                        <label class="avatars">
+                            <input type="radio" name="avatar" value="{{image.avatar_img}}"/>
+                            <img src="{{image.avatar_img.url}}" id="{{image.id}}" value="{{image.avatar_img.url}}" alt="avatar" class="avatar-img">   
+                        </label>
+                        {% endfor %}
+              
+                    <form action="{% url 'users:update_avatar'  %}" method="POST">
+                      {% csrf_token %}
+                          <input type="hidden" value="" id="input-premio" name="premio_name">
+                          <div class="text-center mt-2">
+                            <button class="btn btn-primary rounded-pill" id="btn-guardar">Usar avatar</button>
+                        </div>
+                    </form>
+
+     
+                  </div>
+            {% endif %}
+             </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+
+  var element = document.getElementById("btn-guardar");
+  element.addEventListener("click", myFunction);
+
+  function myFunction() {
+    var radios = document.getElementsByName("avatar");
+    var selected = Array.from(radios).find(radio => radio.checked);
+    document.getElementById("input-premio").value = selected.value
+  };
+
+</script>

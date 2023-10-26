@@ -1,0 +1,90 @@
+.agendar{
+    background-color:#87499c !important;
+    color: #fff;
+}
+
+.agendar:hover{
+    background-color:#fff !important;
+    color: #87499c;
+    border: 1px solid #87499c;
+    font-weight: 600;
+}
+
+
+.title-c{
+    margin: 4px;
+    font-weight: 600;
+  }
+  
+  .color-p{
+    color: #8C51A6;
+  }
+
+  .modal-content{
+    border-radius: 20px;
+  }
+
+  .checks{
+    list-style: none;
+  }
+
+  .checks >li{
+    width: 100px;
+    height: 85px;
+    text-align: center;
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    margin: 10px 16px 10px 5px;
+    border-radius: 13px;
+  }
+
+  .checks >li:hover{
+  
+    border: 2px  solid #87499c;
+    color: #87499c;
+    font-weight: bold;
+
+  }
+
+  .checks >li >label{
+    font-weight: 500 !important;
+    font-size: 14px;
+    width: 85px;
+  }
+
+
+  #id_vote_0,#id_vote_1, #id_vote_2,#id_vote_3,#id_vote_4,#id_vote_5,#id_vote_6{
+    width: 25px;
+    height: 25px;
+
+  }
+  
+ .texto{
+    border-bottom:1px solid #F5F3F8;
+ }
+
+ .card{
+  border-radius: 20px;
+ }
+
+ .user{
+  color: #4FA5D6;
+  font-weight: bold;
+ }
+
+ .votos{
+  height: 395px;
+ }
+
+#id_message{
+  border-radius: 15px;
+}
+
+.avatar{
+  width: 54px;
+  height: 50px;
+  margin-left: 10px;
+}
+
+.users-data{
+  place-items: center;
+}

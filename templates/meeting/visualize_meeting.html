@@ -1,0 +1,97 @@
+{% extends 'base_template_admin.html' %}
+{% block titulo %}Verne | Comité {% endblock titulo %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+  <link href="{% static 'vendor/select2/dist/css/select2.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dist/css/verne/meeting/list_meet.css' %}">
+{% endblock extra_css %}
+
+{% block body_content %}
+<div class="wrapper ">
+  <div class="content-wrapper ">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+           <p class="dasboard-title ml-4 mr-4">Comité</p>
+          </div>
+        </div>
+        <div class="col-sm-12 ">
+          {% if perms.meeting.add_meeting %}     
+         <div class="text-left  ml-4 ">
+            <a class="btn agendar color-palette rounded-pill " href="{% url 'meeting:register' %}">  <i class="fas fa-plus"></i> Agendar reunión</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="content ml-4 mr-4 pb-5">
+      <div class="container-fluid">
+        <div class="col-md-12 ">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <table id="example1" class="table  table-hover dataTable">
+                <thead>
+                <tr>
+                  <th> Fecha</th> 
+                  <th> Lugar</th>      
+                  <th> Nombre</th> 
+                  <th> Asistentes</th>
+                  <th> Estado</th>
+                  <th> Ideas a discutir</th>
+                  
+                  {% if perms.meeting.view_meeting %} 
+                      <th> Ingresar</th>   
+                  {% endif %}         
+
+                </tr>
+                </thead>
+                <tbody>            
+                {% for meeting in meeting.meeting_all %}
+                <tr>
+                  <td>{{ meeting.date|date:"Y-m-d" }} {{ meeting.start_time }}</td>
+                  <td>{{meeting.place}}</td>
+                  <td class="font-weight-bold"><a href="{% url 'meeting:detail_meeting' meeting.id %}">{{ meeting.name }}</a></td>
+                  <td> {{ meeting.user_comitte.all|join:", " }}</td>      
+
+                  <td> 
+                    <span class="badge badge-pill badge-info">
+                    <i class="bg-warning"></i> {{ meeting.is_active|yesno:"Abierto,Cerrado"}}
+                    </span>
+                  </td> 
+
+                  <td> {{ meeting.id_idea.all|join:", " }}</td> 
+                  
+                  {% if perms.meeting.view_meeting %} 
+                  <td>             
+                    <div class="row justify-content-center">
+                      <div class="col-12 boton">   
+                          <a type="button" class="btn btn-sm send rounded-pill" href="{% url 'meeting:detail_meeting' meeting.id %}" data-toggle="tooltip" data-placement="bottom" title="Ingresar a votación">
+                            <i class="fa fa-edit  pr-1"></i>Ingresar
+                          </a> 
+                      </div>                    
+                    </div>
+                  </td>   
+                  {% endif %}                    
+                 </tr>  
+                {% endfor %}     
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock body_content %}
+
+{% block extra_js %}
+<script src="{% static 'plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script type="text/javascript" src="{% static 'dist/js/verne/meeting/visualize_meeting.js' %}"></script>
+{% endblock extra_js %}v

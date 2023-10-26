@@ -1,0 +1,28 @@
+# Python
+*.pyc
+*.pyo
+**/__pycache__/
+
+# Django #
+*.log
+*.pot
+db.sqlite3
+
+#**/migrations/**
+#!**/migrations
+#!**/migrations/__init__.py
+
+# Environments
+.env
+.venv
+env/
+
+# Visual Studio Code #
+.vscode/*
+
+*.sql
+# Archivos
+*.xml
+*.xls
+*.xlsx
+

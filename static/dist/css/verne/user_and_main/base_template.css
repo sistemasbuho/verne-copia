@@ -1,0 +1,72 @@
+
+/*Copyright footer*/
+.admin {
+ font-size: 10px;
+}
+  
+/*logo verne*/
+
+/*letras del menu*/
+.nav-header {
+    color: rgb(115,63,136) !important;
+    font-weight: 600;
+}
+
+.user-panel img {
+    height: auto;
+    width: 3rem !important;
+}
+
+.user-panel {
+    border-bottom: none !important;
+    margin-left: -0.5rem!important;
+}
+
+.user-panel .info {
+    display: inline-block;
+    padding: 13px 5px 5px 10px !important;
+    font-weight: 600 !important;
+}
+
+.navbar-white{
+    background: rgb(115,63,136);
+    background: linear-gradient(90deg, rgba(115,63,136,1) 19%, rgba(7,99,163,1) 46%, rgba(6,99,161,1) 79%, rgba(7,99,163,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+.brand-link{
+    background: rgb(115,63,136);
+    margin: 0;
+    margin-left: 0px;
+    height: 57px;
+}
+
+.title-verne{
+    position: relative;
+    top: -1px;
+    color: #fff;
+    padding-left: 25px;
+    font-size: 30px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.nav-sidebar .nav-item>.nav-link:hover{
+    background: rgb(160,113,181);
+    background: linear-gradient(90deg, rgba(160,113,181,1) 0%, rgba(137,132,193,1) 23%, rgba(118,149,203,1) 46%, rgba(97,167,214,1) 72%, rgba(93,171,216,1) 100%, rgba(7,99,163,1) 100%) !important;
+    color: #fff !important;
+    border-radius: 20px;
+
+}
+
+.sesion{
+    text-align: right;
+  }
+
+  .content-wrapper {
+    background-image: url(../../../img/fondo-estrellas.svg) !important;
+    background-size: cover  !important;
+    background-repeat: no-repeat  !important;
+    background-color: white  !important;
+}
