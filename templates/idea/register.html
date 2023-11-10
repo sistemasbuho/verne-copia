@@ -43,21 +43,14 @@
             {{ form.title }}
             <label for="textarea" class="text-muted">Descripción</label>
             {{ form.description }}
-            <label for="etapa" class="text-muted">¿En qué etapa de encuentra la idea?</label>
-            {{ form.innovation_type }}
-
-            <label for="etapa" class="text-muted">¿A que pilar estratégico le apunta la idea?</label>
-            {{ form.innovation_estrategia }}
-
-            <label for="area" class="text-muted">¿A qué área impacta?</label>
-            {{ form.area }}
-           
-
             <label for="textarea" class="text-muted">Autores</label>
             {% render_field form.collaborator class="form-control" id="activate_select_crear_idea_multiple_collaborator" %}
 
             {% render_field form.id_phase class="form-control" %}
             {% render_field form.current_phase class="form-control" value="1" type="hidden" %}
+
+            <label for="objetivo" class="text-muted">Objetivo</label>
+            {% render_field form.id_objective class="form-control" id="activate_select_objective" %}
 
             <center>
               <p class="text-muted mt-3">

@@ -101,15 +101,15 @@
                 <p class=" font-weight-bold card-title-idea"> Idea {{idea.id}}
                     <span class="ml-4 badge bg-light font-weight-bold">
                       {% if idea.current_phase == 1 %}
-                       Recepción
+                       Pain
                        {% elif idea.current_phase == 2 %}
-                       Nuevas
+                       Observación
                        {% elif idea.current_phase == 3 %}
-                        En desarrollo
+                        Ideación
                        {% elif idea.current_phase == 4 %}
-                       Implementadas
+                       Prototipado
                        {% elif idea.current_phase == 5 %}
-                      Seguimiento
+                      Implementación
                        {% elif idea.current_phase == 6 %}
                        Banco de Ideas
                       {% endif %}

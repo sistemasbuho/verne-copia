@@ -200,17 +200,17 @@ class IndicatorTable(PermissionRequiredMixin,View):
 				fase_actual = valor['current_phase']
 		
 				if(fase_actual==1):
-					fase_actual = "Recepción"
+					fase_actual = "Pain"
 				elif (fase_actual==2):
-					fase_actual = "Nuevas"
+					fase_actual = "Observación"
 				elif (fase_actual==3):
-					fase_actual = "En desarrollo"
+					fase_actual = "Ideación"
 				elif (fase_actual==4):
-					fase_actual = "Implementadas"
+					fase_actual = "Prototipado"
 				elif (fase_actual==5):
-					fase_actual = "Ideas Implementadas"
+					fase_actual = "Implementación"
 				elif (fase_actual==6):
-					fase_actual = "Ideas en Stand By"
+					fase_actual = "Banco de Ideas"
 				else:
 					fase_actual = "Sin Fase"
 

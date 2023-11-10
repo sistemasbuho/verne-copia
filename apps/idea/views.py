@@ -121,7 +121,7 @@ class registerIdea(_FormValid,CreateView):
 						},
 					)
 				email_message = EmailMessage(
-				subject='Tu idea ha sido registrada en Verne',
+				subject='Tu idea ha sido registrada en sistemas',
 				body=body,
 				from_email=host_email,
 				to=lista_nueva,
@@ -136,10 +136,10 @@ class registerIdea(_FormValid,CreateView):
 						},
 					)
 				email_message_proveedor = EmailMessage(
-				subject='Se ha registrado una nueva idea en Verne',
+				subject='Se ha registrado una nueva idea en sistemas',
 				body=body_proveedor,
 				from_email=host_email,
-				to=['ramolab@ramo.com.co',],
+				to=['sistemas@buho.media',],
 				)
 				email_message_proveedor.content_subtype = 'html'
 				email_message_proveedor.send()
@@ -209,7 +209,7 @@ class changePhase(PermissionRequiredMixin,View):
 						},
 					)
 				email_message = EmailMessage(
-				subject='Tu idea ha sido registrada en Verne',
+				subject='Tu idea ha sido registrada en sistemas',
 				body=body,
 				from_email=host_email,
 				to=lista_nueva,
@@ -276,32 +276,26 @@ class IdeaBank(PermissionRequiredMixin,View):
 		return self.cleaned_data
 
 
-# Generador de PDF --------------------------------
+#Generador de PDF --------------------------------
 class IdeaGeneratorPdf(View,PermissionRequiredMixin):
 	permission_required = 'idea.add_idea'
-
 	def get(self, request, *args, **kwargs):
-
 		template=get_template("prints/idea_ticket.html")
-
 		idea= Idea.objects.filter(id=kwargs['pk'])
 		meeting= Meeting.objects.filter(id_idea=kwargs['pk'])
 		activity = Activity.objects.filter(id_idea=kwargs['pk'])
 		phase = Phase_Date.objects.filter(id_idea=kwargs['pk'])
-
 		context = {"id":kwargs['pk'],
 			"ideas": idea,
 			"meetings":meeting,
 			"activity":activity,
 			"phases":phase
 		}
-		
+
 		html = template.render(context)
 		css_url = os.path.join(settings.BASE_DIR, 'static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')
-
 		pdf = HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(stylesheets=[CSS(css_url)])
 		response = HttpResponse(pdf, content_type='application/pdf')
-
 		file_name = 'Idea '+str(kwargs['pk'])+'.pdf' # Agrega fecha y hora al nombre del archivo
 		response['Content-Disposition'] = 'attachment; filename=%s' % file_name
 		# response.write(output.getvalue())	 # Al configurar el tipo de HttpResponse, si da un valor, no es necesario que escriba esta oración
@@ -1400,7 +1394,7 @@ def revisar_idea(request,id_idea):
 								subject='La idea '+idea_externa.title+' ha sido revisada',
 								body=body,
 								from_email=host_email,
-								to=['ramolab@ramo.com.co',],
+								to=['sistemaslab@buho.media',],
 								)
 				email_message.content_subtype = 'html'
 				email_message.send()

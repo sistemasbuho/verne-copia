@@ -282,25 +282,19 @@ def closeMeeting (request,pk):
 
 class MeetingGeneratorPdf(View,PermissionRequiredMixin):
     permission_required = 'meeting.view_meeting'
-
     def get(self, request, *args, **kwargs):
-
         template=get_template("prints/act_meeting.html")
-
         meeting= Meeting.objects.filter(id=kwargs['pk'])
         votes = UserVotes.objects.filter(id_meeting=kwargs['pk']).order_by('id_idea')
-
         context = {"id":kwargs['pk'],
             "meetings":meeting,
             "votes":votes
         }
-        
+      
         html = template.render(context)
         css_url = os.path.join(settings.BASE_DIR, 'static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')
-
         pdf = HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(stylesheets=[CSS(css_url)])
         response = HttpResponse(pdf, content_type='application/pdf')
-
         file_name = 'Acta_reunion.pdf' # Agrega fecha y hora al nombre del archivo
         response['Content-Disposition'] = 'attachment; filename=%s' % file_name
         # response.write(output.getvalue())	 # Al configurar el tipo de HttpResponse, si da un valor, no es necesario que escriba esta oración

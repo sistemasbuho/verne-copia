@@ -16,7 +16,38 @@ class UpdateQuestion(forms.Form):
 	preguntas = QuestionPhase.objects.all()
 	
 
+
 class FormIdeaRegister(forms.ModelForm):
+	class Meta:
+		model = Idea
+		fields=['title','description','id_objective','collaborator','conditions','id_phase','current_phase']
+		widgets = {
+			'title':forms.TextInput(
+				attrs={
+					'class':'form-control',
+					'placeholder':'Dale un gran nombre a tu idea',
+					'id':'title' }),
+			'description':forms.Textarea(
+				attrs={
+					'class':'form-control',
+					'placeholder':'¿Cómo nació esta idea? ¿Qué problema o necesidad esta resolviendo?',
+					'id':'description',
+					'rows':4, 
+					'cols':15,}),
+			}
+
+	
+	def __init__(self,*args, **kwargs):
+		super(FormIdeaRegister, self).__init__(*args, **kwargs)
+		query_user_none= User.objects.none()
+		self.fields['collaborator'].queryset = query_user_none
+		self.fields['id_objective'].queryset = Objective.objects.filter(year=datetime.now().year)
+		self.fields['id_phase'].queryset = Phase.objects.none()
+		self.fields['conditions'].required = True
+
+
+
+class FormIdeaRegister2(forms.ModelForm):
 	class Meta:
 		model = Idea
 		fields=['title','description','collaborator','conditions','area','beneficio','descripcion_beneficio','innovation_type', 'innovation_estrategia','id_phase','current_phase']

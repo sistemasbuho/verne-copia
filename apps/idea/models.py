@@ -81,6 +81,7 @@ class Dimension(models.Model):
 
 class Objective(models.Model):
 	nombre=models.CharField(max_length=300,verbose_name=u'Descripción')
+	year=models.IntegerField(verbose_name=u'Año')
 	history = HistoricalRecords()
 
 	def __str__(self):
@@ -106,7 +107,7 @@ class ExternalIdea(models.Model):
 	subregion = models.ForeignKey(Beneficio,on_delete=models.CASCADE,verbose_name=u'Subregión', blank=True,null=True)
 	frente=models.ForeignKey(Frente,on_delete=models.CASCADE,verbose_name=u'Frente', blank=True,null=True)
 	dimension = models.ForeignKey(Dimension,on_delete=models.CASCADE,verbose_name=u'Dimensión', blank=True,null=True)
-	pilar = models.ForeignKey(Objective,on_delete=models.CASCADE,verbose_name=u'Pilares', blank=True,null=True)
+	pilar = models.ForeignKey(Objective,on_delete=models.CASCADE,verbose_name=u'Objetivos', blank=True,null=True)
 	documento=models.IntegerField(verbose_name=u'Cedula', default=0, blank=True,null=True)
 	revision=models.TextField('Revision del problema',max_length=5000, blank=True,null=True)
 
@@ -279,7 +280,7 @@ class Idea(models.Model):
 	#subregion = models.ForeignKey(Subregion,on_delete=models.CASCADE,verbose_name=u'Subregión', blank=True,null=True)
 	#frente=models.ForeignKey(Frente,on_delete=models.CASCADE,verbose_name=u'Frente de Innovación', blank=True,null=True)
 	#dimension = models.ForeignKey(Dimension,on_delete=models.CASCADE,verbose_name=u'Dimensión', blank=True,null=True)
-	#pilar = models.ForeignKey(Objective,on_delete=models.CASCADE,verbose_name=u'Pilares', blank=True,null=True)
+	id_objective = models.ForeignKey(Objective,on_delete=models.CASCADE,verbose_name=u'Objetivos', blank=True,null=True)
 	#documento=models.IntegerField(verbose_name=u'Cedula', default=0, blank=True,null=True)
 	#external_name = models.CharField('Nombre externo',max_length=150, blank=True,null=True)
 	#external_email= models.CharField('Email externo',max_length=150, blank=True,null=True)
