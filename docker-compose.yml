@@ -7,7 +7,7 @@ services:
     command: 'python3 manage.py runserver 0.0.0.0:8006'
     #command: 'python3 manage.py runserver_plus --cert-file /etc/letsencrypt/live/verne-logisfashion.buho.media/fullchain.pem --key-file /etc/letsencrypt/live/verne-logisfashion.buho.media/privkey.pem  verne-logisfashion.buho.media:8003'
     volumes:
-      - .:/verne2_demo
+      - .:/verne-copia
     environment:
       VIRTUAL_HOST: 'verne-demo.buho.media'
       C_FORCE_ROOT: 1

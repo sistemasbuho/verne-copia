@@ -4,7 +4,7 @@ MAINTAINER buho_team "sistemas@buho.media"
 
 ENV LAST_UPDATED 2021-09-09
 
-ADD deploy.sh /
+# ADD deploy.sh /
 
 # Setup apt
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update
