@@ -353,7 +353,7 @@ def PremioRedimido(request):
 			lista_con_puntos+=mensaje_con_puntos+" \n"
 			print("Se asignaron super ok", request.user.email)
   
-			lista_nueva = ['fernanda.pedraza@ramo.com.co',str(request.user.email)]
+			lista_nueva = [str(request.user.email),]
 			host_email = [settings.EMAIL_HOST_USER]
 			lista_nueva.extend(host_email)
    
