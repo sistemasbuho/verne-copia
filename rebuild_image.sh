@@ -14,7 +14,7 @@ cp deploy.sh .docker/tmp/base/deploy.sh;
 cp run.sh .docker/tmp/base/run.sh;
 #cp -R .docker/id_rsa* .docker/tmp/base/.docker/ ;
 
-cd .docker/tmp/base/ && docker build --tag buho/verne_ramo .;
+cd .docker/tmp/base/ && docker build --tag buho/verne2_demo .;
 rm -Rf .docker/tmp
 cd ../../../
 

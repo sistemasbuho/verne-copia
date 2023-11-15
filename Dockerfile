@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 MAINTAINER buho_team "sistemas@buho.media"
 
@@ -32,8 +32,8 @@ ENV LANG=C.UTF-8
 ENV TZ America/Bogota
 
 #install requirements
-ADD requirements.txt /verne_ramo/requirements.txt
-RUN pip3 install -r /verne_ramo/requirements.txt --ignore-installed
+ADD requirements.txt /verne-copia/requirements.txt
+RUN pip3 install -r /verne-copia/requirements.txt --ignore-installed
 
 
-WORKDIR /verne_ramo 
+WORKDIR /verne-copia

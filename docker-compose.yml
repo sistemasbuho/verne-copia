@@ -2,20 +2,20 @@ version: '3'
 
 services:
  
-  verne_ramo:
-    image: buho/verne_ramo
-    command: 'python3 manage.py runserver 0.0.0.0:8000'
+  verne2_demo:
+    image: buho/verne2_demo
+    command: 'python3 manage.py runserver 0.0.0.0:8006'
     #command: 'python3 manage.py runserver_plus --cert-file /etc/letsencrypt/live/verne-logisfashion.buho.media/fullchain.pem --key-file /etc/letsencrypt/live/verne-logisfashion.buho.media/privkey.pem  verne-logisfashion.buho.media:8003'
     volumes:
-      - .:/verne_ramo
+      - .:/verne2_demo
     environment:
-      VIRTUAL_HOST: 'verne-demo-buho.buho.media'
+      VIRTUAL_HOST: 'verne-demo.buho.media'
       C_FORCE_ROOT: 1
       LC_ALL: 'C.UTF-8'
       LANG: 'C.UTF-8'
       TZ: 'America/Bogota'
-      VIRTUAL_PORT: '8000'
-      LETSENCRYPT_HOST: 'verne-demo-buho.buho.media'
+      VIRTUAL_PORT: '8006'
+      LETSENCRYPT_HOST: 'verne-demo.buho.media'
       LETSENCRYPT_EMAIL: 'sistemas@buho.media'
     networks:
         - default
