@@ -117,7 +117,7 @@
             </div> <!-- container -->
         </div> <!-- navbar area -->
         
-        <div id="home" class="header-hero bg_cover" style="background-image: url({% static 'assets_landing_page/images/banner-bg.svg' %});padding:140px;">
+        <div id="home" class="header-hero bg_cover" style="background-image: url({% static 'assets_landing_page/images/banner-demo-01.svg' %});padding:140px;">
             <div class="container">
                 {% for banner in banner_header %}
                 <div class="row justify-content-center">
@@ -211,7 +211,7 @@
                                     <i> Acepto los términos y condiciones para el uso de las ideas. 
                                         <a class="terminos font-weight-bold" data-toggle="modal" data-target="#exampleModalCenter">Conócelos aquí</a> </i></p>
                     
-                                <!-- Modal T&C-->
+                                 Modal T&C
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -236,10 +236,6 @@
                                     </div>
                                     </div>
                                 </div>
-                                </div>
-
-                                <button class="btn-send btn btn-block col-md-4 container rounded-pill" type="submit"><i class="fas fa-paper-plane pr-2"></i> Enviar idea</button>
-                            </div>
                           </form>
                      </div>     
                 </div>
@@ -252,6 +248,7 @@
 
  
     <!--====== SERVICES PART START ======-->
+    <!--====== Explora ======-->
 
     <section id="features" class="services-area pt-120">
         <div class="container">
@@ -298,6 +295,7 @@
 
 
     <!--====== ABOUT PART START ======-->
+    <!--====== Conoce el proceso ======-->
 
     <section id="about" class="about-area pt-70">
         <div class="container">
@@ -315,6 +313,8 @@
 
     {% for card in process_section %}
 
+    <!--====== Conoce el proceso ======-->
+    
     {% if card.id == 10 %}
     <section  class="about-area pt-70">
         <div class="container">

@@ -21,6 +21,7 @@ class Menu(models.Model):
         return self.items
         
     class Meta:
+        ordering = ["id"]
         verbose_name = "Item Menú"
         verbose_name_plural = "Items Menú"
 

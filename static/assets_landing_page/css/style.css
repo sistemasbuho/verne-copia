@@ -1559,7 +1559,7 @@ p {
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: url(../images/footer-bg.svg);
+    background-image: url(../images/footer-demo.svg);
     background-position: top center;
     z-index: -1;
     background-size: cover;
