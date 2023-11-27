@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 MAINTAINER buho_team "sistemas@buho.media"
 
-ENV LAST_UPDATED 2021-09-09
+ENV LAST_UPDATED 2023-11-27
 
 # ADD deploy.sh /
 
