@@ -2,7 +2,7 @@ version: '3'
 
 services:
  
-  verne_marte:
+  verne_venus:
     # image: buho/verne-marte
     # image: buho/verne-mercurio
     image: buho/verne-venus
