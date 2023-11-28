@@ -3,27 +3,27 @@ version: '3'
 services:
  
   verne_marte:
-    image: buho/verne-marte
-    # image: buho/verne-mercurio
+    # image: buho/verne-marte
+    image: buho/verne-mercurio
     # image: buho/verne-venus
-    command: 'python3 manage.py runserver 0.0.0.0:8086'
-    # command: 'python3 manage.py runserver 0.0.0.0:8087'
+    # command: 'python3 manage.py runserver 0.0.0.0:8086'
+    command: 'python3 manage.py runserver 0.0.0.0:8087'
     # command: 'python3 manage.py runserver 0.0.0.0:8088'
     volumes:
       - .:/verne-copia
     environment:
-      VIRTUAL_HOST: 'verne-marte.buho.media'
-      # VIRTUAL_HOST: 'verne-mercurio.buho.media'
+      # VIRTUAL_HOST: 'verne-marte.buho.media'
+      VIRTUAL_HOST: 'verne-mercurio.buho.media'
       # VIRTUAL_HOST: 'verne-venus.buho.media'
       C_FORCE_ROOT: 1
       LC_ALL: 'C.UTF-8'
       LANG: 'C.UTF-8'
       TZ: 'America/Bogota'
-      VIRTUAL_PORT: '8086'
-      # VIRTUAL_PORT: '8087'
+      # VIRTUAL_PORT: '8086'
+      VIRTUAL_PORT: '8087'
       # VIRTUAL_PORT: '8088'
-      LETSENCRYPT_HOST: 'verne-marte.buho.media'
-      # LETSENCRYPT_HOST: 'verne-mercurio.buho.media'
+      # LETSENCRYPT_HOST: 'verne-marte.buho.media'
+      LETSENCRYPT_HOST: 'verne-mercurio.buho.media'
       # LETSENCRYPT_HOST: 'verne-venus.buho.media'
       LETSENCRYPT_EMAIL: 'sistemas@buho.media'
     networks:

@@ -24,8 +24,8 @@ VERNE_CLIENTES = {
 SERVIDOR = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'verne-marte',
-        # 'NAME': 'verne-mercurio',
+        # 'NAME': 'verne-marte',
+        'NAME': 'verne-mercurio',
         # 'NAME': 'verne-venus',
         'USER': 'produccion_database_clarity',
         'PASSWORD': 'PR4D5CC34N#B5H4$CL1R3TY%22',
