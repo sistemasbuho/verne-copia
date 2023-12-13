@@ -152,7 +152,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'verne@gnilat.com'
-EMAIL_HOST_PASSWORD = 'buho1234*'
+EMAIL_HOST_PASSWORD = 'rblfidcgwspsiopq'
 
 DEFAULT_FROM_EMAIL = 'verne@gnilat.com'
 
