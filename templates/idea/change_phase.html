@@ -6,13 +6,13 @@
 
         <div class="modal-header"><br>
           {% if consulta|add:"1" == 3 %}
-            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Pain</strong>?</h6>
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Ideación</strong>?</h6>
           {% elif consulta|add:"1" == 2 %}
             <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Observación</strong>?</h6>
           {% elif consulta|add:"1" == 4 %}
-            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Ideación</strong>?</h6>
-          {% elif consulta|add:"1" == 5 %}
             <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Prototipado</strong>?</h6>
+          {% elif consulta|add:"1" == 5 %}
+            <h6 class=" "> ¿Estas seguro que deseas cambiar esta idea a la fase <strong>Implementación</strong>?</h6>
           {% endif %}
 
             <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
