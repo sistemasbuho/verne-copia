@@ -204,10 +204,9 @@ class TaskByIdea(models.Model):
 class Idea(models.Model):
 
 	INNOVATION_TYPE=(
-		#("PROCESOS","Procesos"),
-		("Nueva","Nueva"),
-		("En desarrollo","En desarrollo"),
-		("Implementada","Implementada"))
+		("Incremental","Incremental"),
+		("Producto","Producto"),
+		("Procesos","Procesos"))
 
 	INNOVATION_PRIORITY=(
 		("ALTA","Alta"),
