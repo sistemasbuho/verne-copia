@@ -118,6 +118,7 @@ class registerIdea(_FormValid,CreateView):
 						'emails/idea_recibida.html', {
 							'title': info_guardado.title,
 							'fecha': info_guardado.creation_date,
+							'autor': lista_nueva,
 						},
 					)
 				email_message = EmailMessage(
@@ -128,22 +129,6 @@ class registerIdea(_FormValid,CreateView):
 				)
 				email_message.content_subtype = 'html'
 				email_message.send()
-
-				# Para el reenvio de email	
-				body_proveedor = render_to_string(
-						'emails/idea_recibida.html', {
-							'title': request.POST.get('title'),
-						},
-					)
-				email_message_proveedor = EmailMessage(
-				subject='Se ha registrado una nueva idea en sistemas',
-				body=body_proveedor,
-				from_email=host_email,
-				to=['sistemas@buho.media',],
-				)
-				email_message_proveedor.content_subtype = 'html'
-				email_message_proveedor.send()
-				print('email_message_proveedor',email_message_proveedor)
 			except ObjectDoesNotExist as e:
 					error = e
 
@@ -199,8 +184,9 @@ class changePhase(PermissionRequiredMixin,View):
 				info_guardado = Idea.objects.filter(id=self.kwargs.get("pk",None)).first()
 				lista_nueva = []
 				host_email = [settings.EMAIL_HOST_USER]
-				for lista in info_guardado.collaborator.values("email"):
-					lista_nueva.append(lista["email"])
+
+				emails_colaboradores = list(info_guardado.collaborator.values_list('email', flat=True))
+
 				body = render_to_string(
 						'emails/cambio_fase.html', {
 							'title': info_guardado.title,
@@ -209,10 +195,10 @@ class changePhase(PermissionRequiredMixin,View):
 						},
 					)
 				email_message = EmailMessage(
-				subject='Tu idea ha sido registrada en sistemas',
+				subject='Tu idea ha cambiado de fase',
 				body=body,
 				from_email=host_email,
-				to=lista_nueva,
+				to=emails_colaboradores,
 				)
 				email_message.content_subtype = 'html'
 				email_message.send()
